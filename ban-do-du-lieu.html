@@ -100,40 +100,6 @@
       }
 
       /* ============ App shell ============ */
-      .appbar {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        background: #fff;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 10px 22px;
-      }
-      .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        font-size: 15px;
-        white-space: nowrap;
-      }
-      .logo .mark {
-        width: 34px;
-        height: 34px;
-        border-radius: 9px;
-        background: linear-gradient(135deg, var(--blue), var(--blue-600));
-        color: #fff;
-        display: grid;
-        place-items: center;
-        font-size: 16px;
-      }
-      .logo small {
-        display: block;
-        font-weight: 500;
-        color: var(--ink-3);
-        font-size: 11px;
-      }
       .tabs {
         display: flex;
         gap: 4px;
@@ -190,17 +156,6 @@
         background: #fff;
         color: var(--blue-600);
         box-shadow: 0 1px 3px rgba(11, 11, 11, 0.12);
-      }
-      .avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: var(--blue-100);
-        color: var(--blue-600);
-        display: grid;
-        place-items: center;
-        font-weight: 700;
-        font-size: 12px;
       }
       .userbox {
         display: flex;
@@ -286,7 +241,6 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
         gap: 12px;
-        margin-bottom: 16px;
       }
       .card {
         background: var(--surface);
@@ -872,19 +826,9 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        background: var(--surface);
-        border: 1px solid var(--ring);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 9px 12px;
-        margin-bottom: 12px;
-        flex-wrap: wrap;
       }
       .toolbar-top {
         justify-content: flex-end;
-        /* position: sticky;
-        top: 57px;
-        z-index: 45; */
       }
       .toolbar .selcount {
         font-size: 12.5px;
@@ -1684,44 +1628,7 @@
         border: 1px solid var(--ring);
         border-radius: var(--radius);
         box-shadow: var(--shadow);
-        padding: 10px !important; /* Thu nhỏ padding viền trong */
-      }
-      .chart-card h3 {
-        font-size: 11.5px !important;
-        font-weight: 700;
-      }
-      .dcard h3 {
-        display: flex;
-        align-items: center;
-        gap: 6px !important;
-        font-size: 13px !important; /* Hạ font tiêu đề lớn xuống 13px */
-        font-weight: 800;
-        margin-bottom: 6px !important;
-      }
-      .dcard-ico {
-        width: 22px !important; /* Thu nhỏ khung icon */
-        height: 22px !important;
-        border-radius: 5px !important;
-        display: grid;
-        place-items: center;
-        font-size: 11px !important;
-        flex: none;
-      }
-      .dtablehead {
-        display: flex;
-        align-items: center;
-        gap: 10px !important;
-        margin-bottom: 6px !important;
-        flex-wrap: wrap;
-      }
-      .dtablabel {
-        font-size: 12.5px !important;
-        font-weight: 800;
-      }
-      .dtabmilestone {
-        font-size: 9.5px !important;
-        padding: 2px 6px !important;
-        margin-top: 2px !important;
+        padding: 10px !important;
       }
       #detailSearch {
         min-width: 180px !important; /* Thu hẹp ô tìm kiếm */
@@ -2516,10 +2423,32 @@
       .bg-header {
         background: linear-gradient(90deg, #173669, #1b428e, #040c17);
       }
+      /* Tùy chỉnh thanh cuộn cho các trình duyệt Chromium (Chrome, Edge, Safari) */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px; /* Độ rộng thanh cuộn dọc */
+        height: 8px; /* Độ rộng thanh cuộn ngang */
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent; /* Nền đường chạy thanh cuộn ẩn đi cho sạch */
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #1e293b; /* Màu slate-800 tiệp với border của table */
+        border-radius: 9999px; /* Bo tròn hoàn toàn */
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #334155; /* Sáng lên nhẹ (slate-700) khi hover */
+      }
+
+      /* Hỗ trợ hiển thị kiểu table-layout khi ép kiểu block */
+      .display-table-row {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+      }
     </style>
   </head>
   <body class="bg-section">
-    <div class="flex min-h-screen text-white font-sans">
+    <div class="flex min-h-screen font-sans">
       <aside
         id="mainSidebar"
         class="relative w-50 h-screen flex flex-col rounded-r-lg justify-between z-50 px-1 py-3 shrink-0 bg-[#040c17] sticky top-0 transition-all duration-300 ease-in-out"
@@ -2562,10 +2491,10 @@
               class="tab on group w-full px-3 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-3 transition-all duration-200 text-slate-400 hover:text-slate-100 hover:bg-slate-900 cursor-pointer"
             >
               <i
-                class="fa-solid fa-list-ul text-sm w-5 text-center transition-transform group-hover:scale-110"
+                class="fa-solid fa-chart-bar text-sm w-5 text-center transition-transform group-hover:scale-110"
               ></i>
               <span class="sidebar-text transition-opacity duration-200"
-                >Danh sách</span
+                >Báo cáo</span
               >
             </button>
 
@@ -2581,7 +2510,7 @@
                     class="fa-solid fa-chart-pie text-sm w-5 text-center transition-transform group-hover:scale-110"
                   ></i>
                   <span class="sidebar-text transition-opacity duration-200"
-                    >Báo cáo thống kê</span
+                    >Thống kê</span
                   >
                 </div>
                 <!-- Icon mũi tên chỉ trạng thái đóng mở -->
@@ -2701,243 +2630,523 @@
         class="flex-1 h-screen min-w-0 bg-slate-900 overflow-y-auto bg-section"
       >
         <!-- ================= LISTING VIEW ================= -->
-        <section class="view on p-6 text-white space-y-4" id="viewList">
-          <div class="page-head flex flex-col items-start justify-start">
-            <h1 id="listTitle" class="!text-2xl font-extrabold uppercase">
-              Báo cáo tiến độ hoàn thiện CSDL
-            </h1>
-            <div class="sub" id="listSub">
-              Quản lý, gửi duyệt và phê duyệt các Bản đồ dữ liệu CSDL chuyên
-              ngành
+        <section class="view on" id="viewList">
+          <div
+            class="px-6 py-4 h-screen w-full flex flex-col gap-2 overflow-hidden"
+          >
+            <div
+              class="text-white page-head flex flex-col items-start justify-start shrink-0"
+            >
+              <h1
+                id="listTitle"
+                class="!text-lg font-black uppercase tracking-tight"
+              >
+                Báo cáo tiến độ hoàn thiện CSDL
+              </h1>
+              <div
+                class="text-[11px] text-slate-400 leading-tight"
+                id="listSub"
+              >
+                Quản lý, gửi duyệt và phê duyệt các Bản đồ dữ liệu CSDL chuyên
+                ngành
+              </div>
             </div>
-          </div>
 
-          <div class="toolbar toolbar-top" id="toolbar">
-            <input
-              type="file"
-              id="excelFile"
-              accept=".xlsx,.xls,.csv"
-              style="display: none"
-              onchange="handleExcelUpload(this)"
-            />
-            <div class="spacer"></div>
-            <button
-              class="btn-sm ghost"
-              id="btnUpload"
-              onclick="document.getElementById('excelFile').click()"
+            <div
+              class="toolbar toolbar-top flex items-center flex-wrap gap-1.5 p-1.5 bg-[#0d1e32] border border-slate-800/80 rounded-lg shadow-md shrink-0"
+              id="toolbar"
             >
-              📥 Tải lên Excel
-            </button>
-            <button class="btn-sm ghost" id="btnExport" onclick="exportData()">
-              📤 Kết xuất
-            </button>
-            <button
-              class="btn-sm blue"
-              id="btnCreate"
-              onclick="openDetail(null, 'edit')"
-              style="font-weight: 700"
-            >
-              ＋ Thêm mới đánh giá TĐ CSDL
-            </button>
-            <div class="tdiv"></div>
-            <button
-              class="btn-sm blue"
-              id="btnBulkSubmit"
-              onclick="bulkSubmit()"
-            >
-              📤 Gửi duyệt
-            </button>
-            <button
-              class="btn-sm good"
-              id="btnBulkApprove"
-              onclick="bulkApprove()"
-            >
-              ✓ Duyệt
-            </button>
-            <button
-              class="btn-sm warn"
-              id="btnBulkReject"
-              onclick="bulkReject()"
-            >
-              ✗ Từ chối duyệt
-            </button>
-            <button
-              class="btn-sm danger"
-              id="btnBulkDelete"
-              onclick="bulkDelete()"
-            >
-              🗑 Xóa
-            </button>
-          </div>
-
-          <div class="cards" id="cards"></div>
-
-          <div class="filterbar">
-            <div class="searchwrap">
-              <span class="sic">🔍</span>
               <input
-                type="search"
-                id="fSearch"
-                placeholder="Tìm theo tên CSDL hoặc Đơn vị đầu mối chủ quản…"
-                oninput="renderTable()"
+                type="file"
+                id="excelFile"
+                accept=".xlsx,.xls,.csv"
+                style="display: none"
+                onchange="handleExcelUpload(this)"
               />
-            </div>
-            <span class="flabel">Kỳ báo cáo</span>
-            <select
-              id="fKy"
-              onchange="
-                renderTable();
-                renderCards();
-              "
-            ></select>
-            <span class="flabel">Phân loại</span>
-            <select id="fPhanloai" onchange="renderTable()"></select>
-            <span class="flabel" id="fBoLbl">Bộ, ngành</span>
-            <select id="fBo" onchange="renderTable()"></select>
-            <button class="chip-reset" onclick="resetFilters()">
-              Xóa bộ lọc
-            </button>
-          </div>
 
-          <div class="tablewrap">
-            <table class="dt" id="dtable">
-              <colgroup>
-                <col style="width: 34px" />
-                <col style="width: 130px" />
-                <col style="width: 150px" />
-                <col style="width: 190px" />
-                <col style="width: 90px" />
-                <col style="width: 90px" />
-                <col style="width: 130px" />
-                <col style="width: 110px" />
-                <col style="width: 110px" />
-                <col style="width: 110px" />
-                <col style="width: 110px" />
-                <col style="width: 110px" />
-                <col style="width: 110px" />
-                <col style="width: 110px" />
-                <col style="width: 110px" />
-                <col style="width: 130px" />
-                <col style="width: 110px" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th class="chk">
-                    <input
-                      type="checkbox"
-                      class="headchk"
-                      id="headChk"
-                      onchange="toggleSelectAll(this.checked)"
-                      title="Chọn tất cả"
-                    />
-                  </th>
-                  <th>Bộ ngành</th>
-                  <th>Đơn vị chủ quản</th>
-                  <th>Tên CSDL</th>
-                  <th>Kỳ báo cáo</th>
-                  <th>Phân loại</th>
-                  <th>Trạng thái Xây dựng CSDL</th>
-                  <th>Tiến độ</th>
-                  <th>Dữ liệu</th>
-                  <th>ATTT</th>
-                  <th>Hạ tầng</th>
-                  <th>Phần mềm</th>
-                  <th>Cắt giảm TTHC</th>
-                  <th>Pháp lý</th>
-                  <th>Tài chính</th>
-                  <th>Trạng thái</th>
-                  <th>Hành động</th>
-                </tr>
-                <tr class="filters">
-                  <th class="chk"></th>
-                  <th><select id="cfBo" onchange="renderTable()"></select></th>
-                  <th>
-                    <select id="cfDonvi" onchange="renderTable()"></select>
-                  </th>
-                  <th>
-                    <input
-                      type="text"
-                      id="cfCsdl"
-                      placeholder="Nhập từ khóa…"
-                      oninput="renderTable()"
-                    />
-                  </th>
-                  <th><select id="cfKy" onchange="renderTable()"></select></th>
-                  <th><select id="cfPl" onchange="renderTable()"></select></th>
-                  <th>
-                    <select
-                      id="cfBuildStatus"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select id="cfTiendo" onchange="renderTable()">
-                      <option value="">Tất cả</option>
-                      <option value="lt50">&lt; 50%</option>
-                      <option value="50-80">50 – 80%</option>
-                      <option value="gt80">&gt; 80%</option>
-                    </select>
-                  </th>
-                  <th>
-                    <select
-                      id="cfDulieu"
-                      class="cf-score"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select
-                      id="cfAttt"
-                      class="cf-score"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select
-                      id="cfHatang"
-                      class="cf-score"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select
-                      id="cfPhanmem"
-                      class="cf-score"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select
-                      id="cfCatgiam"
-                      class="cf-score"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select
-                      id="cfPhaply"
-                      class="cf-score"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select
-                      id="cfTaichinh"
-                      class="cf-score"
-                      onchange="renderTable()"
-                    ></select>
-                  </th>
-                  <th>
-                    <select id="cfStatus" onchange="renderTable()"></select>
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="tbody"></tbody>
-            </table>
-            <div class="tfoot">
-              <span id="tcount"></span
-              ><span>Prototype demo — dữ liệu minh họa</span>
+              <!-- GIỮ LẠI KHỐI TRÁI: Nhóm chức năng File -->
+              <div class="flex items-center gap-1.5">
+                <button
+                  class="btn-sm ghost group h-8 px-2.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-800/40 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/50 flex items-center gap-1.5 transition-all duration-150 cursor-pointer"
+                  id="btnUpload"
+                  onclick="document.getElementById('excelFile').click()"
+                >
+                  <i
+                    class="fa-solid fa-file-import text-[10px] text-slate-400 group-hover:text-emerald-400 transition-colors"
+                  ></i>
+                  <span>Tải lên Excel</span>
+                </button>
+
+                <button
+                  class="btn-sm ghost group h-8 px-2.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-800/40 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/50 flex items-center gap-1.5 transition-all duration-150 cursor-pointer"
+                  id="btnExport"
+                  onclick="exportData()"
+                >
+                  <i
+                    class="fa-solid fa-file-export text-[10px] text-slate-400 group-hover:text-blue-400 transition-colors"
+                  ></i>
+                  <span>Kết xuất</span>
+                </button>
+              </div>
+
+              <!-- GIỮ CLASS 'spacer' / Khoảng trống đẩy -->
+              <div class="spacer flex-1 min-w-[4px]"></div>
+
+              <!-- GIỮ LẠI KHỐI PHẢI: Khối Hành động & Nghiệp vụ -->
+              <div class="flex items-center flex-wrap gap-1.5">
+                <button
+                  class="btn-sm blue group h-8 px-3 rounded-md text-[10px] font-black uppercase tracking-wider bg-emerald-600/15 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/20 flex items-center gap-1.5 transition-all duration-150 cursor-pointer"
+                  id="btnCreate"
+                  onclick="openDetail(null, 'edit')"
+                  style="font-weight: 700"
+                >
+                  <i
+                    class="fa-solid fa-plus text-[10px] transition-transform duration-150 group-hover:rotate-90"
+                  ></i>
+                  <span>Thêm mới đánh giá TĐ CSDL</span>
+                </button>
+
+                <!-- GIỮ THẺ PHÂN TÁCH CŨ 'tdiv' -->
+                <div class="tdiv h-4 w-[1px] bg-slate-800 mx-0.5"></div>
+
+                <button
+                  class="btn-sm blue group h-8 px-2.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-blue-600/15 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/20 flex items-center gap-1.5 transition-all duration-150 cursor-pointer"
+                  id="btnBulkSubmit"
+                  onclick="bulkSubmit()"
+                >
+                  <i
+                    class="fa-solid fa-paper-plane text-[9px] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  ></i>
+                  <span>Gửi duyệt</span>
+                </button>
+
+                <button
+                  class="btn-sm good group h-8 px-2.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-teal-600/15 hover:bg-teal-600 text-teal-400 hover:text-white border border-teal-500/20 flex items-center gap-1.5 transition-all duration-150 cursor-pointer"
+                  id="btnBulkApprove"
+                  onclick="bulkApprove()"
+                >
+                  <i
+                    class="fa-solid fa-check text-[10px] transition-transform duration-150 group-hover:scale-110"
+                  ></i>
+                  <span>Duyệt</span>
+                </button>
+
+                <button
+                  class="btn-sm warn group h-8 px-2.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-600/15 hover:bg-amber-600 text-amber-400 hover:text-white border border-amber-500/20 flex items-center gap-1.5 transition-all duration-150 cursor-pointer"
+                  id="btnBulkReject"
+                  onclick="bulkReject()"
+                >
+                  <i
+                    class="fa-solid fa-xmark text-[10px] transition-transform duration-150 group-hover:rotate-90"
+                  ></i>
+                  <span>Từ chối duyệt</span>
+                </button>
+
+                <button
+                  class="btn-sm danger group h-8 px-2.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/20 flex items-center gap-1.5 transition-all duration-150 cursor-pointer"
+                  id="btnBulkDelete"
+                  onclick="bulkDelete()"
+                >
+                  <i
+                    class="fa-solid fa-trash-can text-[10px] transition-transform duration-150 group-hover:animate-pulse"
+                  ></i>
+                  <span>Xóa</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Khối chứa Thẻ thống kê (Cards) - Tối ưu margin và thu hẹp không gian -->
+            <div class="cards shrink-0 empty:hidden" id="cards"></div>
+
+            <!-- Thanh lọc FilterBar (Tinh chỉnh chiều cao h-8 cho input/select) -->
+            <div
+              class="flex flex-wrap items-center justify-between gap-2 p-1.5 bg-[#0d1e32] border border-slate-800/80 rounded-lg shadow-md w-full shrink-0"
+              id="filterBar"
+            >
+              <!-- Ô Tìm Kiếm Thu Nhỏ -->
+              <div class="relative flex-1 min-w-[160px] max-w-[200px] group">
+                <span
+                  class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none z-10"
+                >
+                  <i
+                    class="fa-solid fa-magnifying-glass text-[10px] text-slate-500 group-focus-within:text-emerald-400 transition-colors"
+                  ></i>
+                </span>
+                <input
+                  type="search"
+                  id="fSearch"
+                  class="w-full h-7 !pl-7 pr-2 bg-slate-950/60 hover:bg-slate-950 border border-slate-800 focus:border-emerald-500/80 rounded-md text-[10px] text-slate-200 placeholder-slate-500 focus:outline-none transition-all duration-150"
+                  placeholder="Tìm kiếm..."
+                  oninput="renderTable()"
+                />
+              </div>
+
+              <!-- Các khối Bộ Lọc Dropdown (h-7 siêu gọn) -->
+              <div class="flex flex-wrap items-center gap-1.5">
+                <!-- Kỳ báo cáo -->
+                <div
+                  class="group relative flex items-center bg-slate-950/40 border border-slate-800 hover:border-slate-700/80 rounded-md pl-2 h-7 transition-all"
+                >
+                  <div
+                    class="text-[9px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1 shrink-0 pointer-events-none select-none"
+                  >
+                    <i
+                      class="fa-solid fa-calendar-check text-slate-500 group-hover:text-amber-400 transition-colors"
+                    ></i>
+                    <span>Kỳ:</span>
+                  </div>
+                  <select
+                    id="fKy"
+                    class="pl-1 pr-6 h-full bg-transparent text-[10px] font-bold text-slate-200 cursor-pointer focus:outline-none appearance-none min-w-[75px] bg-[url('data:image/svg+xml,%3Csvg_xmlns=%22http://www.w3.org/2000/svg%22_fill=%22none%22_viewBox=%220_0_24_24%22_stroke=%22%3B64748b%22%3E%3Cpath_stroke-linecap=%22round%22_stroke-linejoin=%22round%22_stroke-width=%222.5%22_d=%22M19_9l-7_7-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[position:right_0.35rem_center] bg-[size:0.5rem]"
+                    onchange="
+                      renderTable();
+                      renderCards();
+                    "
+                  ></select>
+                </div>
+
+                <!-- Phân loại -->
+                <div
+                  class="group relative flex items-center bg-slate-950/40 border border-slate-800 hover:border-slate-700/80 rounded-md pl-2 h-7 transition-all"
+                >
+                  <div
+                    class="text-[9px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1 shrink-0 pointer-events-none select-none"
+                  >
+                    <i
+                      class="fa-solid fa-filter text-slate-500 group-hover:text-blue-400 transition-colors"
+                    ></i>
+                    <span>Loại:</span>
+                  </div>
+                  <select
+                    id="fPhanloai"
+                    class="pl-1 pr-6 h-full bg-transparent text-[10px] font-bold text-slate-200 cursor-pointer focus:outline-none appearance-none min-w-[85px] bg-[url('data:image/svg+xml,%3Csvg_xmlns=%22http://www.w3.org/2000/svg%22_fill=%22none%22_viewBox=%220_0_24_24%22_stroke=%22%3B64748b%22%3E%3Cpath_stroke-linecap=%22round%22_stroke-linejoin=%22round%22_stroke-width=%222.5%22_d=%22M19_9l-7_7-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[position:right_0.35rem_center] bg-[size:0.5rem]"
+                    onchange="renderTable()"
+                  ></select>
+                </div>
+
+                <!-- Bộ, ngành -->
+                <div
+                  class="group relative flex items-center bg-slate-950/40 border border-slate-800 hover:border-slate-700/80 rounded-md pl-2 h-7 transition-all"
+                >
+                  <div
+                    class="text-[9px] font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1 shrink-0 pointer-events-none select-none"
+                    id="fBoLbl"
+                  >
+                    <i
+                      class="fa-solid fa-landmark text-slate-500 group-hover:text-emerald-400 transition-colors"
+                    ></i>
+                    <span>Bộ:</span>
+                  </div>
+                  <select
+                    id="fBo"
+                    class="pl-1 pr-6 h-full bg-transparent text-[10px] font-bold text-slate-200 cursor-pointer focus:outline-none appearance-none min-w-[100px] max-w-[150px] truncate bg-[url('data:image/svg+xml,%3Csvg_xmlns=%22http://www.w3.org/2000/svg%22_fill=%22none%22_viewBox=%220_0_24_24%22_stroke=%22%3B64748b%22%3E%3Cpath_stroke-linecap=%22round%22_stroke-linejoin=%22round%22_stroke-width=%222.5%22_d=%22M19_9l-7_7-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[position:right_0.35rem_center] bg-[size:0.5rem]"
+                    onchange="renderTable()"
+                  ></select>
+                </div>
+
+                <!-- Nút Xóa Bộ Lọc -->
+                <button
+                  class="group h-7 px-2.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/20 flex items-center gap-1 transition-all duration-150 cursor-pointer"
+                  onclick="resetFilters()"
+                  title="Đặt lại toàn bộ bộ lọc"
+                >
+                  <i
+                    class="fa-solid fa-arrow-rotate-left text-[10px] transition-transform duration-200 group-hover:-rotate-180"
+                  ></i>
+                  <span class="hidden sm:inline">Xóa bộ lọc</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- CONTAINER BẢNG CHÍNH: Cố định kết cấu hiển thị bằng Flex Layout -->
+            <div
+              class="flex flex-col flex-1 bg-[#0d1e32] border border-slate-800 rounded-lg shadow-xl overflow-hidden mb-6"
+              id="tableContainer"
+            >
+              <!-- 
+    VÙNG CUỘN NGANG: 
+    Chỉ chịu trách nhiệm cuộn chiều ngang nếu màn hình nhỏ hơn 1700px.
+    overflow-y-hidden để ngăn chặn việc cuộn dọc ở tầng này.
+  -->
+              <div
+                class="w-full flex-1 flex flex-col overflow-x-auto overflow-y-hidden custom-scrollbar"
+              >
+                <table
+                  class="w-full text-left border-collapse table-fixed min-w-[1700px] flex flex-col flex-1 min-h-0"
+                  id="dtable"
+                >
+                  <colgroup>
+                    <col style="width: 35px" />
+                    <col style="width: 130px" />
+                    <col style="width: 150px" />
+                    <col style="width: 200px" />
+                    <col style="width: 85px" />
+                    <col style="width: 95px" />
+                    <col style="width: 140px" />
+                    <col style="width: 85px" />
+                    <col style="width: 85px" />
+                    <col style="width: 85px" />
+                    <col style="width: 85px" />
+                    <col style="width: 85px" />
+                    <col style="width: 100px" />
+                    <col style="width: 85px" />
+                    <col style="width: 85px" />
+                    <col style="width: 110px" />
+                    <col style="width: 100px" />
+                  </colgroup>
+
+                  <!-- Tiêu đề bảng cố định ở đỉnh (Không bao giờ cuộn) -->
+                  <thead
+                    class="sticky top-0 z-20 bg-[#091524] shadow-md select-none shrink-0 w-full"
+                  >
+                    <!-- Hàng 1 -->
+                    <tr class="border-b border-slate-800/60 display-table-row">
+                      <th class="p-2 text-center">
+                        <input
+                          type="checkbox"
+                          class="w-3.5 h-3.5 rounded border-slate-700 bg-slate-950 text-emerald-500 focus:ring-emerald-500/30 accent-emerald-500 cursor-pointer"
+                          id="headChk"
+                          onchange="toggleSelectAll(this.checked)"
+                          title="Chọn tất cả"
+                        />
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Bộ ngành
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Đơn vị chủ quản
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Tên CSDL
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Kỳ báo cáo
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Phân loại
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Trạng thái Xây dựng
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Tiến độ
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Dữ liệu
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        ATTT
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Hạ tầng
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Phần mềm
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Cắt giảm TTHC
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Pháp lý
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Tài chính
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400"
+                      >
+                        Trạng thái
+                      </th>
+                      <th
+                        class="p-2 text-[9px] font-black uppercase tracking-wider text-slate-400 text-center"
+                      >
+                        Hành động
+                      </th>
+                    </tr>
+
+                    <!-- Hàng 2: Bộ lọc nhanh tại cột -->
+                    <tr
+                      class="bg-[#0b1726] border-b border-slate-800/80 display-table-row"
+                    >
+                      <th class="p-1"></th>
+                      <th class="p-1">
+                        <select
+                          id="cfBo"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-1 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfDonvi"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-1 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <input
+                          type="text"
+                          id="cfCsdl"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-200 placeholder-slate-700 rounded px-1.5 focus:outline-none"
+                          placeholder="Từ khóa…"
+                          oninput="renderTable()"
+                        />
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfKy"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-1 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfPl"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-1 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfBuildStatus"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-1 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfTiendo"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        >
+                          <option value="">Tất cả</option>
+                          <option value="lt50">&lt; 50%</option>
+                          <option value="50-80">50–80%</option>
+                          <option value="gt80">&gt; 80%</option>
+                        </select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfDulieu"
+                          class="cf-score w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfAttt"
+                          class="cf-score w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfHatang"
+                          class="cf-score w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfPhanmem"
+                          class="cf-score w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfCatgiam"
+                          class="cf-score w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfPhaply"
+                          class="cf-score w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfTaichinh"
+                          class="cf-score w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1">
+                        <select
+                          id="cfStatus"
+                          class="w-full h-6 bg-slate-950/60 border border-slate-800 text-[10px] text-slate-300 rounded px-0.5 focus:outline-none"
+                          onchange="renderTable()"
+                        ></select>
+                      </th>
+                      <th class="p-1"></th>
+                    </tr>
+                  </thead>
+
+                  <!-- 
+        THÂN BẢNG CHÍNH (TBODY): 
+        Áp dụng `block flex-1 overflow-y-auto` biến toàn bộ tbody thành vùng cuộn dọc duy nhất.
+      -->
+                  <tbody
+                    id="tbody"
+                    class="block flex-1 overflow-y-auto divide-y divide-slate-800/40 bg-[#0d1e32] custom-scrollbar"
+                  >
+                    <!-- Dữ liệu JS tự động render -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Thanh Footer cố định đáy -->
+              <div
+                class="flex items-center justify-between px-3 py-1.5 bg-[#091524] border-t border-slate-800 text-[10px] text-slate-400 font-medium select-none shrink-0"
+              >
+                <div class="flex items-center gap-1">
+                  <i
+                    class="fa-solid fa-chart-simple text-emerald-500 text-[10px]"
+                  ></i>
+                  <span id="tcount" class="font-bold text-slate-200"
+                    >Đang tải số liệu...</span
+                  >
+                </div>
+                <div
+                  class="flex items-center gap-1 text-slate-500 text-[9px] font-bold uppercase tracking-wider"
+                >
+                  <i
+                    class="fa-solid fa-circle-nodes text-[7px] animate-pulse text-emerald-500"
+                  ></i>
+                  <span>Prototype demo</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -3429,7 +3638,7 @@
         </section>
 
         <section class="view" id="detailDash">
-          <div>màn hình chi tiết</div>
+          <div>Chi tiết bộ ngành</div>
         </section>
 
         <section class="view" id="digitalMap">
@@ -7358,10 +7567,12 @@
           ? '<span class="score" style="background:var(--neutral-bg);color:var(--ink-3)">—</span>'
           : `<span class="score ${scoreCls(v)}">${v.toFixed(1)}</span>`;
       }
-      function scoreCellPlain(v) {
-        return v == null
-          ? '<span style="color:var(--ink-3)">—</span>'
-          : `<span style="color:var(--ink);font-weight:400;font-variant-numeric:tabular-nums">${v.toFixed(1)}</span>`;
+      function scoreCellPlain(score) {
+        if (score === undefined || score === null)
+          return `<span class="text-slate-600">—</span>`;
+
+        // Định dạng điểm số thành màu trắng/slate sáng nổi bật trên nền tối
+        return `<span class="text-slate-100 font-semibold tracking-wide">${score.toFixed(1)}</span>`;
       }
       function tiendoCls(v) {
         return v == null ? "neutral" : v >= 80 ? "hi" : v >= 50 ? "mid" : "lo";
@@ -7520,36 +7731,36 @@
             key: "khoitao",
             label: "Khởi tạo",
             hint: "Đang soạn thảo, chưa gửi duyệt",
-            icon: "✎",
-            bg: "var(--neutral-bg)",
-            fg: "var(--ink-2)",
+            icon: "fa-solid fa-pen-to-square",
+            bg: "rgba(203, 213, 225, 0.18)", // Nền xám slate sáng hơn
+            fg: "#cbd5e1", // Chữ màu slate sáng hẳn (Slate 300)
             count: (m) => m.status === "khoitao",
           },
           {
             key: "choduyet",
             label: "Chờ duyệt",
             hint: "Đã gửi, đang đợi xử lý",
-            icon: "⏳",
-            bg: "var(--warn-bg)",
-            fg: "#8a5a00",
+            icon: "fa-solid fa-hourglass-half",
+            bg: "rgba(251, 191, 36, 0.18)", // Nền vàng hổ phách sáng
+            fg: "#fbbf24", // Chữ màu vàng hổ phách rực rỡ (Amber 400)
             count: (m) => m.status === "choduyet",
           },
           {
             key: "duyetlai",
             label: "Cần duyệt lại",
             hint: "Bị từ chối, cần chỉnh sửa",
-            icon: "↩",
-            bg: "var(--serious-bg)",
-            fg: "#a34a22",
+            icon: "fa-solid fa-rotate-left",
+            bg: "rgba(248, 113, 113, 0.18)", // Nền đỏ sáng
+            fg: "#f87171", // Chữ màu đỏ pastel sáng (Red 400)
             count: (m) => m.status === "duyetlai",
           },
           {
             key: "daduyet",
             label: "Đã duyệt",
             hint: "Đã khóa dữ liệu, hoàn tất",
-            icon: "✓",
-            bg: "var(--good-bg)",
-            fg: "var(--good-ink)",
+            icon: "fa-solid fa-circle-check",
+            bg: "rgba(52, 211, 153, 0.18)", // Nền xanh lục sáng hơn
+            fg: "#34d399", // Chữ màu xanh ngọc lục bảo tươi (Emerald 400)
             count: (m) => m.status === "daduyet",
           },
         ];
@@ -7559,14 +7770,54 @@
           ? document.getElementById("fKy").value
           : "";
         const defs = cardDefs();
+
         document.getElementById("cards").innerHTML = defs
           .map((d) => {
             const n = MAPS.filter((m) => !(m.isNew && !m.csdl))
               .filter((m) => !fk || m.ky === fk)
               .filter(d.count).length;
-            return `<div class="card ${quickFilter === d.key ? "sel" : ""}" onclick="toggleQuick('${d.key}')">
-      <div class="lbl" style="background:${d.bg};color:${d.fg}">${d.label}</div>
-      <div class="num">${n}</div></div>`;
+
+            const isSelected = quickFilter === d.key;
+
+            return `
+        <div 
+          class="group relative bg-[#0d1e32] border ${isSelected ? "border-emerald-500 shadow-lg shadow-emerald-950/40 scale-[1.02]" : "border-slate-800 hover:border-slate-700"} rounded-xl p-2 flex flex-col justify-between gap-1 cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl"
+          onclick="toggleQuick('${d.key}')"
+          title="${d.hint}"
+        >
+          <!-- Trên: Nhãn & Biểu tượng -->
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex flex-col">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-300 group-hover:text-white transition-colors">
+                ${d.label}
+              </span>
+              <span class="text-[9px] text-slate-400 font-medium line-clamp-1 mt-0.5 max-w-[130px]">
+                ${d.hint}
+              </span>
+            </div>
+            
+            <!-- Vòng tròn icon đồng điệu màu sắc -->
+            <div 
+              class="w-8 h-8 rounded-lg flex items-center justify-center text-xs shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" 
+              style="background: ${d.bg}; color: ${d.fg};"
+            >
+              <i class="${d.icon}"></i>
+            </div>
+          </div>
+
+          <!-- Dưới: Số lượng hiển thị lớn -->
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl font-black text-white transition-colors">
+              ${n}
+            </span>
+            <!-- Thay đổi từ ngữ tại đây -->
+            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wide scale-90">Báo Cáo</span>
+          </div>
+
+          <!-- Chỉ báo kích hoạt động ở đáy -->
+          ${isSelected ? `<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-[3px] bg-emerald-500 rounded-t-full"></div>` : ""}
+        </div>
+      `;
           })
           .join("");
       }
@@ -7773,41 +8024,116 @@
         const rows = visibleRows();
         const tb = document.getElementById("tbody");
         const visIds = new Set(rows.map(({ m }) => m.id));
+
+        // Dọn dẹp selected array nếu phần tử không còn hiển thị
         [...selected].forEach((id) => {
           if (!visIds.has(id)) selected.delete(id);
         });
+
+        // TRƯỜNG HỢP: Không có dữ liệu khớp bộ lọc
         if (!rows.length) {
-          tb.innerHTML = `<tr><td colspan="17" class="empty">Không có Bản đồ dữ liệu nào khớp bộ lọc.<br><button class="chip-reset" onclick="resetFilters()">Xóa bộ lọc</button></td></tr>`;
-        } else
+          tb.innerHTML = `
+      <tr>
+        <td colspan="17" class="p-8 text-center text-slate-500 text-xs bg-[#0d1e32]">
+          <div class="flex flex-col items-center justify-center gap-3">
+            <i class="fa-solid fa-folder-open text-3xl text-slate-700"></i>
+            <span>Không có Bản đồ dữ liệu nào khớp bộ lọc.</span>
+            <button 
+              class="group h-8 px-3 rounded-lg text-[10px] font-black uppercase tracking-wider bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/20 hover:border-red-500 flex items-center gap-1.5 transition-all duration-200 cursor-pointer mt-1" 
+              onclick="resetFilters()"
+            >
+              <i class="fa-solid fa-arrow-rotate-left text-xs transition-transform duration-300 group-hover:-rotate-180"></i>
+              <span>Xóa bộ lọc</span>
+            </button>
+          </div>
+        </td>
+      </tr>`;
+        } else {
+          // TRƯỜNG HỢP: Có dữ liệu hiển thị
           tb.innerHTML = rows
             .map(({ m, c }) => {
               const st = ST[m.status];
               const sel = selected.has(m.id);
               const tc = tiendoColor(c.wScore);
-              return `<tr class="${sel ? "rowsel" : ""}">
-      <td class="chk"><input type="checkbox" class="rowchk" ${sel ? "checked" : ""} onchange="toggleRowSel(${m.id},this.checked)"></td>
-      <td>${esc(m.bo)}</td>
-      <td>${esc(m.donvi)}</td>
-      <td><div class="csdl-name">${esc(m.csdl)}</div></td>
-      <td>${esc(m.ky)}</td>
-      <td><span class="plaincell${m.phanloai ? "" : " muted"}">${m.phanloai ? esc(m.phanloai) : "—"}</span></td>
-      <td><span class="plaincell">${esc(m.buildStatus)}</span></td>
-      <td class="num"><span class="score" style="background:${tc.bg};color:${tc.fg};min-width:46px">${c.wScore.toFixed(1)}%</span></td>
-      <td class="num">${scoreCellPlain(c.gs["Dữ liệu"].avg)}</td>
-      <td class="num">${scoreCellPlain(c.gs["ATTT"].avg)}</td>
-      <td class="num">${scoreCellPlain(c.gs["Hạ tầng"].avg)}</td>
-      <td class="num">${scoreCellPlain(c.gs["Phần mềm"].avg)}</td>
-      <td class="num">${scoreCellPlain(c.gs["Cắt giảm TTHC"].avg)}</td>
-      <td class="num">${scoreCellPlain(c.gs["Pháp lý"].avg)}</td>
-      <td class="num">${scoreCellPlain(c.gs["Tài chính"].avg)}</td>
-      <td><span class="statusdot" style="background:${STATUS_COLOR[m.status]}"></span> <span class="plaincell">${st.label}</span></td>
-      <td class="actioncell"><button class="actionsbtn" onclick="toggleActionMenu(event,${m.id})"><span class="plusicon">＋</span> Hành động</button></td></tr>`;
+
+              // Tạo class động cho dòng đang được chọn (selected row)
+              const rowClass = sel
+                ? "bg-slate-950/40 border-b border-slate-800/60 hover:bg-slate-950/60 transition-colors duration-150"
+                : "border-b border-slate-800/60 hover:bg-slate-950/30 transition-colors duration-150";
+
+              return `
+          <tr class="${rowClass}">
+            <!-- 1. Checkbox chọn dòng -->
+            <td class="p-3 text-center">
+              <input 
+                type="checkbox" 
+                class="w-4 h-4 rounded border-slate-700 bg-slate-950 text-emerald-500 focus:ring-emerald-500/30 accent-emerald-500 cursor-pointer" 
+                ${sel ? "checked" : ""} 
+                onchange="toggleRowSel(${m.id}, this.checked)"
+              />
+            </td>
+            
+            <!-- 2. Thông tin cơ bản CSDL -->
+            <td class="p-3 text-xs text-slate-300 font-medium">${esc(m.bo)}</td>
+            <td class="p-3 text-xs text-slate-400">${esc(m.donvi)}</td>
+            <td class="p-3 text-xs text-slate-200 font-bold truncate max-w-[220px]" title="${esc(m.csdl)}">
+              ${esc(m.csdl)}
+            </td>
+            <td class="p-3 text-xs text-slate-300">${esc(m.ky)}</td>
+            
+            <!-- 3. Phân loại & Trạng thái xây dựng -->
+            <td class="p-3 text-xs">
+              <span class="${m.phanloai ? "text-slate-300" : "text-slate-600 italic"}">
+                ${m.phanloai ? esc(m.phanloai) : "—"}
+              </span>
+            </td>
+            <td class="p-3 text-xs text-slate-300">${esc(m.buildStatus)}</td>
+            
+            <!-- 4. Cột điểm tiến độ (Độ rộng tối thiểu để không bị nhảy hàng) -->
+            <td class="p-3 text-xs font-bold text-center">
+              <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[11px] font-bold min-w-[50px] shadow-sm" style="background:${tc.bg}; color:${tc.fg}">
+                ${c.wScore.toFixed(1)}%
+              </span>
+            </td>
+            
+            <!-- 5. Khối điểm các chỉ số thành phần -->
+            <td class="p-3 text-xs text-slate-300 text-center font-semibold">${scoreCellPlain(c.gs["Dữ liệu"].avg)}</td>
+            <td class="p-3 text-xs text-slate-300 text-center font-semibold">${scoreCellPlain(c.gs["ATTT"].avg)}</td>
+            <td class="p-3 text-xs text-slate-300 text-center font-semibold">${scoreCellPlain(c.gs["Hạ tầng"].avg)}</td>
+            <td class="p-3 text-xs text-slate-300 text-center font-semibold">${scoreCellPlain(c.gs["Phần mềm"].avg)}</td>
+            <td class="p-3 text-xs text-slate-300 text-center font-semibold">${scoreCellPlain(c.gs["Cắt giảm TTHC"].avg)}</td>
+            <td class="p-3 text-xs text-slate-300 text-center font-semibold">${scoreCellPlain(c.gs["Pháp lý"].avg)}</td>
+            <td class="p-3 text-xs text-slate-300 text-center font-semibold">${scoreCellPlain(c.gs["Tài chính"].avg)}</td>
+            
+            <!-- 6. Trạng thái phê duyệt (Đèn tín hiệu mờ hiện đại) -->
+            <td class="p-3 text-xs whitespace-nowrap">
+              <span class="inline-block w-2 h-2 rounded-full mr-2 shadow-sm" style="background:${STATUS_COLOR[m.status]}"></span>
+              <span class="text-slate-300 font-medium">${st.label}</span>
+            </td>
+            
+            <!-- 7. Thao tác / Hành động -->
+            <td class="p-3 text-center whitespace-nowrap">
+              <button 
+                class="group/btn inline-flex items-center gap-1.5 h-7 px-2.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800/40 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition-all cursor-pointer" 
+                onclick="toggleActionMenu(event, ${m.id})"
+              >
+                <i class="fa-solid fa-ellipsis-vertical text-[10px] text-slate-500 group-hover/btn:text-slate-300 transition-colors"></i>
+                <span>Hành động</span>
+              </button>
+            </td>
+          </tr>`;
             })
             .join("");
+        }
+
+        // Cập nhật số liệu đếm ở Footer
         document.getElementById("tcount").textContent =
           `Hiển thị ${rows.length} / ${MAPS.filter((m) => !(m.isNew && !m.csdl)).length} bản đồ dữ liệu`;
+
+        // Trạng thái nút chọn tất cả (Header Checkbox)
         document.getElementById("headChk").checked =
           rows.length > 0 && rows.every(({ m }) => selected.has(m.id));
+
         renderToolbar();
       }
 
@@ -9022,7 +9348,7 @@
               const isNegative = pctValue < 0 || c.status.includes("chua_xay");
 
               return `
-      <div class="kpi kpi-status ${c.cls || ""} ${isActive ? "kpi-active" : ""} group w-full py-1.5 px-2.5 bg-white border ${isActive ? "border-emerald-500" : "border-slate-100"} rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer" 
+      <div class="kpi kpi-status ${c.cls || ""} ${isActive ? "kpi-active" : ""} group w-full py-1.5 px-2.5 border ${isActive ? "border-emerald-500" : "border-slate-100"} rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer" 
            onclick="openDashDetail('${c.status}')">
         
         <div class="kic w-8 h-8 rounded-md flex items-center justify-center text-xs shrink-0 transition-all duration-300 group-hover:scale-105" style="background:${c.bg}; color:${c.fg}">
