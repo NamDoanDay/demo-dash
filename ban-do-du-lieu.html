@@ -1752,6 +1752,8 @@
         overflow-y: auto;
         max-height: 180px !important; /* Khống chế chiều cao cuộn gọn gàng */
       }
+
+      /* rank-table 22222222 */
       .ranktable {
         width: 100%;
         border-collapse: collapse;
@@ -2518,12 +2520,10 @@
   </head>
   <body class="bg-section">
     <div class="flex min-h-screen text-white font-sans">
-      <!-- SIDEBAR DIỀU HƯỚNG BÊN TRÁI -->
       <aside
         id="mainSidebar"
         class="relative w-50 h-screen flex flex-col rounded-r-lg justify-between z-50 px-1 py-3 shrink-0 bg-[#040c17] sticky top-0 transition-all duration-300 ease-in-out"
       >
-        <!-- NÚT TOGGLE ABSOLUTE: Nằm chính giữa bên phải viền sidebar -->
         <button
           onclick="toggleSidebar()"
           class="absolute top-1/2 -translate-y-1/2 right-0 z-50 w-7 h-7 rounded-md bg-slate-900 hover:bg-emerald-600 border border-slate-800 hover:border-emerald-500 text-slate-400 hover:text-white flex items-center justify-center cursor-pointer transition-all duration-300 shadow-md group/btn"
@@ -2534,12 +2534,10 @@
             class="fa-solid fa-chevron-left text-[10px] transition-transform duration-300 group-hover/btn:-translate-x-0.5"
           ></i>
         </button>
-        <!-- Khối Trên cùng: Logo & Nút Toggle Thu Phóng -->
         <div>
           <div
             class="flex items-center justify-center gap-2 mb-6 pb-4 border-b border-slate-800/60 min-w-0"
           >
-            <!-- Logo và Tiêu đề -->
             <div
               class="sidebar-brand flex items-center justify-center gap-3 min-w-0 transition-opacity duration-200"
             >
@@ -2571,18 +2569,63 @@
               >
             </button>
 
-            <button
-              id="tabDash"
-              onclick="gotoDash()"
-              class="tab group w-full px-3 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-3 transition-all duration-200 text-slate-400 hover:text-slate-100 hover:bg-slate-900 cursor-pointer"
-            >
-              <i
-                class="fa-solid fa-chart-pie text-sm w-5 text-center transition-transform group-hover:scale-110"
-              ></i>
-              <span class="sidebar-text transition-opacity duration-200"
-                >Báo cáo thống kê</span
+            <!-- Cụm Dropdown Báo cáo thống kê -->
+            <div class="relative w-full">
+              <button
+                id="tabDash"
+                onclick="toggleDashDropdown(event)"
+                class="tab group w-full px-3 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center justify-between transition-all duration-200 text-slate-400 hover:text-slate-100 hover:bg-slate-900 cursor-pointer"
               >
-            </button>
+                <div class="flex items-center gap-3 min-w-0">
+                  <i
+                    class="fa-solid fa-chart-pie text-sm w-5 text-center transition-transform group-hover:scale-110"
+                  ></i>
+                  <span class="sidebar-text transition-opacity duration-200"
+                    >Báo cáo thống kê</span
+                  >
+                </div>
+                <!-- Icon mũi tên chỉ trạng thái đóng mở -->
+                <i
+                  id="dashArrow"
+                  class="fa-solid fa-chevron-down text-[9px] transition-transform duration-200 sidebar-text"
+                ></i>
+              </button>
+
+              <!-- Submenu chứa các mục sub-tab -->
+              <div
+                id="dashSubmenu"
+                class="hidden flex-col gap-1 mt-1 px-2 transition-all duration-200"
+              >
+                <button
+                  id="subtab-tongquan"
+                  onclick="handleSubTabClick('tongquan')"
+                  class="subtab w-full text-left px-3 py-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                >
+                  Tổng quan
+                </button>
+                <button
+                  id="subtab-chitiet"
+                  onclick="handleSubTabClick('chitiet')"
+                  class="subtab w-full text-left px-3 py-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                >
+                  Chi tiết
+                </button>
+                <button
+                  id="subtab-tieuchi"
+                  onclick="handleSubTabClick('tieuchi')"
+                  class="subtab w-full text-left px-3 py-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                >
+                  Tiêu chí
+                </button>
+                <button
+                  id="subtab-phanloai"
+                  onclick="handleSubTabClick('phanloai')"
+                  class="subtab w-full text-left px-3 py-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                >
+                  Phân loại
+                </button>
+              </div>
+            </div>
 
             <button
               id="tabMap"
@@ -2655,7 +2698,7 @@
         </div>
       </aside>
       <main
-        class="flex-1 h-full min-w-0 bg-slate-900 overflow-y-auto bg-section"
+        class="flex-1 h-screen min-w-0 bg-slate-900 overflow-y-auto bg-section"
       >
         <!-- ================= LISTING VIEW ================= -->
         <section class="view on p-6 text-white space-y-4" id="viewList">
@@ -3086,62 +3129,24 @@
         </section>
 
         <!-- ================= DASHBOARD VIEW ================= -->
-        <section
-          class="px-6 py-2 text-white space-y-4 rounded-lg view"
-          id="viewDash"
-        >
-          <div class="page-head flex flex-col items-center">
-            <!-- Khối Tiêu đề tinh gọn, hiện đại -->
-            <div class="w-full flex justify-start">
-              <h1 class="!text-2xl font-extrabold uppercase">
-                Dashboard Tổng Quan
-              </h1>
-            </div>
-
-            <!-- Thanh Toolbar Bộ Lọc Đẳng Cấp Sạch Sẽ (Gom cụm các select) -->
-            <div class="w-full flex items-center justify-between">
-              <div
-                class="flex gap-1 bg-slate-100 rounded-xl text-xs font-medium border border-slate-200"
-              >
-                <button
-                  id="tab-tongquan"
-                  onclick="switchTab('tongquan')"
-                  class="flex-1 px-3 py-1.5 bg-white rounded-lg shadow-xs text-slate-800 font-bold transition-all duration-150"
-                >
-                  Tổng quan
-                </button>
-                <button
-                  id="tab-tieuchi"
-                  onclick="switchTab('tieuchi')"
-                  class="w-fit px-3 md:px-4 py-1.5 text-slate-500 hover:text-slate-800 rounded-lg transition-all duration-150"
-                >
-                  Chi tiết
-                </button>
-                <button
-                  id="tab-tieuchi"
-                  onclick="switchTab('tieuchi')"
-                  class="w-fit px-3 md:px-4 py-1.5 text-slate-500 hover:text-slate-800 rounded-lg transition-all duration-150"
-                >
-                  Tiêu chí
-                </button>
-                <button
-                  id="tab-phanloai"
-                  onclick="switchTab('phanloai')"
-                  class="px-3 md:px-4 py-1.5 text-slate-400 hover:text-slate-800 rounded-lg transition-all duration-150"
-                >
-                  Phân loại
-                </button>
+        <section class="view" id="viewDash">
+          <div
+            class="h-full flex flex-col px-6 py-2 text-white space-y-4 rounded-lg"
+          >
+            <div class="page-head flex flex-col items-center">
+              <div class="w-full flex justify-start">
+                <h1 class="!text-2xl font-extrabold uppercase">
+                  Dashboard Tổng Quan
+                </h1>
               </div>
 
-              <div class="flex flex-wrap items-center justify-end gap-1 p-1">
-                <!-- Bộ lọc 1: Kỳ báo cáo (Thêm `group` và hiệu ứng hover) -->
+              <div class="w-full flex items-center justify-end gap-1 p-1">
                 <div
                   class="group relative flex items-center bg-white rounded-lg shadow-3xs pl-2.5 hover:shadow-xs cursor-pointer"
                 >
                   <div
                     class="flabel text-slate-400 text-[12px] shrink-0 pointer-events-none flex items-center gap-1 font-bold uppercase tracking-wider scale-90"
                   >
-                    <!-- Icon nổi bật với màu nền nhẹ, khi hover sẽ zoom và đổi màu sắc nét -->
                     <i
                       class="fa-solid fa-calendar-check w-5 h-5 rounded flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white"
                     ></i>
@@ -3156,7 +3161,6 @@
                     class="px-3 py-1.5 bg-white text-xs font-black text-slate-500 hover:text-slate-900 cursor-pointer"
                   ></select>
                 </div>
-
                 <!-- Vạch ngăn cách dọc -->
                 <div
                   class="hidden sm:block h-4 w-px bg-slate-200/80 mx-0.5"
@@ -3169,7 +3173,6 @@
                   <div
                     class="flabel text-slate-400 text-[12px] shrink-0 pointer-events-none flex items-center gap-1 font-bold uppercase tracking-wider scale-90"
                   >
-                    <!-- Icon bộ lọc chuyển động tịnh tiến khi hover -->
                     <i
                       class="fa-solid fa-filter text-emerald-600 bg-emerald-50 w-5 h-5 rounded flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white"
                     ></i>
@@ -3181,7 +3184,7 @@
                   <select
                     id="dashPhanloai"
                     onchange="renderDash()"
-                    class="pl-1 pr-6 py-1.5 bg-white text-[11px] font-black text-slate-700 hover:text-slate-900 appearance-none cursor-pointer focus:outline-none min-w-[100px] bg-[url('data:image/svg+xml,%3Csvg_xmlns=%22http://www.w3.org/2000/svg%22_fill=%22none%22_viewBox=%220_0_24_24%22_stroke=%22%23047857%22%3E%3Cpath_stroke-linecap=%22round%22_stroke-linejoin=%22round%22_stroke-width=%222.5%22_d=%22M19_9l-7_7-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[position:right_0.25rem_center] bg-[size:0.6rem]"
+                    class="pl-1 pr-6 py-1.5 bg-white text-[11px] font-black text-slate-700 hover:text-slate-900 appearance-none cursor-pointer focus:outline-none min-w-[100px]"
                   ></select>
                 </div>
 
@@ -3196,7 +3199,6 @@
                   <div
                     class="flabel text-slate-400 text-[12px] shrink-0 pointer-events-none flex items-center gap-1 font-bold uppercase tracking-wider scale-90"
                   >
-                    <!-- Icon so sánh xoay nhẹ khi hover -->
                     <i
                       class="fa-solid fa-code-compare text-emerald-600 bg-emerald-50 w-5 h-5 rounded flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:bg-emerald-600 group-hover:text-white"
                     ></i>
@@ -3208,7 +3210,7 @@
                   <select
                     id="dashCompare"
                     onchange="renderDash()"
-                    class="pl-1 pr-6 py-1.5 bg-white text-[11px] font-black text-slate-700 hover:text-slate-900 appearance-none cursor-pointer focus:outline-none min-w-[135px] bg-[url('data:image/svg+xml,%3Csvg_xmlns=%22http://www.w3.org/2000/svg%22_fill=%22none%22_viewBox=%220_0_24_24%22_stroke=%22%23047857%22%3E%3Cpath_stroke-linecap=%22round%22_stroke-linejoin=%22round%22_stroke-width=%222.5%22_d=%22M19_9l-7_7-7-7%22/%3E%3C/svg%3E')] bg-no-repeat bg-[position:right_0.25rem_center] bg-[size:0.6rem]"
+                    class="pl-1 pr-6 py-1.5 bg-white text-[11px] font-black text-slate-700 hover:text-slate-900 appearance-none cursor-pointer focus:outline-none min-w-[135px]"
                   >
                     <option
                       value="prev"
@@ -3237,114 +3239,201 @@
                 </button>
               </div>
             </div>
-          </div>
 
-          <div class="kpis" id="dashKpis"></div>
+            <div class="kpis" id="dashKpis"></div>
 
-          <div class="dashgrid">
-            <!-- ================= ROW 1: HAI BẢNG DỮ LIỆU CHI TIẾT & XẾP HẠNG ================= -->
+            <div class="flex-1 h-full">
+              <div class="dashgrid h-full">
+                <!-- ================= ROW 1: HAI BẢNG DỮ LIỆU CHI TIẾT & XẾP HẠNG ================= -->
 
-            <!-- Bảng 1: Chi tiết trạng thái -->
-            <div class="chart-card dcard col-12" id="detailCard">
-              <div class="dtablehead">
-                <div>
-                  <div class="dtablabel">
-                    Trạng thái: <span id="detailStatusLabel">Đã xây dựng</span>
+                <!-- Bảng 1: Chi tiết trạng thái -->
+                <div
+                  class="chart-card dcard col-12 !row-start-1 !col-span-7 !p-1.5 !bg-[var(--surface)] !border !border-[var(--ring)] !rounded-[var(--radius)] !shadow-[var(--shadow)]"
+                  id="detailCard"
+                >
+                  <div
+                    class="dtablehead !flex !items-center !gap-1.5 !mb-1 !flex-wrap"
+                  >
+                    <div>
+                      <div
+                        class="dtablabel !text-[11px] !font-extrabold !text-black"
+                      >
+                        Trạng thái:
+                        <span id="detailStatusLabel" class="!text-black"
+                          >Đã xây dựng</span
+                        >
+                      </div>
+                      <div
+                        class="dtabmilestone !text-[9px] !py-0.5 !px-1 !mt-0.5"
+                        id="detailMilestone"
+                      ></div>
+                    </div>
+                    <div class="spacer flex-grow"></div>
+                    <input
+                      type="text"
+                      id="detailSearch"
+                      class="!min-w-[150px] !max-w-[200px] !py-0.5 !px-1.5 !text-[11px] !text-black border rounded focus:outline-none"
+                      placeholder="Tìm kiếm..."
+                      oninput="renderDetailTable()"
+                    />
                   </div>
-                  <div class="dtabmilestone" id="detailMilestone"></div>
+
+                  <div
+                    class="ranktablewrap dtablescroll !overflow-y-visible !overflow-x-hidden h-auto !w-full"
+                  >
+                    <table
+                      class="ranktable !w-full !table-fixed !border-collapse !text-[11px] !text-black"
+                      id="detailTable"
+                    ></table>
+                  </div>
                 </div>
-                <div class="spacer"></div>
-                <input
-                  type="text"
-                  id="detailSearch"
-                  placeholder="Tìm bộ ngành, chủ quản, tên CSDL…"
-                  oninput="renderDetailTable()"
-                />
-              </div>
-              <div class="ranktablewrap dtablescroll">
-                <table class="ranktable" id="detailTable"></table>
-              </div>
-            </div>
 
-            <!-- Bảng 2: Xếp hạng bộ ngành / CSDL -->
-            <div class="chart-card dcard dcard-violet col-12">
-              <div class="ranktabs" id="rankTabs">
-                <button
-                  class="ranktab on"
-                  id="rankTab-bo"
-                  onclick="switchRankTab('bo')"
+                <!-- Bảng 2: Xếp hạng bộ ngành / CSDL -->
+                <div
+                  class="chart-card dcard dcard-violet col-12 !row-start-1 !col-span-5 !p-1 !bg-[var(--surface)] !border !border-[var(--ring)] !rounded-[var(--radius)] !shadow-[var(--shadow)] !box-border !w-full !overflow-x-hidden"
                 >
-                  🏛 Xếp hạng Bộ ngành
-                </button>
-                <button
-                  class="ranktab"
-                  id="rankTab-csdl"
-                  onclick="switchRankTab('csdl')"
+                  <div
+                    class="ranktabs !flex !items-center !justify-between !gap-2 !mb-2.5 !w-full !border-b !border-slate-100 !pb-2"
+                    id="rankTabs"
+                  >
+                    <div
+                      class="!text-[11.5px] !font-bold !text-slate-700 !flex !items-center !gap-1.5 !tracking-tight"
+                    >
+                      <i
+                        class="fa-solid fa-chart-simple !text-violet-500 !text-[13px]"
+                      ></i>
+                      Bảng xếp hạng Bộ ngành / CSDL
+                    </div>
+
+                    <div
+                      class="!flex !items-center !bg-slate-100/80 !p-0.5 !rounded-lg !border !border-slate-200/60"
+                    >
+                      <button
+                        class="ranktab on !flex !items-center !gap-1 !py-1 !px-2.5 !text-[10px] !font-semibold !rounded-md !text-violet-700 !bg-white !shadow-sm !border-none !transition-all !duration-200 !whitespace-nowrap"
+                        id="rankTab-bo"
+                        onclick="switchRankTab('bo')"
+                      >
+                        <span class="!text-[11px]">🏛️</span> Bộ ngành
+                      </button>
+
+                      <button
+                        class="ranktab !flex !items-center !gap-1 !py-1 !px-2.5 !text-[10px] !font-medium !rounded-md !text-slate-500 !bg-transparent !border-none hover:!text-slate-800 hover:!bg-slate-200/50 !transition-all !duration-200 !whitespace-nowrap"
+                        id="rankTab-csdl"
+                        onclick="switchRankTab('csdl')"
+                      >
+                        <span class="!text-[11px] !opacity-70">🗄️</span> CSDL
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- ĐÃ SỬA: Thay !overflow-y-auto bằng !overflow-y-visible và xóa !max-h-[180px] -->
+                  <div
+                    class="ranktablewrap dtablescroll !overflow-y-visible !overflow-x-hidden h-auto !w-full !box-border"
+                  >
+                    <div
+                      id="rankBody"
+                      class="!text-black !w-full !max-w-full !overflow-x-hidden"
+                    ></div>
+                  </div>
+                </div>
+
+                <!-- ================= ROW 2: BA THÀNH PHẦN BIỂU ĐỒ BÁO CÁO CÒN LẠI ================= -->
+
+                <!-- Thành phần 3: Cắt giảm thành phần hồ sơ -->
+                <div
+                  class="chart-card dcard dcard-blue col-5 !p-2 !overflow-hidden"
                 >
-                  🗄 Xếp hạng CSDL
-                </button>
-              </div>
-              <div id="rankBody"></div>
-            </div>
+                  <h3
+                    class="!flex !items-center !justify-between !text-[11px] !font-bold !text-slate-700 !mb-1"
+                  >
+                    <span class="!flex !items-center !gap-1.5">
+                      <i class="fa-solid fa-scissors !text-blue-500"></i> CẮT
+                      GIẢM THÀNH PHẦN HỒ SƠ
+                    </span>
+                    <i
+                      class="fa-solid fa-circle-info !text-slate-400 !text-[10px] cursor-pointer"
+                    ></i>
+                  </h3>
+                  <div id="chCatGiam" class="!w-full !overflow-hidden"></div>
+                </div>
 
-            <!-- ================= ROW 2: BA THÀNH PHẦN BIỂU ĐỒ BÁO CÁO CÒN LẠI ================= -->
-
-            <!-- Thành phần 3: Cắt giảm thành phần hồ sơ -->
-            <div class="chart-card dcard dcard-blue col-5">
-              <h3>
-                <span
-                  class="dcard-ico"
-                  style="background: var(--blue-50); color: var(--blue-600)"
-                  >📉</span
-                >Cắt giảm thành phần hồ sơ
-              </h3>
-              <div class="csub">Số liệu minh họa theo báo cáo mẫu</div>
-              <div id="chCatGiam"></div>
-            </div>
-
-            <!-- Thành phần 4: Đánh giá nguyên nhân vướng mắc -->
-            <div class="chart-card dcard dcard-orange col-7">
-              <h3>
-                <span
-                  class="dcard-ico"
-                  style="background: var(--warn-bg); color: #8a5a00"
-                  >⚠</span
-                >Đánh giá nguyên nhân vướng mắc đồng bộ dữ liệu (Real-time)
-              </h3>
-              <div class="csub">Số liệu minh họa theo báo cáo mẫu</div>
-              <div id="chNguyenNhan"></div>
-            </div>
-
-            <!-- Thành phần 5: Số lượng CSDL theo kỳ báo cáo -->
-            <div class="chart-card dcard dcard-green col-12">
-              <h3>
-                <span
-                  class="dcard-ico"
-                  style="background: var(--good-bg); color: var(--good-ink)"
-                  >📊</span
-                >Số lượng CSDL theo kỳ báo cáo
-              </h3>
-              <div class="csub">
-                Phân bố theo trạng thái xây dựng — trong phạm vi Phân loại đang
-                chọn, không phụ thuộc bộ lọc Kỳ ở trên
-              </div>
-              <div class="dtablehead" style="margin-bottom: 6px">
-                <span
-                  class="flabel"
-                  style="font-size: 11px; color: var(--ink-3); font-weight: 600"
-                  >Từ kỳ</span
+                <!-- Thành phần 4: Đánh giá nguyên nhân vướng mắc -->
+                <div
+                  class="chart-card dcard dcard-orange col-7 !p-2 !overflow-hidden"
                 >
-                <select id="trendFromKy" onchange="renderDash()"></select>
-                <span
-                  class="flabel"
-                  style="font-size: 11px; color: var(--ink-3); font-weight: 600"
-                  >Đến kỳ</span
+                  <h3
+                    class="!flex !items-center !justify-between !text-[11px] !font-bold !text-slate-700 !mb-1"
+                  >
+                    <span class="!flex !items-center !gap-1.5">
+                      <i
+                        class="fa-solid fa-triangle-exclamation !text-amber-500"
+                      ></i>
+                      ĐÁNH GIÁ NGUYÊN NHÂN VƯỚNG MẮC ĐỒNG BỘ DỮ LIỆU
+                    </span>
+                    <i
+                      class="fa-solid fa-circle-info !text-slate-400 !text-[10px] cursor-pointer"
+                    ></i>
+                  </h3>
+                  <div id="chNguyenNhan" class="!w-full !overflow-hidden"></div>
+                </div>
+
+                <!-- Thành phần 5: Số lượng CSDL theo kỳ báo cáo -->
+                <div
+                  class="chart-card dcard dcard-green col-12 !p-2 !overflow-hidden"
                 >
-                <select id="trendToKy" onchange="renderDash()"></select>
+                  <div class="!flex !items-center !justify-between !mb-1">
+                    <h3
+                      class="!flex !items-center !gap-1.5 !text-[11px] !font-bold !text-slate-700"
+                    >
+                      <i class="fa-solid fa-chart-bar !text-emerald-500"></i> SỐ
+                      LƯỢNG CSDL THEO KỲ BÁO CÁO
+                    </h3>
+                    <div class="!flex !items-center !gap-2 !mb-1.5">
+                      <span
+                        class="flabel"
+                        style="
+                          font-size: 10px;
+                          color: var(--ink-3);
+                          font-weight: 600;
+                        "
+                        >Từ kỳ</span
+                      >
+                      <select
+                        id="trendFromKy"
+                        class="!text-[10px] !py-0.5"
+                        onchange="renderDash()"
+                      ></select>
+                      <span
+                        class="flabel"
+                        style="
+                          font-size: 10px;
+                          color: var(--ink-3);
+                          font-weight: 600;
+                        "
+                        >Đến kỳ</span
+                      >
+                      <select
+                        id="trendToKy"
+                        class="!text-[10px] !py-0.5"
+                        onchange="renderDash()"
+                      ></select>
+                    </div>
+                  </div>
+                  <div id="chBarTrend" class="!w-full !overflow-hidden"></div>
+                </div>
+
+                <!-- end -->
               </div>
-              <div id="chBarTrend"></div>
             </div>
           </div>
+        </section>
+
+        <section class="view" id="detailDash">
+          <div>màn hình chi tiết</div>
+        </section>
+
+        <section class="view" id="digitalMap">
+          <div>màn hình bản đồ số</div>
         </section>
       </main>
 
@@ -7310,20 +7399,108 @@
       }
 
       /* ================= NAV ================= */
+      function toggleDashDropdown(event) {
+        const submenu = document.getElementById("dashSubmenu");
+        const arrow = document.getElementById("dashArrow");
+        const isHidden = submenu.classList.contains("hidden");
+        if (isHidden) {
+          submenu.classList.remove("hidden");
+          submenu.classList.add("flex");
+          arrow.classList.add("rotate-180");
+          gotoDash();
+        } else {
+          submenu.classList.add("hidden");
+          submenu.classList.remove("flex");
+          arrow.classList.remove("rotate-180");
+        }
+      }
+
+      // Thay thế hàm gotoDash cũ để tích hợp highlight "Tổng quan" mặc định
+      function gotoDash() {
+        switchView("viewDash");
+        if (typeof switchTab === "function") {
+          switchTab("tongquan");
+        }
+        // Highlight sub-tab "Tổng quan" ở dưới sidebar
+        highlightSubTab("tongquan");
+        // Khởi chạy hàm render dữ liệu của bạn
+        if (typeof renderDash === "function") {
+          renderDash();
+        }
+      }
+
+      function handleSubTabClick(tabId) {
+        if (tabId === "chitiet") {
+          switchView("detailDash");
+        } else {
+          switchView("viewDash");
+          if (typeof switchTab === "function") {
+            switchTab(tabId);
+          }
+        }
+
+        // Vẫn giữ highlight chính xác cho subtab tương ứng trên sidebar
+        highlightSubTab(tabId);
+      }
+
+      function highlightSubTab(tabId) {
+        document.querySelectorAll(".subtab").forEach((btn) => {
+          btn.classList.remove("text-emerald-400", "font-bold", "bg-slate-800");
+          btn.classList.add("text-slate-400", "font-medium");
+        });
+
+        const activeBtn = document.getElementById(`subtab-${tabId}`);
+        if (activeBtn) {
+          activeBtn.classList.remove("text-slate-400", "font-medium");
+          activeBtn.classList.add(
+            "text-emerald-400",
+            "font-bold",
+            "bg-slate-800",
+          );
+        }
+      }
+
+      // Cập nhật lại hàm switchView gốc của bạn để tắt Dropdown/Subtab khi rời sang tab khác
       function switchView(id) {
+        // 1. Ẩn tất cả các view bằng cách xóa class "on"
         document
           .querySelectorAll(".view")
           .forEach((v) => v.classList.remove("on"));
-        document.getElementById(id).classList.add("on");
+
+        // 2. Kích hoạt view mục tiêu
+        const targetView = document.getElementById(id);
+        if (targetView) targetView.classList.add("on");
+
+        // 3. Đồng bộ trạng thái sáng/tối (on) của nút chính trên Sidebar
         document
           .getElementById("tabList")
-          .classList.toggle("on", id !== "viewDash");
+          .classList.toggle("on", id === "viewList");
+
         document
-          .getElementById("tabDash")
-          .classList.toggle("on", id === "viewDash");
-        document
-          .getElementById("stickybar")
-          .classList.toggle("on", id === "viewDetail");
+          .getElementById("tabMap")
+          .classList.toggle("on", id === "digitalMap"); // Cập nhật theo ID mới của bạn
+
+        // Nút Báo cáo thống kê (tabDash) sẽ sáng nếu đang ở màn hình Dashboard lớn HOẶC Màn hình chi tiết
+        const isDashGroup = id === "viewDash" || id === "detailDash";
+        document.getElementById("tabDash").classList.toggle("on", isDashGroup);
+
+        // 4. Nếu đi lệch ra ngoài cụm Dashboard (ví dụ sang Bản đồ hoặc Danh sách), tự động đóng Dropdown lại
+        if (!isDashGroup) {
+          const submenu = document.getElementById("dashSubmenu");
+          const arrow = document.getElementById("dashArrow");
+          if (submenu) {
+            submenu.classList.add("hidden");
+            submenu.classList.remove("flex");
+          }
+          if (arrow) arrow.classList.remove("rotate-180");
+        }
+
+        // Khối stickybar xử lý riêng của bạn nếu có
+        const stickyBar = document.getElementById("stickybar");
+        if (stickyBar) {
+          stickyBar.classList.toggle("on", id === "viewDetail");
+        }
+
         window.scrollTo({ top: 0 });
       }
       function gotoList() {
@@ -7331,9 +7508,9 @@
         renderCards();
         renderTable();
       }
-      function gotoDash() {
-        switchView("viewDash");
-        renderDash();
+      function gotoMap() {
+        // Mở section có id="digitalMap"
+        switchView("digitalMap");
       }
 
       /* ================= SUMMARY CARDS ================= */
@@ -8909,16 +9086,16 @@
         return `<span style="color:${col};font-weight:700">${pct.toFixed(1)}%</span>`;
       }
       function progRankCell(pct) {
-        // ô xếp hạng dạng thanh tiến độ (value + progress bar), tô màu theo RAG — khớp mẫu báo cáo
         const col = ragColor(pct);
-        const w = Math.max(0, Math.min(100, pct));
-        return `<div class="progrank"><div class="pv" style="color:${col}">${pct.toFixed(1)}%</div><div class="pbar"><i style="width:${w}%;background:${col}"></i></div></div>`;
+        // Trả về thẻ span thuần túy, ép dòng hiển thị tự nhiên block/inline chống đè chữ
+        return `<span style="color:${col}; font-weight:700; display:inline-block; line-height:1.2;">${pct.toFixed(1)}%</span>`;
       }
       function renderRankBody() {
         const list = dashMaps().map((m) => ({ m, c: calc(m) }));
         if (dashRankTab === "bo") renderRankBo(list);
         else renderRankCsdl(list);
       }
+
       function renderRankBo(list) {
         const byBoMap = {};
         list.forEach(({ m, c }) => {
@@ -8952,29 +9129,65 @@
             };
           })
           .sort((a, b) => b.tiendo - a.tiendo);
+
         const medal = ["🥇", "🥈", "🥉"];
         const rowsHtml = rows
-          .map(
-            (r, i) => `<tr>
-    <td class="num">${medal[i] || i + 1}</td>
-    <td><div class="rankname">${esc(r.bo)}</div><div class="rankmeta">${r.n} CSDL</div></td>
-    <td class="num">${progressCell(r.tiendo)}</td>
-    <td class="num">${progressCell(r.phaply)}</td>
-    <td class="num">${progressCell(r.dulieu)}</td>
-    <td class="num">${progressCell(r.hatang)}</td>
-    <td class="num">${progressCell(r.attt)}</td>
-    <td class="num">${progressCell(r.taichinh)}</td>
-    <td class="num">${progressCell(r.phanmem)}</td>
-    <td class="num">${progressCell(r.catgiam)}</td>
-  </tr>`,
-          )
+          .map((r, i) => {
+            const boTxt = esc(r.bo);
+            return `<tr class="[&>td]:!p-0.5 [&>td]:!align-middle">
+        <td class="num">${medal[i] || i + 1}</td>
+        <!-- Cột số 2: Truncate + hiển thị dạng hover -->
+        <td class="!max-w-0 !truncate !text-left" title="${boTxt}">
+          <div class="rankname !truncate !font-bold">${boTxt}</div>
+          <div class="rankmeta !text-[8.5px] !text-gray-500">${r.n} CSDL</div>
+        </td>
+        <!-- Các cột số từ cột 3 trở đi: Bỏ hoàn toàn truncate -->
+        <td class="num">${progressCell(r.tiendo)}</td>
+        <td class="num">${progressCell(r.phaply)}</td>
+        <td class="num">${progressCell(r.dulieu)}</td>
+        <td class="num">${progressCell(r.hatang)}</td>
+        <td class="num">${progressCell(r.attt)}</td>
+        <td class="num">${progressCell(r.taichinh)}</td>
+        <td class="num">${progressCell(r.phanmem)}</td>
+        <td class="num">${progressCell(r.catgiam)}</td>
+      </tr>`;
+          })
           .join("");
+
         document.getElementById("rankBody").innerHTML =
-          `<div class="ranktablewrap dtablescroll-bo"><table class="ranktable">
-    <thead><tr><th>Hạng</th><th style="text-align:left">Tên Bộ ngành</th><th>Tiến độ</th><th>Pháp lý</th><th>Dữ liệu</th><th>Hạ tầng</th><th>ATTT</th><th>Tài chính</th><th>Phần mềm</th><th>Cắt giảm TTHC</th></tr></thead>
-    <tbody>${rowsHtml || '<tr><td colspan="10" class="empty">Không có dữ liệu.</td></tr>'}</tbody>
-  </table></div>`;
+          `<div class="ranktablewrap dtablescroll-bo !overflow-x-hidden !w-full">
+      <table class="ranktable !w-full !table-fixed !border-collapse !text-[9.5px]">
+        <colgroup>
+          <col style="width: 7%">
+          <col style="width: 25%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 8%">
+          <col style="width: 10%">
+          <col style="width: 10%">
+        </colgroup>
+        <thead>
+          <tr class="[&>th]:!p-0.5 [&>th]:!text-[8.5px] [&>th]:!tracking-tighter">
+            <th>Hạng</th>
+            <th style="text-align:left">Bộ ngành</th>
+            <th>T.Độ</th>
+            <th>P.Lý</th>
+            <th>D.Liệu</th>
+            <th>H.Tầng</th>
+            <th>ATTT</th>
+            <th>T.Chính</th>
+            <th>P.Mềm</th>
+            <th>C.Giảm</th>
+          </tr>
+        </thead>
+        <tbody>${rowsHtml || '<tr><td colspan="10" class="empty">Không có dữ liệu.</td></tr>'}</tbody>
+      </table>
+    </div>`;
       }
+
       function renderRankCsdl(list) {
         const sorted = [...list]
           .sort((a, b) => b.c.wScore - a.c.wScore)
@@ -8989,27 +9202,64 @@
             const cg = c.gs["Cắt giảm TTHC"];
             const cgPct =
               cg && cg.max ? Math.round((cg.sum / cg.max) * 1000) / 10 : 0;
-            return `<tr>
-      <td class="num">${medal[i] || i + 1}</td>
-      <td><div class="rankname">${esc(m.csdl)}</div><div class="rankmeta">${esc(m.bo)}</div></td>
-      <td class="num">${progRankCell(s.rate)}<div class="rankmeta">${s.synced.toLocaleString("vi-VN")} / ${s.total.toLocaleString("vi-VN")} bản ghi</div></td>
-      <td class="num">${progRankCell(dq.dung)}</td>
-      <td class="num">${progRankCell(dq.du)}</td>
-      <td class="num">${progRankCell(dq.sach)}</td>
-      <td class="num">${progRankCell(dq.song)}</td>
-      <td class="num">${progRankCell(cgPct)}<div class="rankmeta">${tthcCount} TTHC</div></td>
-    </tr>`;
+
+            const csdlTxt = esc(m.csdl);
+            const boTxt = esc(m.bo);
+
+            return `<tr class="[&>td]:!p-1 [&>td]:!vertical-middle !border-b !border-gray-100">
+        <td class="num">${medal[i] || i + 1}</td>
+        <td class="!max-w-0 !truncate !text-left" title="${csdlTxt} (${boTxt})">
+          <div class="rankname !truncate !font-bold !text-[11px] !text-slate-800">${csdlTxt}</div>
+          <div class="rankmeta !truncate !text-[9.5px] !text-gray-400" style="margin-top:2px">${boTxt}</div>
+        </td>
+        <td class="num">
+          ${progRankCell(s.rate)}
+          <div class="rankmeta !text-[9px] !text-gray-400 !white-space-nowrap" style="margin-top:1px">${s.synced.toLocaleString("vi-VN")} / ${s.total.toLocaleString("vi-VN")}</div>
+        </td>
+        <td class="num">${progRankCell(dq.dung)}</td>
+        <td class="num">${progRankCell(dq.du)}</td>
+        <td class="num">${progRankCell(dq.sach)}</td>
+        <td class="num">${progRankCell(dq.song)}</td>
+        <td class="num">
+          ${progRankCell(cgPct)}
+          <div class="rankmeta !text-[9px] !text-gray-400" style="margin-top:1px">${tthcCount} TTHC</div>
+        </td>
+      </tr>`;
           })
           .join("");
-        document.getElementById("rankBody").innerHTML =
-          `<div class="ranktablewrap dtablescroll-tall"><table class="ranktable">
-    <thead><tr><th>Hạng</th><th style="text-align:left">CSDL / Bộ ngành</th><th>Tỷ lệ đồng bộ</th><th>Dữ liệu đúng</th><th>Dữ liệu đủ</th><th>Dữ liệu sạch</th><th>Dữ liệu sống</th><th>Cắt giảm TTHC</th></tr></thead>
-    <tbody>${rowsHtml || '<tr><td colspan="8" class="empty">Không có dữ liệu.</td></tr>'}</tbody>
-  </table></div><div class="csub" style="margin-top:8px">Hiển thị top 15 CSDL theo Tiến độ (5 dòng đầu, cuộn để xem thêm).</div>`;
-      }
 
+        // Loại bỏ hoàn toàn dtablescroll-tall, ép overflow-x-hidden để triệt tiêu scroll kép
+        document.getElementById("rankBody").innerHTML =
+          `<div class="ranktablewrap !overflow-x-hidden !overflow-y-visible !w-full">
+      <table class="ranktable !w-full !table-fixed !border-collapse !text-[10px]">
+        <colgroup>
+          <col style="width: 6%">   <!-- Hạng -->
+          <col style="width: 28%">  <!-- CSDL / Bộ ngành -->
+          <col style="width: 18%">  <!-- Tỷ lệ ĐB -->
+          <col style="width: 9%">   <!-- Đúng -->
+          <col style="width: 9%">   <!-- Đủ -->
+          <col style="width: 9%">   <!-- Sạch -->
+          <col style="width: 9%">   <!-- Sống -->
+          <col style="width: 12%">  <!-- C.Giảm -->
+        </colgroup>
+        <thead>
+          <tr class="[&>th]:!p-1 [&>th]:!text-[9.5px] [&>th]:!text-gray-500 !border-b">
+            <th>HẠNG</th>
+            <th style="text-align:left">CSDL / BỘ NGÀNH</th>
+            <th>TỶ LỆ ĐB</th>
+            <th>ĐÚNG</th>
+            <th>ĐỦ</th>
+            <th>SẠCH</th>
+            <th>SỐNG</th>
+            <th>C.GIẢM</th>
+          </tr>
+        </thead>
+        <tbody>${rowsHtml || '<tr><td colspan="8" class="empty">Không có dữ liệu.</td></tr>'}</tbody>
+      </table>
+    </div>
+    <div class="csub" style="margin-top:6px; font-size: 9.5px; color: var(--ink-3); font-style: italic;">* Hiển thị top 15 CSDL theo Tiến độ.</div>`;
+      }
       /* ---- Cắt giảm thành phần hồ sơ & Đánh giá nguyên nhân vướng mắc (báo cáo mẫu) ---- */
-      /* ---- Cắt giảm thành phần hồ sơ (báo cáo mẫu) — số liệu minh họa tĩnh, chưa có nguồn dữ liệu trực tiếp ---- */
       const CATGIAM_RATE = 35.6;
       const CATGIAM_ITEMS = [
         { label: "Tổng số TTHC rà soát", val: "2.345", color: "var(--blue)" },
@@ -9029,23 +9279,6 @@
           color: "var(--violet)",
         },
       ];
-      function renderCatGiamCard() {
-        const deg = (CATGIAM_RATE / 100) * 360;
-        const legs = CATGIAM_ITEMS.map(
-          (
-            it,
-          ) => `<div class="donutleg"><span class="dot" style="background:${it.color}"></span>
-    <div><div class="dl-label">${esc(it.label)}</div><div class="dl-val">${it.val}</div></div></div>`,
-        ).join("");
-        document.getElementById("chCatGiam").innerHTML =
-          `<div class="donutwrap">
-    <div class="donutring" style="background:conic-gradient(var(--blue) 0deg ${deg}deg, var(--neutral-bg) ${deg}deg 360deg)">
-      <div class="donuthole"><div class="dh-val">${CATGIAM_RATE.toFixed(1)}%</div><div class="dh-label" style="margin-top:4px">Tỷ lệ cắt giảm trung bình</div></div>
-    </div>
-    <div class="donutlegs">${legs}</div>
-  </div>`;
-      }
-
       /* ---- Đánh giá nguyên nhân vướng mắc đồng bộ dữ liệu — real-time (báo cáo mẫu) — số liệu minh họa tĩnh ---- */
       const NGUYENNHAN_ITEMS = [
         {
@@ -9079,6 +9312,42 @@
           color: "#9aa0a6",
         },
       ];
+      function renderCatGiamCard() {
+        const deg = (CATGIAM_RATE / 100) * 360;
+
+        // Thu gọn khoảng cách đệm (padding) và cỡ chữ để vừa khung
+        const legs = CATGIAM_ITEMS.map(
+          (it) => `
+    <div class="!flex !items-center !justify-between !w-full !text-[9.5px] !py-0.5 !border-b !border-slate-100/50">
+      <div class="!flex !items-center !gap-1 !truncate !max-w-[75%]">
+        <span class="!w-1.5 !h-1.5 !rounded-sm !flex-shrink-0" style="background:${it.color}"></span>
+        <span class="!text-slate-600 !truncate">${esc(it.label)}</span>
+      </div>
+      <div class="!font-bold !text-slate-800 !flex-shrink-0">${it.val.toLocaleString("vi-VN")}</div>
+    </div>
+  `,
+        ).join("");
+
+        document.getElementById("chCatGiam").innerHTML = `
+    <div class="!flex !items-center !gap-2 !w-full !pt-1">
+      <!-- Vòng tròn Donut (Thu nhỏ từ 110px xuống 85px) -->
+      <div class="!flex-shrink-0 !relative !w-[85px] !h-[85px] !rounded-full !flex !items-center !justify-center" 
+           style="background:conic-gradient(var(--blue) 0deg ${deg}deg, var(--neutral-bg, #e2e8f0) ${deg}deg 360deg)">
+        <div class="!absolute !w-[63px] !h-[63px] !bg-white !rounded-full !flex !flex-col !items-center !justify-center !text-center !p-0.5 !shadow-sm">
+          <div class="!text-[13px] !font-black !text-slate-800 !leading-none">${CATGIAM_RATE.toFixed(1)}%</div>
+          <div class="!text-[7px] !text-gray-400 !scale-90 !mt-0.5 !leading-none">Tỷ lệ giảm</div>
+        </div>
+      </div>
+      <!-- Chú thích -->
+      <div class="!flex-1 !flex !flex-col !justify-center !overflow-hidden">
+        ${legs}
+        <a href="#" class="!text-[9px] !text-blue-500 !font-semibold !mt-1 hover:!underline !flex !items-center !gap-0.5">
+          Xem chi tiết <i class="fa-solid fa-arrow-right !text-[8px]"></i>
+        </a>
+      </div>
+    </div>`;
+      }
+
       function renderNguyenNhanCard() {
         const total = NGUYENNHAN_ITEMS.reduce((s, it) => s + it.n, 0);
         let acc = 0;
@@ -9088,34 +9357,61 @@
           const to = (acc / 100) * 360;
           return `${it.color} ${from}deg ${to}deg`;
         }).join(", ");
+
+        // Sửa lỗi thanh tiến độ bị đẩy lệch xuống dòng: Cố định width bằng % phối hợp flex
         const rows = NGUYENNHAN_ITEMS.map(
-          (it) => `<div class="nnrow">
-      <div class="nnlabel"><span class="dot" style="background:${it.color}"></span>${esc(it.label)}</div>
-      <div class="nnn">${it.n}</div>
-      <div class="nnpct"><span class="pctval">${it.pct.toFixed(1)}%</span><span class="pbarx"><i style="width:${it.pct}%;background:${it.color}"></i></span></div>
-    </div>`,
-        ).join("");
-        document.getElementById("chNguyenNhan").innerHTML =
-          `<div class="nncard">
-    <div class="nndonut">
-      <div class="donutring" style="width:150px;height:150px;background:conic-gradient(${stops})">
-        <div class="donuthole" style="width:98px;height:98px"><div class="dh-val" style="font-size:24px">${total}</div><div class="dh-label">CSDL chưa đồng bộ</div></div>
+          (it) => `
+    <div class="!flex !items-center !text-[9.5px] !py-0.5 !border-b !border-slate-50 !w-full">
+      <div class="!w-[55%] !flex !items-center !gap-1 !truncate" title="${esc(it.label)}">
+        <span class="!w-1.5 !h-1.5 !rounded-full !flex-shrink-0" style="background:${it.color}"></span>
+        <span class="!truncate !text-slate-600">${esc(it.label)}</span>
+      </div>
+      <div class="!w-[15%] !text-center !font-medium !text-slate-700">${it.n}</div>
+      <div class="!w-[30%] !flex !items-center !gap-1.5 !justify-end">
+        <span class="!font-bold !w-7 !text-right !flex-shrink-0" style="color:${it.color}">${it.pct.toFixed(0)}%</span>
+        <div class="!w-8 !h-1 !bg-slate-100 !rounded-full !overflow-hidden !flex-shrink-0">
+          <div class="!h-full !rounded-full" style="width:${it.pct}%; background:${it.color}"></div>
+        </div>
       </div>
     </div>
-    <div class="nntable">
-      <div class="nnhead"><div>Nguyên nhân</div><div style="text-align:center">Số CSDL</div><div>Tỷ lệ</div></div>
-      ${rows}
-    </div>
-    <div class="nnimpact">
-      <h4>Ảnh hưởng</h4>
-      <div class="nnimpitem"><span class="nnimpicon" style="background:var(--blue)">⏳</span>Chậm khai thác, chia sẻ dữ liệu</div>
-      <div class="nnimpitem"><span class="nnimpicon" style="background:var(--good)">📉</span>Giảm hiệu quả chỉ đạo, điều hành</div>
-      <div class="nnimpitem"><span class="nnimpicon" style="background:var(--critical)">⚠</span>Ảnh hưởng đến chất lượng dịch vụ công</div>
-    </div>
-  </div>`;
+  `,
+        ).join("");
+
+        document.getElementById("chNguyenNhan").innerHTML = `
+    <div class="!flex !items-center !gap-3 !w-full !pt-1 !overflow-hidden">
+      <!-- Donut Chart (Thu nhỏ kích thước tránh lấn át không gian) -->
+      <div class="!flex-shrink-0 !flex !items-center !justify-center">
+        <div class="!relative !w-[85px] !h-[85px] !rounded-full !flex !items-center !justify-center" style="background:conic-gradient(${stops})">
+          <div class="!absolute !w-[63px] !h-[63px] !bg-white !rounded-full !flex !flex-col !items-center !justify-center !text-center !p-0.5 !shadow-sm">
+            <div class="!text-[14px] !font-black !text-slate-800 !leading-none">${total}</div>
+            <div class="!text-[7px] !text-gray-400 !scale-95 !leading-none !mt-0.5">Chưa đồng bộ</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bảng số liệu ở giữa được ép vừa vặn -->
+      <div class="!flex-1 !flex !flex-col !justify-center !overflow-hidden">
+        <div class="!flex !text-[9px] !font-bold !text-slate-400 !pb-0.5 !border-b !w-full">
+          <div class="!w-[55%]">Nguyên nhân</div>
+          <div class="!w-[15%] !text-center">SL</div>
+          <div class="!w-[30%] !text-right">Tỷ lệ</div>
+        </div>
+        ${rows}
+      </div>
+      
+      <!-- Khối Ảnh hưởng bên phải -->
+      <div class="!w-[24%] !bg-slate-50/70 !p-1.5 !rounded-lg !border !border-slate-100 !flex !flex-col !justify-center !gap-1 !flex-shrink-0">
+        <h4 class="!text-[8.5px] !font-bold !text-slate-500 !uppercase !tracking-wider !mb-0.5">Ảnh hưởng</h4>
+        <div class="!flex !items-center !gap-1 !text-[8.5px] !text-slate-600 !truncate">
+          <i class="fa-solid fa-hourglass-half !text-blue-500 !text-[8px] !w-3"></i> <span class="!truncate">Chậm khai thác</span>
+        </div>
+        <div class="!flex !items-center !gap-1 !text-[8.5px] !text-slate-600 !truncate">
+          <i class="fa-solid fa-chart-line !text-emerald-500 !text-[8px] !w-3"></i> <span class="!truncate">Giảm hiệu quả</span>
+        </div>
+      </div>
+    </div>`;
       }
 
-      /* ---- Bar chart xu hướng: Số lượng CSDL theo kỳ báo cáo ---- */
       function renderBarTrend(all) {
         const fEl = document.getElementById("trendFromKy"),
           tEl = document.getElementById("trendToKy");
@@ -9129,6 +9425,7 @@
           i1 = tmp;
         }
         const kyRange = KY_ORDER.slice(i0, i1 + 1);
+
         const data = kyRange.map((ky) => {
           const items = all.filter((x) => x.m.ky === ky);
           return {
@@ -9144,36 +9441,40 @@
             ).length,
           };
         });
+
         const COLORS = {
-          da: "#0ca30c",
-          dang: "#fab219",
-          chua: "#d03b3b",
-          canxaymoi: "#2a78d6",
+          da: "#10b981",
+          dang: "#f59e0b",
+          chua: "#ef4444",
+          canxaymoi: "#3b82f6",
         };
         const maxV = Math.max(
           1,
           ...data.map((d) => Math.max(d.da, d.dang, d.chua, d.canxaymoi)),
         );
-        const axisMax = Math.max(5, Math.ceil((maxV * 1.15) / 5) * 5);
-        const gridStep = axisMax / 5;
-        const W = Math.max(760, data.length * 115),
-          H = 320,
-          padL = 44,
-          padR = 16,
-          padT = 22,
-          padB = 42;
+        const axisMax = Math.max(5, Math.ceil((maxV * 1.1) / 5) * 5);
+        const gridStep = axisMax / 4;
+
+        // Hạ thấp chiều cao tổng thể H xuống 115px để vừa khít vùng nhìn, triệt tiêu scroll dọc
+        const W = 760,
+          H = 115,
+          padL = 25,
+          padR = 10,
+          padT = 10,
+          padB = 20;
         const plotH = H - padT - padB;
         const groupW = (W - padL - padR) / data.length;
-        const barW = Math.min(18, (groupW - 24) / 4);
-        const gap = 4;
+        const barW = Math.min(7, (groupW - 12) / 4); // Thu mảnh nét cột lại
+        const gap = 1;
         const setW = barW * 4 + gap * 3;
         const Y = (v) => padT + plotH * (1 - v / axisMax);
-        let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="font-family:var(--font);min-width:${W}px">`;
-        svg += `<text x="2" y="${padT - 8}" font-size="11" fill="var(--ink-3)" font-weight="700">Số lượng CSDL</text>`;
+
+        let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" style="font-family:var(--font); display:block;">`;
         for (let v = 0; v <= axisMax; v += gridStep) {
-          svg += `<line x1="${padL}" y1="${Y(v)}" x2="${W - padR}" y2="${Y(v)}" stroke="var(--grid)"/>
-      <text x="${padL - 8}" y="${Y(v) + 4}" font-size="10.5" fill="var(--ink-3)" text-anchor="end" style="font-variant-numeric:tabular-nums">${v}</text>`;
+          svg += `<line x1="${padL}" y1="${Y(v)}" x2="${W - padR}" y2="${Y(v)}" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="${padL - 4}" y="${Y(v) + 3}" font-size="8.5" fill="#94a3b8" text-anchor="end">${Math.round(v)}</text>`;
         }
+
         data.forEach((d, i) => {
           const gx = padL + groupW * i + (groupW - setW) / 2;
           [
@@ -9185,23 +9486,25 @@
             const bx = gx + j * (barW + gap);
             const by = Y(val),
               bh = Math.max(Y(0) - Y(val), 0);
-            svg += `<rect x="${bx}" y="${by}" width="${barW}" height="${bh}" rx="2" fill="${COLORS[key]}"/>
-        <text x="${bx + barW / 2}" y="${by - 5}" font-size="10.5" font-weight="700" fill="var(--ink)" text-anchor="middle" style="font-variant-numeric:tabular-nums">${val}</text>`;
+            svg += `<rect x="${bx}" y="${by}" width="${barW}" height="${bh}" rx="0.5" fill="${COLORS[key]}"/>`;
+            if (val > 0) {
+              svg += `<text x="${bx + barW / 2}" y="${by - 2}" font-size="8" font-weight="700" fill="#475569" text-anchor="middle">${val}</text>`;
+            }
           });
-          svg += `<text x="${padL + groupW * i + groupW / 2}" y="${H - 16}" font-size="11" fill="var(--ink-2)" font-weight="700" text-anchor="middle">${esc(d.ky.replace(" báo cáo", ""))}</text>`;
+          svg += `<text x="${padL + groupW * i + groupW / 2}" y="${H - 6}" font-size="8.5" fill="#64748b" font-weight="600" text-anchor="middle">${esc(d.ky.replace(" báo cáo", ""))}</text>`;
         });
-        svg += `<line x1="${padL}" y1="${Y(0)}" x2="${W - padR}" y2="${Y(0)}" stroke="var(--ink-3)"/>`;
+        svg += `<line x1="${padL}" y1="${Y(0)}" x2="${W - padR}" y2="${Y(0)}" stroke="#cbd5e1"/>`;
         svg += `</svg>`;
-        document.getElementById("chBarTrend").innerHTML =
-          `<div class="trendlegend">
-      <span class="li"><span class="ragdot" style="background:${COLORS.da}"></span>CSDL đã xây dựng</span>
-      <span class="li"><span class="ragdot" style="background:${COLORS.dang}"></span>CSDL đang xây dựng</span>
-      <span class="li"><span class="ragdot" style="background:${COLORS.chua}"></span>CSDL chưa xây dựng</span>
-      <span class="li"><span class="ragdot" style="background:${COLORS.canxaymoi}"></span>CSDL cần xây dựng mới</span>
-    </div>
-    <div style="overflow-x:auto">${svg}</div>`;
-      }
 
+        document.getElementById("chBarTrend").innerHTML = `
+    <div class="!flex !items-center !gap-3 !mb-1 !text-[9px] !text-slate-500 !justify-start">
+      <span class="!flex !items-center !gap-1"><span class="!w-1.5 !h-1.5 !rounded-full" style="background:${COLORS.da}"></span>Đã xây dựng</span>
+      <span class="!flex !items-center !gap-1"><span class="!w-1.5 !h-1.5 !rounded-full" style="background:${COLORS.dang}"></span>Đang xây dựng</span>
+      <span class="!flex !items-center !gap-1"><span class="!w-1.5 !h-1.5 !rounded-full" style="background:${COLORS.chua}"></span>Chưa xây dựng</span>
+      <span class="!flex !items-center !gap-1"><span class="!w-1.5 !h-1.5 !rounded-full" style="background:${COLORS.canxaymoi}"></span>Cần xây dựng mới</span>
+    </div>
+    <div class="!w-full !overflow-hidden">${svg}</div>`;
+      }
       /* ---- Bảng chi tiết theo trạng thái xây dựng (click từ thẻ KPI) ---- */
       function emptyRow(n) {
         return `<tr><td colspan="${n}" class="empty">Không có CSDL nào khớp.</td></tr>`;
@@ -9234,59 +9537,169 @@
         const el = document.getElementById("detailCard");
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
+
       function renderDetailTable() {
         document.getElementById("detailStatusLabel").textContent =
           dashDetailStatus;
+
         const milestones = {
           "Đã xây dựng": "Mốc lịch sử: 01/12/2025",
           "Đang xây dựng": "Mốc lịch sử: 01/07/2024",
           "Chưa xây dựng": "Mốc lịch sử: 01/02/2024",
           "Cần xây dựng mới": "Mốc lịch sử: 01/02/2024",
         };
-        document.getElementById("detailMilestone").textContent =
-          milestones[dashDetailStatus] || "";
+
+        const milestoneEl = document.getElementById("detailMilestone");
+        if (milestoneEl) {
+          milestoneEl.textContent = milestones[dashDetailStatus] || "";
+          milestoneEl.className = "text-[11px] text-slate-400 block mt-0.5";
+        }
+
         const rows = detailRows();
         const table = document.getElementById("detailTable");
+
+        // Thiết lập class: Toàn bộ text-slate-800 font-bold làm chủ đạo, cỡ chữ nhỏ mịn gọn gàng
+        const tableSmallClass =
+          "text-[11px] leading-tight text-slate-800 font-bold";
+
+        // Định dạng thead: chữ nhỏ mịn, uppercase, tracking rộng, không bị xuống dòng ở header
+        const theadClass =
+          "[&_th]:!text-left [&_th]:py-2 [&_th]:px-2 [&_th]:text-[10px] [&_th]:uppercase [&_th]:tracking-wider [&_th]:text-slate-800 [&_th]:font-bold [&_th]:border-b [&_th]:border-slate-200 [&_th]:whitespace-nowrap";
+
+        // Định dạng tbody: padding nhỏ gọn, viền mờ phân cách dòng
+        const tbodyClass =
+          "[&_td]:py-2 [&_td]:px-2 [&_td]:border-b [&_td]:border-slate-100";
+
+        table.className = `${tableSmallClass} ${theadClass} ${tbodyClass} w-full`;
+
         if (dashDetailStatus === "Đã xây dựng") {
-          table.innerHTML = `<thead><tr><th>STT</th><th>Bộ ngành</th><th>Chủ quản</th><th>Tên cơ sở dữ liệu</th><th>Phần mềm / Link</th><th>Tổng số bản ghi</th><th>Bản ghi đồng bộ</th><th>% Đ.Bộ</th></tr></thead>
+          table.innerHTML = `
+      <colgroup>
+        <col style="width: 4%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+        <col style="width: 20%">
+        <col style="width: 16%">
+        <col style="width: 10%">
+        <col style="width: 10%">
+        <col style="width: 10%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Bộ ngành</th>
+          <th>Chủ quản</th>
+          <th>Tên cơ sở dữ liệu</th>
+          <th>Phần mềm / Link</th>
+          <th>Tổng số BG</th>
+          <th>BG đồng bộ</th>
+          <th>% Đ.Bộ</th>
+        </tr>
+      </thead>
       <tbody>${
         rows
           .map((m, i) => {
             const s = dashSyncOf(m);
-            return `<tr><td class="num">${i + 1}</td><td style="text-align:left">${esc(m.bo)}</td><td style="text-align:left">${esc(m.donvi)}</td><td style="text-align:left"><div class="rankname">${esc(m.csdl)}</div></td>
-          <td style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Phần mềm quản lý chuyên ngành <span style="color:var(--blue-600);font-size:11px">· 🔗 Hệ thống Link</span></td>
-          <td class="num">${s.total.toLocaleString("vi-VN")}</td>
-          <td class="num">${s.synced.toLocaleString("vi-VN")}</td>
-          <td class="num">${progressCell(s.rate)}</td></tr>`;
+            const boTxt = esc(m.bo);
+            const donviTxt = esc(m.donvi);
+            const csdlTxt = esc(m.csdl);
+
+            return `<tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="num !text-left">${i + 1}</td>
+              <td class="!text-left" title="${boTxt}">${boTxt}</td>
+              <td class="!text-left" title="${donviTxt}">${donviTxt}</td>
+              <td class="!text-left" title="${csdlTxt}"><div class="rankname text-[11px]">${csdlTxt}</div></td>
+              <td class="!text-left">Phần mềm quản lý chuyên ngành <span class="text-blue-600 font-bold">· 🔗 Link</span></td>
+              <td class="num !text-left whitespace-nowrap">${s.total.toLocaleString("vi-VN")}</td>
+              <td class="num !text-left whitespace-nowrap">${s.synced.toLocaleString("vi-VN")}</td>
+              <td class="num !text-left whitespace-nowrap">${progressCell(s.rate)}</td>
+            </tr>`;
           })
           .join("") || emptyRow(8)
       }</tbody>`;
         } else if (dashDetailStatus === "Đang xây dựng") {
-          table.innerHTML = `<thead><tr><th>STT</th><th>Bộ ngành</th><th>Chủ quản</th><th>Tên cơ sở dữ liệu</th><th>Tiến độ</th><th>Khó khăn / Vướng mắc</th><th>Dự kiến xong</th></tr></thead>
+          table.innerHTML = `
+      <colgroup>
+        <col style="width: 5%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+        <col style="width: 25%">
+        <col style="width: 10%">
+        <col style="width: 20%">
+        <col style="width: 10%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Bộ ngành</th>
+          <th>Chủ quản</th>
+          <th>Tên cơ sở dữ liệu</th>
+          <th>Tiến độ</th>
+          <th>Khó khăn / Vướng mắc</th>
+          <th>Dự kiến xong</th>
+        </tr>
+      </thead>
       <tbody>${
         rows
           .map((m, i) => {
             const c = calc(m);
-            return `<tr><td class="num">${i + 1}</td><td style="text-align:left">${esc(m.bo)}</td><td style="text-align:left">${esc(m.donvi)}</td><td style="text-align:left"><div class="rankname">${esc(m.csdl)}</div></td>
-          <td class="num">${progressCell(c.wScore)}</td>
-          <td style="text-align:left">${m.tontai ? esc(m.tontai) : '<span style="color:var(--ink-3);font-style:italic">Không có ghi nhận vướng mắc</span>'}</td>
-          <td style="text-align:left">${m.expectedFinish ? esc(m.expectedFinish) : '<span style="color:var(--ink-3)">Chưa định ngày</span>'}</td></tr>`;
+            const boTxt = esc(m.bo);
+            const donviTxt = esc(m.donvi);
+            const csdlTxt = esc(m.csdl);
+
+            return `<tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="num !text-left">${i + 1}</td>
+              <td class="!text-left" title="${boTxt}">${boTxt}</td>
+              <td class="!text-left" title="${donviTxt}">${donviTxt}</td>
+              <td class="!text-left" title="${csdlTxt}"><div class="rankname text-[11px]">${csdlTxt}</div></td>
+              <td class="num !text-left whitespace-nowrap">${progressCell(c.wScore)}</td>
+              <td class="!text-left">${m.tontai ? esc(m.tontai) : '<span class="font-normal italic text-slate-400">Không có ghi nhận vướng mắc</span>'}</td>
+              <td class="!text-left whitespace-nowrap">${m.expectedFinish ? esc(m.expectedFinish) : '<span class="font-normal text-slate-400">Chưa định ngày</span>'}</td>
+            </tr>`;
           })
           .join("") || emptyRow(7)
       }</tbody>`;
         } else {
-          table.innerHTML = `<thead><tr><th>STT</th><th>Bộ ngành</th><th>Chủ quản</th><th>Tên cơ sở dữ liệu</th><th>Lý do tồn đọng / Giải pháp</th><th>Dự kiến khởi công</th></tr></thead>
+          table.innerHTML = `
+      <colgroup>
+        <col style="width: 5%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+        <col style="width: 30%">
+        <col style="width: 25%">
+        <col style="width: 10%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Bộ ngành</th>
+          <th>Chủ quản</th>
+          <th>Tên cơ sở dữ liệu</th>
+          <th>Lý do tồn đọng / Giải pháp</th>
+          <th>Dự kiến khởi công</th>
+        </tr>
+      </thead>
       <tbody>${
         rows
           .map((m, i) => {
-            return `<tr><td class="num">${i + 1}</td><td style="text-align:left">${esc(m.bo)}</td><td style="text-align:left">${esc(m.donvi)}</td><td style="text-align:left"><div class="rankname">${esc(m.csdl)}</div></td>
-          <td style="text-align:left">${m.tontai ? esc(m.tontai) : '<span style="color:var(--ink-3);font-style:italic">Chưa có thông tin lý do</span>'}</td>
-          <td style="text-align:left">${m.expectedStart ? esc(m.expectedStart) : '<span style="color:var(--ink-3)">Chưa lên lịch</span>'}</td></tr>`;
+            const boTxt = esc(m.bo);
+            const donviTxt = esc(m.donvi);
+            const csdlTxt = esc(m.csdl);
+
+            return `<tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="num !text-left">${i + 1}</td>
+              <td class="!text-left" title="${boTxt}">${boTxt}</td>
+              <td class="!text-left" title="${donviTxt}">${donviTxt}</td>
+              <td class="!text-left" title="${csdlTxt}"><div class="rankname text-[11px]">${csdlTxt}</div></td>
+              <td class="!text-left">${m.tontai ? esc(m.tontai) : '<span class="font-normal italic text-slate-400">Chưa có thông tin lý do</span>'}</td>
+              <td class="!text-left whitespace-nowrap">${m.expectedStart ? esc(m.expectedStart) : '<span class="font-normal text-slate-400">Chưa lên lịch</span>'}</td>
+            </tr>`;
           })
           .join("") || emptyRow(6)
       }</tbody>`;
         }
       }
+
       function renderDash() {
         const list = dashMaps().map((m) => ({ m, c: calc(m) }));
         const all = dashFilteredBase().map((m) => ({ m, c: calc(m) }));
@@ -9304,6 +9717,10 @@
         const texts = document.querySelectorAll(".sidebar-text");
         const brand = document.querySelector(".sidebar-brand");
 
+        // Lấy thêm element của submenu và mũi tên dropdown
+        const submenu = document.getElementById("dashSubmenu");
+        const arrow = document.getElementById("dashArrow");
+
         if (sidebar.classList.contains("w-50")) {
           // THU NHỎ SIDEBAR
           sidebar.classList.replace("w-50", "w-18");
@@ -9313,6 +9730,16 @@
           texts.forEach((el) =>
             el.classList.add("opacity-0", "pointer-events-none", "hidden"),
           );
+
+          // BỔ SUNG: Ép ẩn toàn bộ khối menu con khi thu nhỏ sidebar
+          if (submenu) {
+            submenu.classList.add("hidden");
+            submenu.classList.remove("flex");
+          }
+          // Trả mũi tên dropdown về hướng mặc định (chỉ xuống)
+          if (arrow) {
+            arrow.classList.remove("rotate-180");
+          }
         } else {
           // MỞ RỘNG SIDEBAR
           sidebar.classList.replace("w-18", "w-50");
@@ -9322,9 +9749,20 @@
           texts.forEach((el) =>
             el.classList.remove("opacity-0", "pointer-events-none", "hidden"),
           );
+
+          // BỔ SUNG: Tự động mở lại menu con nếu người dùng đang ở tab Dashboard
+          const isDashActive = document
+            .getElementById("tabDash")
+            .classList.contains("on");
+          if (isDashActive && submenu) {
+            submenu.classList.remove("hidden");
+            submenu.classList.add("flex");
+            if (arrow) {
+              arrow.classList.add("rotate-180");
+            }
+          }
         }
       }
-
       /* ================= INIT ================= */
       initFilters();
       gotoList();
