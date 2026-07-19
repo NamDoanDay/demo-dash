@@ -9,7 +9,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       :root {
         --surface: #fcfcfb;
@@ -3638,7 +3638,1242 @@
         </section>
 
         <section class="view" id="detailDash">
-          <div>Chi tiết bộ ngành</div>
+          <div
+            class="h-full flex flex-col px-6 py-2 text-slate-200 space-y-4 rounded-lg"
+          >
+            <div class="w-full flex justify-start">
+              <h1
+                class="!text-2xl font-extrabold uppercase tracking-wide text-slate-100 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-chart-pie text-emerald-500 text-xl"></i>
+                Dashboard Tổng Quan
+              </h1>
+            </div>
+
+            <div
+              class="flex flex-col lg:flex-row gap-4 items-center justify-between w-full rounded-xl"
+            >
+              <div class="w-full lg:max-w-md flex items-center justify-start">
+                <div class="relative w-full">
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-500"
+                  >
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                  </div>
+                  <input
+                    id="boNganhLineChartSearchInput"
+                    type="text"
+                    placeholder="Tìm kiếm theo Bộ ngành..."
+                    class="w-full !pl-11 pr-28 py-2 rounded-lg text-xs text-slate-300 bg-[#091524] border border-slate-800 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-all font-medium"
+                  />
+                  <button
+                    class="absolute right-1 inset-y-1 px-3.5 rounded bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/20 text-[10px] font-bold uppercase tracking-wider active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+                  >
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span class="hidden sm:inline">Tìm kiếm</span>
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="w-full lg:w-auto flex flex-wrap items-center justify-start lg:justify-end gap-2"
+              >
+                <div
+                  class="group relative flex items-center bg-[#091524] border border-slate-800 rounded px-2 hover:border-slate-700 cursor-pointer h-9 transition-colors"
+                >
+                  <div
+                    class="text-slate-500 text-[10px] shrink-0 pointer-events-none flex items-center gap-1.5 font-bold uppercase tracking-wider"
+                  >
+                    <i class="fa-solid fa-calendar-check text-emerald-500"></i>
+                    <span>Kỳ:</span>
+                  </div>
+                  <select
+                    id="dashKy"
+                    onchange="renderDash()"
+                    class="pl-1.5 pr-6 py-1 bg-transparent text-xs font-black text-slate-300 hover:text-slate-100 cursor-pointer appearance-none focus:outline-none"
+                  >
+                    <option value="1" class="bg-[#091524] text-slate-300">
+                      Tháng 07/2026
+                    </option>
+                  </select>
+                  <i
+                    class="fa-solid fa-chevron-down text-[9px] text-slate-600 absolute right-2 pointer-events-none"
+                  ></i>
+                </div>
+
+                <div class="hidden sm:block h-4 w-px bg-slate-800 mx-0.5"></div>
+
+                <div
+                  class="group relative flex items-center bg-[#091524] border border-slate-800 rounded px-2 hover:border-slate-700 cursor-pointer h-9 transition-colors"
+                >
+                  <div
+                    class="text-slate-500 text-[10px] shrink-0 pointer-events-none flex items-center gap-1.5 font-bold uppercase tracking-wider"
+                  >
+                    <i class="fa-solid fa-filter text-emerald-500"></i>
+                    <span>Loại:</span>
+                  </div>
+                  <select
+                    id="dashPhanloai"
+                    onchange="renderDash()"
+                    class="pl-1.5 pr-6 py-1 bg-transparent text-xs font-black text-slate-300 hover:text-slate-100 cursor-pointer appearance-none focus:outline-none min-w-[90px]"
+                  >
+                    <option value="all" class="bg-[#091524] text-slate-300">
+                      Tất cả
+                    </option>
+                  </select>
+                  <i
+                    class="fa-solid fa-chevron-down text-[9px] text-slate-600 absolute right-2 pointer-events-none"
+                  ></i>
+                </div>
+
+                <div class="hidden sm:block h-4 w-px bg-slate-800 mx-0.5"></div>
+
+                <div
+                  class="group relative flex items-center bg-[#091524] border border-slate-800 rounded px-2 hover:border-slate-700 cursor-pointer h-9 transition-colors"
+                >
+                  <div
+                    class="text-slate-500 text-[10px] shrink-0 pointer-events-none flex items-center gap-1.5 font-bold uppercase tracking-wider"
+                  >
+                    <i class="fa-solid fa-code-compare text-emerald-500"></i>
+                    <span>So sánh:</span>
+                  </div>
+                  <select
+                    id="dashCompare"
+                    onchange="renderDash()"
+                    class="pl-1.5 pr-6 py-1 bg-transparent text-xs font-black text-slate-300 hover:text-slate-100 cursor-pointer appearance-none focus:outline-none min-w-[130px]"
+                  >
+                    <option value="prev" class="bg-[#091524] text-slate-300">
+                      Với kỳ liền trước
+                    </option>
+                    <option value="year" class="bg-[#091524] text-slate-300">
+                      Với kỳ gốc
+                    </option>
+                  </select>
+                  <i
+                    class="fa-solid fa-chevron-down text-[9px] text-slate-600 absolute right-2 pointer-events-none"
+                  ></i>
+                </div>
+
+                <button
+                  class="group h-9 w-9 rounded border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200 flex items-center justify-center transition-all bg-[#091524] cursor-pointer"
+                  onclick="resetDashFilters()"
+                  title="Đặt lại toàn bộ bộ lọc"
+                >
+                  <i
+                    class="fa-solid fa-arrow-rotate-left text-xs transition-transform duration-300 group-hover:-rotate-180"
+                  ></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- KHỐI BIỂU ĐỒ (Card Hiện trạng) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              <div
+                class="col-span-12 p-5 bg-[#0d1e32] rounded-xl border border-slate-800/80 shadow-xl"
+              >
+                <div
+                  class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4"
+                >
+                  <div>
+                    <h3
+                      class="text-slate-200 font-bold text-base flex items-center gap-1.5"
+                    >
+                      <span
+                        class="w-1.5 h-3.5 bg-emerald-500 rounded-sm"
+                      ></span>
+                      Hiện trạng xây dựng CSDL của Bộ ngành
+                    </h3>
+                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">
+                      Thống kê chi tiết hiện trạng Đã xây dựng, Đang xây dựng và
+                      Chưa xây dựng trên tổng số CSDL
+                    </p>
+                  </div>
+                  <span
+                    class="text-[10px] bg-slate-950/60 text-slate-400 border border-slate-800 font-bold px-2.5 py-1 rounded-md uppercase tracking-wider"
+                  >
+                    Đơn vị: Số lượng CSDL
+                  </span>
+                </div>
+
+                <div class="w-full h-80 relative">
+                  <canvas id="multipleBarChartMinistries"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Khung Card Tổng Quan (Dark Theme đồng bộ) -->
+            <div
+              class="w-full bg-[#0d1e32] border border-slate-800 rounded-lg p-6 tracking-tight text-slate-300 select-none"
+            >
+              <div
+                class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800/60 mb-6"
+              >
+                <div>
+                  <h2
+                    class="text-sm font-bold text-slate-100 uppercase tracking-wide"
+                  >
+                    Tổng quan chất lượng và đồng bộ dữ liệu
+                  </h2>
+                  <p class="text-[11px] text-slate-400 mt-0.5">
+                    Thống kê số lượng dữ liệu theo các tiêu chí và trạng thái
+                    đồng bộ về C12 (Đơn vị: bản ghi)
+                  </p>
+                </div>
+              </div>
+
+              <div class="relative w-full h-[380px] mb-6">
+                <div
+                  class="absolute top-0 left-0 text-[10px] text-slate-500 font-medium"
+                >
+                  Số lượng bản ghi
+                </div>
+                <canvas id="qualityLineChart" class="mt-4"></canvas>
+              </div>
+
+              <div
+                class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-3 pt-4 border-t border-slate-800/60"
+              >
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-blue-400">
+                    <i class="fa-solid fa-database text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Tổng số dữ liệu</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div class="text-[13px] font-bold font-mono text-blue-400">
+                      115.600.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-emerald-400">
+                    <i class="fa-solid fa-circle-nodes text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Đã đồng bộ về C12</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div
+                      class="text-[13px] font-bold font-mono text-emerald-400"
+                    >
+                      92.100.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-purple-400">
+                    <i class="fa-regular fa-circle-check text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Dữ liệu "đúng"</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div
+                      class="text-[13px] font-bold font-mono text-purple-400"
+                    >
+                      84.500.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-amber-500">
+                    <i class="fa-regular fa-clipboard text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Dữ liệu "đủ"</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div class="text-[13px] font-bold font-mono text-amber-500">
+                      79.600.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-cyan-400">
+                    <i class="fa-solid fa-broom text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Dữ liệu "sạch"</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div class="text-[13px] font-bold font-mono text-cyan-400">
+                      62.900.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-pink-500">
+                    <i class="fa-solid fa-heart-pulse text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Dữ liệu "sống"</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div class="text-[13px] font-bold font-mono text-pink-500">
+                      54.900.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-teal-400">
+                    <i class="fa-solid fa-shield-halved text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Đúng, đủ, sạch, sống</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div class="text-[13px] font-bold font-mono text-teal-400">
+                      42.100.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded p-3 flex flex-col justify-between"
+                >
+                  <div class="flex items-center gap-1.5 text-rose-500">
+                    <i class="fa-solid fa-cloud-arrow-up text-xs shrink-0"></i>
+                    <span class="text-[10px] font-bold leading-tight"
+                      >Đồng bộ & Đạt chuẩn</span
+                    >
+                  </div>
+                  <div class="mt-2">
+                    <div class="text-[13px] font-bold font-mono text-rose-500">
+                      33.900.000
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">bản ghi</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- FOOTER NOTE -->
+              <div class="text-[10px] text-slate-500 italic mt-4 font-light">
+                Ghi chú: Dữ liệu được cập nhật hàng ngày.
+              </div>
+            </div>
+
+            <!-- KHỐI BẢNG CHI TIẾT (Card Danh sách chi tiết) -->
+            <div
+              class="w-full rounded-xl text-slate-300 shadow-xl bg-[#0d1e32] border border-slate-800/80 p-5 space-y-4"
+            >
+              <!-- Tiêu đề phân khu & Bộ lọc -->
+              <div class="flex flex-col items-center justify-between gap-3">
+                <div
+                  class="w-full flex justify-start text-slate-200 font-bold text-base flex items-center gap-1.5"
+                >
+                  <span class="w-1.5 h-3.5 bg-blue-500 rounded-sm"></span>
+                  Danh sách chi tiết
+                </div>
+
+                <div class="w-full flex justify-between items-center text-xs">
+                  <!-- Input Tìm kiếm bảng -->
+                  <div class="relative w-72">
+                    <i
+                      class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 text-xs"
+                    ></i>
+                    <input
+                      id="donViCSDLSearchInput"
+                      type="text"
+                      placeholder="Lọc dữ liệu theo đơn vị chủ quản, CSDL..."
+                      oninput="onTableStateChange()"
+                      class="w-full !pl-9 pr-3 py-2 rounded-md text-slate-700 placeholder:text-slate-700 focus:outline-none focus:border-slate-700 transition-all text-xs font-medium"
+                    />
+                  </div>
+
+                  <!-- Bộ lọc Khoảng tiến độ slider -->
+                  <div
+                    class="flex flex-row items-center p-1.5 gap-2.5 bg-slate-950/40 rounded-md border border-slate-800 text-xs select-none h-8"
+                  >
+                    <label
+                      class="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 hover:text-slate-200 cursor-pointer text-[10px]"
+                    >
+                      <input
+                        type="checkbox"
+                        id="toggleSliderCheckbox"
+                        onchange="window.toggleProgressSlider(this)"
+                        class="w-3.5 h-3.5 rounded border-slate-800 bg-slate-900 text-emerald-500 focus:ring-emerald-500/30 accent-emerald-500 cursor-pointer"
+                      />
+                      <span>Khoảng tiến độ</span>
+                      <i
+                        class="fa-solid fa-left-right text-[9px] text-slate-500"
+                      ></i>
+                    </label>
+
+                    <div
+                      id="sliderContainer"
+                      class="hidden flex-row items-center gap-3 animate-in fade-in duration-200"
+                    >
+                      <div class="relative w-28 h-5 flex items-center">
+                        <div
+                          class="absolute left-0 right-0 h-1 bg-slate-800 rounded-lg"
+                        ></div>
+                        <div
+                          id="sliderActiveTrack"
+                          class="absolute h-1 bg-blue-500/70 rounded-lg"
+                          style="left: 0%; right: 0%"
+                        ></div>
+                        <input
+                          type="range"
+                          id="sliderMinInput"
+                          min="0"
+                          max="100"
+                          value="0"
+                          oninput="window.onSliderInputChange()"
+                          class="absolute w-full h-1 appearance-none bg-transparent pointer-events-none cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:shadow-md"
+                        />
+                        <input
+                          type="range"
+                          id="sliderMaxInput"
+                          min="0"
+                          max="100"
+                          value="100"
+                          oninput="window.onSliderInputChange()"
+                          class="absolute w-full h-1 appearance-none bg-transparent pointer-events-none cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:shadow-md"
+                        />
+                      </div>
+                      <span
+                        class="text-blue-400 bg-blue-950/60 border border-blue-900/50 px-1.5 py-0.5 rounded text-[10px] font-bold font-mono min-w-[65px] text-center"
+                        id="sliderRangeLabel"
+                      >
+                        0%-100%
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Button Sắp xếp -->
+                  <div class="flex flex-row gap-2">
+                    <button
+                      onclick="window.toggleProgressSort()"
+                      class="h-8 px-2.5 border border-slate-800 rounded-md bg-slate-950/40 text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px] transition-all shadow-sm active:scale-95 cursor-pointer"
+                    >
+                      <i
+                        class="fa-solid fa-arrow-down-wide-short text-slate-500"
+                      ></i>
+                      <span>Tiến độ:</span>
+                      <span
+                        id="sortLabelText"
+                        class="text-blue-400 font-extrabold"
+                        >Giảm dần</span
+                      >
+                    </button>
+
+                    <!-- Dropdown Hiển thị cột -->
+                    <div class="relative inline-block text-left">
+                      <button
+                        onclick="window.toggleColumnMenuDropdown(event)"
+                        class="h-8 px-2.5 border border-slate-800 rounded-md bg-slate-950/40 text-slate-300 hover:text-white hover:bg-slate-800/60 flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px] shadow-sm active:scale-95 cursor-pointer"
+                      >
+                        <i class="fa-solid fa-table-columns text-slate-500"></i>
+                        <span>Hiển thị cột</span>
+                      </button>
+
+                      <div
+                        id="columnDisplayDropdownMenu"
+                        class="absolute right-0 mt-1 w-44 bg-[#0d1e32] border border-slate-800 rounded-md shadow-2xl hidden z-50 p-1.5 space-y-0.5 text-slate-300 text-[11px]"
+                        onclick="event.stopPropagation()"
+                      >
+                        <label
+                          class="flex items-center gap-2 p-2 hover:bg-slate-800/60 rounded-md cursor-pointer font-medium transition-colors"
+                        >
+                          <input
+                            type="checkbox"
+                            checked
+                            onchange="
+                              window.toggleTableColDynamic('chuQuan', this)
+                            "
+                            class="w-3.5 h-3.5 rounded border-slate-800 bg-slate-900 text-emerald-500 accent-emerald-500 cursor-pointer"
+                          />
+                          Đơn vị chủ quản
+                        </label>
+                        <label
+                          class="flex items-center gap-2 p-2 hover:bg-slate-800/60 rounded-md cursor-pointer font-medium transition-colors"
+                        >
+                          <input
+                            type="checkbox"
+                            checked
+                            onchange="
+                              window.toggleTableColDynamic('tieuChiCon', this)
+                            "
+                            class="w-3.5 h-3.5 rounded border-slate-800 bg-slate-900 text-emerald-500 accent-emerald-500 cursor-pointer"
+                          />
+                          Các tiêu chí con
+                        </label>
+                        <label
+                          class="flex items-center gap-2 p-2 hover:bg-slate-800/60 rounded-md cursor-pointer font-medium transition-colors"
+                        >
+                          <input
+                            type="checkbox"
+                            checked
+                            onchange="
+                              window.toggleTableColDynamic('danhGiaChung', this)
+                            "
+                            class="w-3.5 h-3.5 rounded border-slate-800 bg-slate-900 text-emerald-500 accent-emerald-500 cursor-pointer"
+                          />
+                          Đánh giá chung
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cấu trúc Vùng chứa bảng dữ liệu bên dưới -->
+              <div
+                class="rounded-lg border border-slate-800/80 overflow-hidden bg-[#0d1e32] w-full flex flex-col min-h-[480px]"
+              >
+                <!-- Div bọc ngoài chịu trách nhiệm cuộn dọc và ngang -->
+                <div
+                  class="w-full overflow-auto max-h-[500px] custom-scrollbar rounded-lg border border-slate-800 bg-[#0d1e32]"
+                >
+                  <table
+                    id="mainShadcnReactTable"
+                    class="w-full text-[11px] border-collapse min-w-[1600px] tracking-tight text-slate-300 table-fixed"
+                  >
+                    <!-- Định hình độ rộng cố định tuyệt đối cho các cột -->
+                    <colgroup>
+                      <col style="width: 55px" />
+                      <!-- STT -->
+                      <col style="width: 140px" />
+                      <!-- Bộ ngành -->
+                      <col style="width: 160px" />
+                      <!-- Đơn vị chủ quản -->
+                      <col style="width: 220px" />
+                      <!-- Tên CSDL -->
+                      <col style="width: 75px" />
+                      <!-- Tiến độ -->
+                      <col style="width: 75px" />
+                      <!-- Pháp lý -->
+                      <col style="width: 75px" />
+                      <!-- Tài chính -->
+                      <col style="width: 75px" />
+                      <!-- Hạ tầng -->
+                      <col style="width: 75px" />
+                      <!-- Dữ liệu -->
+                      <col style="width: 75px" />
+                      <!-- Phần mềm -->
+                      <col style="width: 75px" />
+                      <!-- ATTT -->
+                      <col style="width: 95px" />
+                      <!-- Trạng thái -->
+                      <col style="width: 200px" />
+                      <!-- Đánh giá hiện trạng -->
+                      <col style="width: 200px" />
+                      <!-- Khó khăn vướng mắc -->
+                      <col style="width: 200px" />
+                      <!-- Kiến nghị đề xuất -->
+                      <col style="width: 55px" />
+                      <!-- Xem -->
+                    </colgroup>
+
+                    <thead>
+                      <tr class="border-b border-slate-800 text-slate-400">
+                        <!-- Sử dụng sticky top-0 trực tiếp trên từng th kèm bg để không bị lộ chữ khi cuộn -->
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)]"
+                        >
+                          STT
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)]"
+                        >
+                          Bộ ngành
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-holder"
+                        >
+                          Đơn vị chủ quản
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)]"
+                        >
+                          Tên CSDL chuyên ngành
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)]"
+                        >
+                          Tiến độ
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-criteria"
+                        >
+                          Pháp lý
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-criteria"
+                        >
+                          Tài chính
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-criteria"
+                        >
+                          Hạ tầng
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-criteria"
+                        >
+                          Dữ liệu
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-criteria"
+                        >
+                          Phần mềm
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-criteria"
+                        >
+                          ATTT
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] col-sub-eval"
+                        >
+                          Trạng thái
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)]"
+                        >
+                          <i
+                            class="fa-solid fa-magnifying-glass-chart mr-1 text-slate-500"
+                          ></i
+                          >Đánh giá hiện trạng
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)]"
+                        >
+                          <i
+                            class="fa-solid fa-triangle-exclamation mr-1 text-slate-500"
+                          ></i
+                          >Khó khăn vướng mắc
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)]"
+                        >
+                          <i
+                            class="fa-solid fa-hand-holding-hand mr-1 text-slate-500"
+                          ></i
+                          >Kiến nghị đề xuất
+                        </th>
+                        <th
+                          class="sticky top-0 z-20 bg-[#091524] p-2.5 font-bold text-left shadow-[0_1px_0_0_rgba(30,41,59,1)] text-slate-500"
+                        >
+                          <i class="fa-solid fa-eye"></i>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <!-- Bỏ hoàn toàn class block khỏi tbody -->
+                    <tbody
+                      id="reactTableBody"
+                      class="divide-y divide-slate-800/40 bg-[#0d1e32]"
+                    >
+                      <!-- Dữ liệu JS tự động render -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Thanh phân trang Footer (Gắn kết liền mạch bên dưới Card bảng) -->
+                <div
+                  class="flex items-center justify-between px-4 py-2 bg-[#091524] border-t border-slate-800 text-[10px] text-slate-400 font-bold uppercase tracking-wider select-none shrink-0"
+                >
+                  <div
+                    class="flex items-center gap-1.5 normal-case font-medium text-slate-400"
+                  >
+                    <i
+                      class="fa-solid fa-circle-info text-[10px] text-slate-500"
+                    ></i>
+                    <span
+                      id="counterRowsSummary"
+                      class="text-slate-300 font-semibold"
+                      >Đang tải dữ liệu cấu phần dữ liệu...</span
+                    >
+                  </div>
+
+                  <div class="flex items-center gap-6">
+                    <div
+                      class="flex items-center gap-2 normal-case font-medium text-slate-400"
+                    >
+                      <span>Số hàng:</span>
+                      <select
+                        id="rowsPerPageSelect"
+                        onchange="onRowsPerPageChange()"
+                        class="h-6 px-1.5 rounded border border-slate-800 bg-slate-950 text-slate-300 font-bold outline-none cursor-pointer text-[10px] focus:border-slate-700"
+                      >
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                      </select>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                      <span
+                        id="paginationInfo"
+                        class="text-slate-400 font-mono text-[10px]"
+                        >Trang 1 / 1</span
+                      >
+                      <div class="flex items-center gap-1">
+                        <button
+                          id="prevPageBtn"
+                          onclick="goToPage(-1)"
+                          class="w-6 h-6 border border-slate-800 rounded bg-slate-950 flex items-center justify-center text-slate-400 hover:bg-slate-800/80 hover:text-white active:scale-95 transition-all disabled:text-slate-800 disabled:border-slate-900 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 cursor-pointer"
+                        >
+                          <i class="fa-solid fa-chevron-left text-[9px]"></i>
+                        </button>
+                        <button
+                          id="nextPageBtn"
+                          onclick="goToPage(1)"
+                          class="w-6 h-6 border border-slate-800 rounded bg-slate-950 flex items-center justify-center text-slate-400 hover:bg-slate-800/80 hover:text-white active:scale-95 transition-all disabled:text-slate-800 disabled:border-slate-900 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 cursor-pointer"
+                        >
+                          <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bọc toàn bộ Dashboard trong container Dark Theme -->
+            <div
+              class="w-full bg-[#0d1e32] border border-slate-800 rounded-xl p-6 tracking-tight text-slate-300 select-none space-y-6"
+            >
+              <div
+                class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-800/60"
+              >
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <h2
+                      class="text-sm font-bold text-slate-100 uppercase tracking-wide"
+                    >
+                      Tổng quan dữ liệu & Đồng bộ về C12
+                    </h2>
+                    <i
+                      class="fa-regular fa-circle-question text-xs text-slate-500 cursor-pointer"
+                    ></i>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-0.5">
+                    Thống kê số lượng dữ liệu trung bình và tần suất bản ghi mới
+                    được đồng bộ về C12
+                  </p>
+                </div>
+
+                <!-- Bộ lọc thời gian chuẩn chỉnh -->
+                <div class="flex flex-wrap items-center gap-3 text-[11px]">
+                  <div
+                    class="flex items-center bg-[#091524] border border-slate-800 p-0.5 rounded"
+                  >
+                    <button
+                      class="px-3 py-1 bg-blue-600 text-white rounded font-medium transition-all"
+                    >
+                      Ngày
+                    </button>
+                    <button
+                      class="px-3 py-1 text-slate-400 hover:text-slate-200 transition-all"
+                    >
+                      Tháng
+                    </button>
+                    <button
+                      class="px-3 py-1 text-slate-400 hover:text-slate-200 transition-all"
+                    >
+                      Năm
+                    </button>
+                  </div>
+                  <div
+                    class="flex items-center gap-2 bg-[#091524] border border-slate-800 rounded px-2.5 py-1.5 cursor-pointer hover:border-slate-700 transition-colors"
+                  >
+                    <i class="fa-regular fa-calendar text-slate-500"></i>
+                    <span class="font-mono text-slate-300"
+                      >01/07/2025 - 15/07/2025</span
+                    >
+                    <i
+                      class="fa-solid fa-chevron-down text-[10px] text-slate-500 ml-1"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded-lg p-4 flex flex-col justify-between h-[220px]"
+                >
+                  <div class="flex items-center justify-between text-slate-400">
+                    <div class="flex items-center gap-2 text-[11px] font-bold">
+                      <span class="p-1 rounded bg-blue-500/10 text-blue-400"
+                        ><i class="fa-solid fa-chart-line text-[10px]"></i
+                      ></span>
+                      <span
+                        >Tần suất trung bình
+                        <span class="text-slate-500 font-normal"
+                          >(bản ghi/ngày)</span
+                        ></span
+                      >
+                      <i
+                        class="fa-regular fa-circle-question text-[10px] text-slate-600"
+                      ></i>
+                    </div>
+                  </div>
+
+                  <div
+                    class="relative flex flex-col items-center justify-center flex-1 mt-2"
+                  >
+                    <div class="w-36 h-20 relative overflow-hidden">
+                      <canvas id="gaugeFrequencyChart"></canvas>
+                    </div>
+                    <div class="text-center -mt-2 z-10">
+                      <div class="text-lg font-black font-mono text-blue-400">
+                        1.86%
+                      </div>
+                      <div class="text-[10px] text-slate-500 mt-0.5">
+                        Mục tiêu: ≤ 3.000 bản ghi/ngày
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="bg-[#091524] border border-slate-800/80 rounded-lg p-4 flex flex-col justify-between h-[220px]"
+                >
+                  <div class="flex items-start justify-between">
+                    <div
+                      class="flex items-center gap-2 text-[11px] font-bold text-slate-400"
+                    >
+                      <span
+                        class="p-1 rounded bg-emerald-500/10 text-emerald-400"
+                        ><i class="fa-solid fa-chart-area text-[10px]"></i
+                      ></span>
+                      <span>Số bản ghi trung bình mỗi ngày</span>
+                      <i
+                        class="fa-regular fa-circle-question text-[10px] text-slate-600"
+                      ></i>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between flex-1 mt-2">
+                    <!-- Số lớn chỉ số bên trái -->
+                    <div class="shrink-0 pr-4">
+                      <div
+                        class="text-2xl font-black font-mono text-emerald-400 tracking-tight"
+                      >
+                        8.304
+                      </div>
+                      <div class="text-[10px] text-slate-400 font-medium">
+                        bản ghi/ngày
+                      </div>
+                      <div
+                        class="text-[10px] text-emerald-500 font-bold mt-2 flex items-center gap-1"
+                      >
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        <span
+                          >12.4%
+                          <span class="text-slate-500 font-normal"
+                            >so với kỳ trước</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                    <!-- Vùng Mini Area Chart bên phải -->
+                    <div class="flex-1 h-full min-h-[110px] relative">
+                      <canvas id="miniAreaChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div
+                  class="flex items-center gap-1.5 text-[11px] text-slate-400 font-bold uppercase tracking-wider"
+                >
+                  <span
+                    >Thành phần dữ liệu
+                    <span class="text-slate-500 font-normal lowercase"
+                      >(bản ghi)</span
+                    ></span
+                  >
+                  <i
+                    class="fa-regular fa-circle-question text-[10px] text-slate-600"
+                  ></i>
+                </div>
+
+                <div
+                  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
+                >
+                  <!-- Card 1: CSDL chuyên ngành -->
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-blue-500/10 text-blue-400 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-database"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        CSDL chuyên ngành
+                      </div>
+                      <div class="text-base font-black font-mono text-blue-400">
+                        142.560
+                      </div>
+                      <div class="text-[9px] text-blue-400/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      >
+                        Dữ liệu phục vụ nghiệp vụ chuyên ngành
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-emerald-500/10 text-emerald-400 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-server"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        CSDL quốc gia
+                      </div>
+                      <div
+                        class="text-base font-black font-mono text-emerald-400"
+                      >
+                        28.340
+                      </div>
+                      <div class="text-[9px] text-emerald-400/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      >
+                        Dữ liệu tổng hợp, dùng chung toàn quốc
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-purple-500/10 text-purple-400 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        CSDL trọng yếu
+                      </div>
+                      <div
+                        class="text-base font-black font-mono text-purple-400"
+                      >
+                        9.875
+                      </div>
+                      <div class="text-[9px] text-purple-400/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      ></p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-amber-500/10 text-amber-500 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        DMDL dùng chung
+                      </div>
+                      <div
+                        class="text-base font-black font-mono text-amber-500"
+                      >
+                        18.204
+                      </div>
+                      <div class="text-[9px] text-amber-500/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      >
+                        Dữ liệu dùng chung giữa các bộ, ngành, địa phương
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-cyan-500/10 text-cyan-400 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        DMDL dùng riêng
+                      </div>
+                      <div class="text-base font-black font-mono text-cyan-400">
+                        34.652
+                      </div>
+                      <div class="text-[9px] text-cyan-400/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      >
+                        Dữ liệu phục vụ nội bộ của cơ quan, đơn vị
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-pink-500/10 text-pink-400 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-key"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        DMDL dữ liệu chủ
+                      </div>
+                      <div class="text-base font-black font-mono text-pink-400">
+                        16.431
+                      </div>
+                      <div class="text-[9px] text-pink-400/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      >
+                        Dữ liệu là nguồn gốc, làm cơ sở để chia sẻ, kết nối
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-teal-500/10 text-teal-400 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        DL mở
+                      </div>
+                      <div class="text-base font-black font-mono text-teal-400">
+                        7.684
+                      </div>
+                      <div class="text-[9px] text-teal-400/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      >
+                        Dữ liệu công khai, cho phép sử dụng lại
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#091524] border border-slate-800 rounded p-4 flex items-start gap-3 hover:border-slate-700 transition-colors"
+                  >
+                    <div
+                      class="p-2.5 rounded bg-indigo-500/10 text-indigo-400 text-xs shrink-0"
+                    >
+                      <i class="fa-solid fa-book-atlas"></i>
+                    </div>
+                    <div class="space-y-1">
+                      <div class="text-[11px] font-bold text-slate-200">
+                        Từ điển dữ liệu
+                      </div>
+                      <div
+                        class="text-base font-black font-mono text-indigo-400"
+                      >
+                        2.153
+                      </div>
+                      <div class="text-[9px] text-indigo-400/80 font-medium">
+                        bản ghi
+                      </div>
+                      <p
+                        class="text-[10px] text-slate-500 pt-1 border-t border-slate-800/40 leading-snug"
+                      >
+                        Tập hợp các định nghĩa, cấu trúc và tiêu chuẩn
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="bg-[#091524] border border-slate-800/80 rounded-lg p-5 flex flex-col md:flex-row items-center justify-between gap-6"
+              >
+                <!-- Cột bên trái: Các thành phần Progress Bar tiến độ -->
+                <div class="w-full md:w-3/5 space-y-4">
+                  <div>
+                    <div
+                      class="flex items-center gap-1.5 text-[11px] font-bold text-slate-200"
+                    >
+                      <span
+                        >Hiệu suất đồng bộ dữ liệu về Trung tâm dữ liệu quốc gia
+                        (C12)</span
+                      >
+                      <i
+                        class="fa-regular fa-circle-question text-[10px] text-slate-600"
+                      ></i>
+                    </div>
+                    <div class="text-[10px] text-slate-500 italic mt-0.5">
+                      Trạng thái kết nối thời gian thực
+                    </div>
+                  </div>
+
+                  <!-- Thanh 1: Thành công -->
+                  <div class="space-y-1 text-[11px]">
+                    <div class="flex justify-between font-medium">
+                      <span class="text-emerald-400 flex items-center gap-1.5"
+                        ><i class="fa-regular fa-circle-check"></i> Thành
+                        công</span
+                      >
+                      <span class="font-mono font-bold text-emerald-400"
+                        >82%</span
+                      >
+                    </div>
+                    <div
+                      class="w-full h-2 bg-slate-800 rounded-full overflow-hidden"
+                    >
+                      <div
+                        class="bg-emerald-500 h-full rounded-full"
+                        style="width: 82%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <!-- Thanh 2: Đang hàng đợi -->
+                  <div class="space-y-1 text-[11px]">
+                    <div class="flex justify-between font-medium">
+                      <span class="text-blue-400 flex items-center gap-1.5"
+                        ><i class="fa-regular fa-clock"></i> Đang hàng đợi</span
+                      >
+                      <span class="font-mono font-bold text-blue-400">13%</span>
+                    </div>
+                    <div
+                      class="w-full h-2 bg-slate-800 rounded-full overflow-hidden"
+                    >
+                      <div
+                        class="bg-blue-500 h-full rounded-full"
+                        style="width: 13%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <!-- Thanh 3: Thất bại / Lỗi -->
+                  <div class="space-y-1 text-[11px]">
+                    <div class="flex justify-between font-medium">
+                      <span class="text-rose-500 flex items-center gap-1.5"
+                        ><i class="fa-solid fa-triangle-exclamation"></i> Thất
+                        bại / Lỗi</span
+                      >
+                      <span class="font-mono font-bold text-rose-500">5%</span>
+                    </div>
+                    <div
+                      class="w-full h-2 bg-slate-800 rounded-full overflow-hidden"
+                    >
+                      <div
+                        class="bg-rose-500 h-full rounded-full"
+                        style="width: 5%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="w-full md:w-2/5 flex justify-center items-center relative py-4"
+                >
+                  <div
+                    class="relative flex flex-col items-center justify-center p-6 rounded-xl border border-slate-800/60 bg-[#0d1e32]/40 min-w-[200px] shadow-inner"
+                  >
+                    <div
+                      class="relative text-blue-500 text-4xl mb-2 filter drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]"
+                    >
+                      <i class="fa-solid fa-server"></i>
+                    </div>
+                    <div class="flex items-center gap-4 text-slate-500">
+                      <i
+                        class="fa-solid fa-cloud-arrow-up text-emerald-400 text-sm animate-bounce"
+                      ></i>
+                      <span
+                        class="text-[9px] font-mono tracking-widest text-slate-400 uppercase"
+                        >C12 NODE</span
+                      >
+                      <i
+                        class="fa-solid fa-network-wired text-blue-400 text-sm"
+                      ></i>
+                    </div>
+                    <div
+                      class="absolute inset-0 border border-dashed border-slate-700/40 rounded-xl pointer-events-none scale-105"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="flex flex-wrap items-center justify-start gap-6 pt-2 border-t border-slate-800/40 text-[10px] text-slate-500"
+              >
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-regular fa-clock"></i>
+                  <span
+                    >Dữ liệu được cập nhật lúc:
+                    <span class="font-mono text-slate-400"
+                      >10:30 15/07/2025</span
+                    ></span
+                  >
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-arrow-rotate-right"></i>
+                  <span
+                    >Tự động cập nhật mỗi
+                    <span class="text-slate-400">5 phút</span></span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="view" id="digitalMap">
@@ -3759,6 +4994,345 @@
             <button class="btn btn-danger" onclick="confirmReject()">
               Xác nhận từ chối
             </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="legalLeftSidebar"
+        class="hidden fixed inset-0 z-[100] select-none flex-row justify-end"
+      >
+        <div
+          onclick="window.closeLegalLeftSidebar()"
+          class="absolute inset-0 bg-slate-900/40 backdrop-blur-xs cursor-pointer"
+        ></div>
+
+        <div
+          class="relative h-full w-[420px] max-w-full bg-white shadow-2xl border-r border-slate-200 flex flex-col bg-gradient-to-b from-white to-slate-50/50"
+        >
+          <div
+            class="p-5 border-b border-slate-100 flex items-center justify-between bg-white"
+          >
+            <div class="space-y-1 text-left">
+              <h3
+                class="text-sm font-bold text-slate-900 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-scale-balanced text-[#0b557a]"></i> Hồ sơ
+                Căn cứ Pháp lý
+              </h3>
+              <p class="text-[11px] text-slate-500 font-medium">
+                Danh mục văn bản pháp lý cố định
+              </p>
+            </div>
+            <button
+              onclick="window.closeLegalLeftSidebar()"
+              class="w-7 h-7 flex items-center justify-center rounded-lg border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors"
+            >
+              <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+          </div>
+
+          <div class="flex-1 overflow-y-auto p-5 custom-scrollbar text-left">
+            <div
+              class="relative pl-5 border-l-2 border-slate-200 space-y-5 ml-1.5 pt-1"
+            >
+              <div class="relative">
+                <span
+                  class="absolute -left-[29px] top-1 bg-[#0b557a] w-3.5 h-3.5 rounded-full border-4 border-white shadow-sm"
+                ></span>
+                <div
+                  class="bg-white border border-slate-100 rounded-xl p-3 shadow-xs space-y-1.5"
+                >
+                  <div class="flex items-center justify-between gap-2">
+                    <span
+                      class="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded font-mono"
+                      >QĐ 123/BCA-TTDLQG</span
+                    >
+                    <span class="text-[10px] text-slate-400 font-medium"
+                      ><i class="fa-regular fa-calendar mr-1"></i
+                      >20/02/2026</span
+                    >
+                  </div>
+                  <h4 class="text-xs font-bold text-slate-800 leading-normal">
+                    Đã ban hành Quyết định phê duyệt phương án vận hành hệ thống
+                  </h4>
+                  <p
+                    class="text-[10px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded w-fit flex items-center gap-1"
+                  >
+                    <i class="fa-solid fa-circle-check text-[9px]"></i> Đã ban
+                    hành chính thức
+                  </p>
+                </div>
+              </div>
+
+              <div class="relative">
+                <span
+                  class="absolute -left-[29px] top-1 bg-[#0b557a] w-3.5 h-3.5 rounded-full border-4 border-white shadow-sm"
+                ></span>
+                <div
+                  class="bg-white border border-slate-100 rounded-xl p-3 shadow-xs space-y-1.5"
+                >
+                  <div class="flex items-center justify-between gap-2">
+                    <span
+                      class="text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 px-1.5 py-0.5 rounded font-mono"
+                      >KH 345/BCA-TTDLQG</span
+                    >
+                    <span class="text-[10px] text-slate-400 font-medium"
+                      ><i class="fa-regular fa-calendar mr-1"></i
+                      >15/03/2026</span
+                    >
+                  </div>
+                  <h4 class="text-xs font-bold text-slate-800 leading-normal">
+                    Đã ban hành Kế hoạch số hóa dữ liệu cư dân và làm sạch cơ sở
+                    dữ liệu chuyên ngành
+                  </h4>
+                  <p
+                    class="text-[10px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded w-fit flex items-center gap-1"
+                  >
+                    <i class="fa-solid fa-circle-check text-[9px]"></i> Đã phê
+                    duyệt và thực hiện
+                  </p>
+                </div>
+              </div>
+
+              <div class="relative">
+                <span
+                  class="absolute -left-[29px] top-1 bg-[#0b557a] w-3.5 h-3.5 rounded-full border-4 border-white shadow-sm"
+                ></span>
+                <div
+                  class="bg-white border border-slate-100 rounded-xl p-3 shadow-xs space-y-1.5"
+                >
+                  <div class="flex items-center justify-between gap-2">
+                    <span
+                      class="text-[10px] font-bold text-purple-700 bg-purple-50 border border-purple-100 px-1.5 py-0.5 rounded font-mono"
+                      >KT-01/BCA-KT</span
+                    >
+                    <span class="text-[10px] text-slate-400 font-medium"
+                      ><i class="fa-regular fa-calendar mr-1"></i
+                      >04/04/2026</span
+                    >
+                  </div>
+                  <h4 class="text-xs font-bold text-slate-800 leading-normal">
+                    Đã hoàn thành cấu trúc Khung Kiến Trúc Dữ Liệu Tổng Thể Phân
+                    Hệ
+                  </h4>
+                  <p
+                    class="text-[10px] text-blue-700 font-bold bg-blue-50 border border-blue-100 px-2 py-0.5 rounded w-fit flex items-center gap-1"
+                  >
+                    <i class="fa-solid fa-spinner animate-spin text-[9px]"></i>
+                    Đã nghiệm thu báo cáo
+                  </p>
+                </div>
+              </div>
+
+              <div class="relative">
+                <span
+                  class="absolute -left-[29px] top-1 bg-[#0b557a] w-3.5 h-3.5 rounded-full border-4 border-white shadow-sm"
+                ></span>
+                <div
+                  class="bg-white border border-slate-100 rounded-xl p-3 shadow-xs space-y-1.5"
+                >
+                  <div class="flex items-center justify-between gap-2">
+                    <span
+                      class="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-100 px-1.5 py-0.5 rounded font-mono"
+                      >QT-BC/2026</span
+                    >
+                    <span class="text-[10px] text-slate-400 font-medium"
+                      ><i class="fa-regular fa-calendar mr-1"></i
+                      >20/04/2026</span
+                    >
+                  </div>
+                  <h4 class="text-xs font-bold text-slate-800 leading-normal">
+                    Đã ban hành Khung quản trị an toàn thông tin & Bảo mật dữ
+                    liệu tầng sâu
+                  </h4>
+                  <p
+                    class="text-[10px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded w-fit flex items-center gap-1"
+                  >
+                    <i class="fa-solid fa-circle-check text-[9px]"></i> Đã ban
+                    hành
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        id="chartDetailsDialog"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs hidden transition-all duration-150"
+      >
+        <div
+          id="chartDialogBoxStructure"
+          class="relative w-full max-w-2xl mx-4 bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col max-h-[85vh] scale-95 opacity-0 transition-all duration-200 ease-out"
+        >
+          <div
+            class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80 backdrop-blur-md rounded-t-2xl sticky top-0 z-10"
+          >
+            <h3
+              id="chartModalTitle"
+              class="text-sm font-semibold text-slate-800 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-folder-open text-slate-500 mr-2"></i>Chi
+              tiết CSDL theo Bộ ngành
+            </h3>
+            <button
+              onclick="closeChartClickDetailsPopup()"
+              class="w-7 h-7 rounded-full text-slate-400 hover:bg-slate-200 hover:text-slate-800 flex items-center justify-center transition-colors focus:outline-hidden"
+              title="Đóng (Phím Esc)"
+            >
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+
+          <div
+            id="chartModalListContent"
+            class="p-4 overflow-y-auto space-y-4 flex-1 min-h-[250px] scrollbar-thin scrollbar-thumb-slate-200"
+          ></div>
+
+          <div
+            class="p-3 border-t border-slate-100 bg-slate-50 text-right rounded-b-2xl"
+          >
+            <button
+              onclick="closeChartClickDetailsPopup()"
+              class="px-4 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-2xs hover:shadow-xs transition-all focus:ring-2 focus:ring-slate-100"
+            >
+              Đóng cửa sổ
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        id="popupTieuChiChiTiet"
+        class="fixed inset-0 bg-black/50 backdrop-blur-xs z-[100] hidden flex items-center justify-center p-4 animate-fade-in"
+        onclick="handleSubPopupBackdropClick(event)"
+      >
+        <div
+          class="bg-white w-full max-w-lg rounded-xl shadow-2xl border border-slate-100 flex flex-col max-h-[75vh] overflow-hidden transform transition-all duration-200 scale-95 animate-in fade-in zoom-in-95"
+        >
+          <div
+            class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50"
+          >
+            <div
+              class="flex items-center gap-2.5 text-slate-800"
+              id="subPopupHeaderTitle"
+            ></div>
+            <button
+              onclick="closeSubPopup()"
+              class="text-slate-400 hover:text-slate-600 rounded-full p-1.5 hover:bg-slate-200 transition-colors"
+            >
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+
+          <div
+            class="flex-1 p-5 space-y-4 overflow-y-auto"
+            id="subPopupBodyContent"
+          ></div>
+        </div>
+      </div>
+      <div
+        id="chiTietDanhGia"
+        class="fixed inset-0 bg-black/60 backdrop-blur-xs z-[99] hidden flex items-center justify-center p-4 animate-fade-in"
+      >
+        <div
+          class="bg-white w-full max-w-5xl h-[80vh] max-h-[85vh] rounded-2xl shadow-xl border border-slate-100 flex flex-col overflow-hidden transition-all duration-200 relative animate-in fade-in zoom-in-95"
+          id="dialogBoxStructure"
+        >
+          <div
+            class="px-6 py-4 border-b border-slate-100 flex items-start justify-between bg-slate-50/50"
+          >
+            <div class="space-y-1">
+              <div
+                class="inline-flex items-center text-[10px] bg-slate-100 border border-slate-200 text-slate-800 font-mono font-bold px-1.5 py-0.5 rounded"
+                id="dialogMetaSTT"
+              >
+                STT
+              </div>
+              <h4
+                class="font-bold text-slate-900 text-base leading-tight"
+                id="dialogMetaCsdlName"
+              >
+                Cơ sở dữ liệu
+              </h4>
+            </div>
+            <button
+              onclick="closeShadcnDialog()"
+              class="text-slate-400 hover:text-slate-600 rounded-full p-1.5 hover:bg-slate-100 transition-colors"
+            >
+              <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+          </div>
+
+          <div
+            class="flex-1 flex flex-col p-6 space-y-5 text-xs overflow-y-auto"
+          >
+            <div class="grid grid-cols-2 gap-3">
+              <div
+                class="py-2 border-b border-slate-100"
+                id="dialogMetaBoNganh"
+              >
+                ---
+              </div>
+              <div
+                class="py-2 border-b border-slate-100"
+                id="dialogMetaChuQuan"
+              >
+                ---
+              </div>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200/60 p-4 rounded-xl">
+              <div
+                class="flex items-center justify-between font-semibold mb-2 text-slate-700"
+              >
+                <span>Tiến độ phân hệ tổng thể</span>
+                <span id="dialogProgressText" class="text-slate-900 font-bold"
+                  >0%</span
+                >
+              </div>
+              <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                <div
+                  id="dialogProgressBar"
+                  class="bg-slate-900 h-full transition-all duration-500"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+
+            <div class="flex-1 flex flex-col space-y-2">
+              <span
+                class="text-slate-500 font-bold text-[11px] uppercase tracking-wider block"
+                >Chi tiết 6 nhóm tiêu chí kỹ thuật (Click để xem chi
+                tiết):</span
+              >
+              <div
+                class="grid grid-cols-3 gap-4"
+                id="dialogCriteriaGridBox"
+              ></div>
+              <div class="mt-4 shrink-0">
+                <span
+                  class="text-[10px] uppercase tracking-wider font-bold text-slate-400 block mb-1"
+                >
+                  <i class="fa-solid fa-file-invoice text-slate-500 mr-1"></i>
+                  Nội dung phân tích & giải pháp chuyên sâu
+                </span>
+              </div>
+
+              <div
+                id="dialogDetailAnalysisBox"
+                class="flex-1 overflow-y-auto pr-1 custom-scrollbar"
+              ></div>
+            </div>
+
+            <div
+              class="pt-4 border-t border-slate-100 flex items-center justify-between shrink-0"
+            >
+              <span class="font-bold text-slate-800 text-sm"
+                >Trạng thái đánh giá tổng quan:</span
+              >
+              <div id="dialogGeneralStatusBadge">---</div>
+            </div>
           </div>
         </div>
       </div>
@@ -10092,6 +11666,1947 @@
       /* ================= INIT ================= */
       initFilters();
       gotoList();
+    </script>
+    <script>
+      window.coreDataSource = [
+        {
+          id: 1,
+          boNganh: "Bộ Công An",
+          chuQuan: "Cục Cảnh sát quản lý hành chính về trật tự xã hội (C06)",
+          csdl: "Cơ sở dữ liệu quốc gia về Dân cư",
+          statusType: "passed", // Đã xây dựng
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 11,
+          boNganh: "Bộ Công An",
+          chuQuan: "Trung tâm Dữ liệu quốc gia (C12)",
+          csdl: "Cơ sở dữ liệu quốc gia tổng hợp",
+          statusType: "passed", // Đã xây dựng
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 2,
+          boNganh: "Bộ Công An",
+          chuQuan: "Cục Cảnh sát giao thông (C08)",
+          csdl: "Cơ sở dữ liệu Đăng ký xe toàn quốc",
+          statusType: "passed", // Đã xây dựng
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 3,
+          boNganh: "Bộ Công An",
+          chuQuan: "Cục Cảnh sát quản lý hành chính về trật tự xã hội (C06)",
+          csdl: "Cơ sở dữ liệu Căn cước công dân",
+          statusType: "processing", // Đang xây dựng
+          progress: 65,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: false,
+          pm: true,
+          attt: false,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 4,
+          boNganh: "Bộ Tư Pháp",
+          chuQuan: "Cục Công nghệ thông tin",
+          csdl: "Cơ sở dữ liệu Hộ tịch điện tử toàn quốc",
+          statusType: "passed",
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 41,
+          boNganh: "Bộ Tư Pháp",
+          chuQuan: "Cục Tư Pháp quốc gia",
+          csdl: "Cơ sở dữ liệu Tư pháp điện tử toàn quốc",
+          statusType: "processing",
+          progress: 80,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 5,
+          boNganh: "Bộ Tư Pháp",
+          chuQuan: "Cục Đăng ký quốc gia giao dịch bảo đảm",
+          csdl: "Cơ sở dữ liệu Giao dịch bảo đảm",
+          statusType: "failed", // Chưa xây dựng
+          progress: 0,
+          pl: false,
+          tc: false,
+          ht: false,
+          dl: false,
+          pm: false,
+          attt: false,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 51,
+          boNganh: "Bộ Tư Pháp",
+          chuQuan: "Cục Đăng ký Tư pháp quốc gia",
+          csdl: "Cơ sở dữ liệu Giao dịch bảo đảm",
+          statusType: "failed", // Chưa xây dựng
+          progress: 0,
+          pl: false,
+          tc: false,
+          ht: false,
+          dl: false,
+          pm: false,
+          attt: false,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 6,
+          boNganh: "Bộ Kế hoạch & Đầu tư",
+          chuQuan: "Cục Quản lý đăng ký kinh doanh",
+          csdl: "Cơ sở dữ liệu quốc gia về Đăng ký doanh nghiệp",
+          statusType: "passed",
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 7,
+          boNganh: "Bộ Kế hoạch & Đầu tư",
+          chuQuan: "Vụ Quản lý các khu kinh tế",
+          csdl: "Hệ thống thông tin quốc gia về Đầu tư nước ngoài",
+          statusType: "processing",
+          progress: 45,
+          pl: true,
+          tc: false,
+          ht: true,
+          dl: false,
+          pm: false,
+          attt: false,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 7,
+          boNganh: "Bộ Kế hoạch & Đầu tư",
+          chuQuan: "Vụ Quản lý các khu đầu tư",
+          csdl: "CSDL về Đầu tư nước ngoài",
+          statusType: "failed",
+          progress: 0,
+          pl: true,
+          tc: false,
+          ht: true,
+          dl: false,
+          pm: false,
+          attt: false,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 8,
+          boNganh: "Bộ Tài chính",
+          chuQuan: "Tổng cục Thuế",
+          csdl: "Cơ sở dữ liệu quốc gia về Thuế",
+          statusType: "passed",
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 9,
+          boNganh: "Bộ Tài chính",
+          chuQuan: "Tổng cục Hải quan",
+          csdl: "Hệ thống thông tin tích hợp hải quan thông minh",
+          statusType: "processing",
+          progress: 80,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: false,
+          attt: false,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 10,
+          boNganh: "Bộ Tài nguyên & Môi trường",
+          chuQuan:
+            "Cục Chuyển đổi số và Thông tin dữ liệu tài nguyên môi trường",
+          csdl: "Cơ sở dữ liệu Đất đai quốc gia",
+          statusType: "passed",
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 101,
+          boNganh: "Bộ Tài nguyên & Môi trường",
+          chuQuan: "CSDL Thông tin dữ liệu tài nguyên môi trường",
+          csdl: "Cơ sở dữ liệu Môi trường quốc gia",
+          statusType: "failed",
+          progress: 0,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 11,
+          boNganh: "Bộ Giáo dục & Đào tạo",
+          chuQuan: "Cục Quản lý chất lượng",
+          csdl: "Hệ thống quản lý văn bằng chứng chỉ số quốc gia",
+          statusType: "failed",
+          progress: 0,
+          pl: false,
+          tc: false,
+          ht: false,
+          dl: false,
+          pm: false,
+          attt: false,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 100,
+          boNganh: "Bộ Giáo dục & Đào tạo",
+          chuQuan: "Cục sách giáo khoa và thiết bị giáo dục",
+          csdl: "CSDL chứng chỉ thiết bị giáo dục quốc gia",
+          statusType: "passed",
+          syncedRecords: 98450231,
+          progress: 100,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 101,
+          boNganh: "Bộ Giáo dục & Đào tạo",
+          chuQuan: "Cục sức khỏe học đường",
+          csdl: "CSDL sức khỏe học đường quốc gia",
+          statusType: "processing",
+          progress: 40,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 102,
+          boNganh: "Bộ Giáo dục & Đào tạo",
+          chuQuan: "Cục chứng chỉ và văn bằng quốc gia",
+          csdl: "CSDL chứng chỉ và văn bằng quốc gia",
+          statusType: "processing",
+          progress: 40,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+        {
+          id: 102,
+          boNganh: "Bộ Giáo dục & Đào tạo",
+          chuQuan: "Cục tài liệu học quốc gia",
+          csdl: "CSDL tài liệu học quốc gia",
+          statusType: "failed",
+          progress: 0,
+          pl: true,
+          tc: true,
+          ht: true,
+          dl: true,
+          pm: true,
+          attt: true,
+          // ---- CÁC PHẦN BỔ SUNG MỚI ----
+          danhGiaCsdl:
+            "Hệ thống đã định hình cấu trúc nhưng trục kết nối chia sẻ dữ liệu chưa đồng bộ.",
+          nhanXet:
+            "Đơn vị có tinh thần triển khai nhanh, tuy nhiên tiến độ thẩm định hạ tầng an toàn thông tin còn chậm.",
+          khoKhan:
+            "Thiếu nhân sự chuyên trách về ATTT; Kinh phí phân bổ cho phân hệ bảo mật đang chờ phê duyệt.",
+          kienNghi:
+            "Đề nghị Bộ TT&TT hỗ trợ đánh giá khẩn cấp hồ sơ cấp độ ATTT; điều phối chuyên gia hạ tầng SOC.",
+        },
+      ];
+
+      let globalChartInstance = null;
+
+      // 1. TỔNG HỢP DỮ LIỆU ĐỒ THỊ THEO THUỘC TÍNH STATUSTYPE MỚI
+      function generateMinistryDataRaw() {
+        const mapData = {};
+        if (!window.coreDataSource) return [];
+
+        window.coreDataSource.forEach((item) => {
+          if (!mapData[item.boNganh]) {
+            mapData[item.boNganh] = {
+              name: item.boNganh,
+              passed: 0,
+              processing: 0,
+              failed: 0,
+            };
+          }
+          if (item.statusType === "passed") mapData[item.boNganh].passed += 1;
+          else if (item.statusType === "processing")
+            mapData[item.boNganh].processing += 1;
+          else if (item.statusType === "failed")
+            mapData[item.boNganh].failed += 1;
+        });
+        return Object.values(mapData);
+      }
+
+      // 2. CHART ENGINE
+      window.initMultipleBarChart = function () {
+        const canvas = document.getElementById("multipleBarChartMinistries");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+
+        if (globalChartInstance) {
+          globalChartInstance.destroy();
+        }
+
+        const rawData = generateMinistryDataRaw();
+        const searchKeyword =
+          window.tableState && window.tableState.boNganhFilter
+            ? window.tableState.boNganhFilter.toLowerCase().trim()
+            : "";
+
+        const displayData = rawData.filter((item) =>
+          item.name.toLowerCase().includes(searchKeyword),
+        );
+
+        const labels = displayData.map((item) => item.name);
+        const passedData = displayData.map((item) => item.passed);
+        const processingData = displayData.map((item) => item.processing);
+        const failedData = displayData.map((item) => item.failed);
+        const totalData = displayData.map(
+          (item) => item.passed + item.processing + item.failed,
+        );
+
+        globalChartInstance = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Đã xây dựng",
+                data: passedData,
+                backgroundColor: "#10b981",
+                borderRadius: 4,
+              },
+              {
+                label: "Đang xây dựng",
+                data: processingData,
+                backgroundColor: "#f59e0b",
+                borderRadius: 4,
+              },
+              {
+                label: "Chưa xây dựng",
+                data: failedData,
+                backgroundColor: "#ef4444",
+                borderRadius: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            onClick: (event, elements) => {
+              if (elements.length > 0) {
+                const firstElement = elements[0];
+                const datasetIndex = firstElement.datasetIndex; // 0: Đã, 1: Đang, 2: Chưa
+                const clickedIndex = firstElement.index;
+                const targetMinistry = labels[clickedIndex];
+
+                let targetStatusText = "passed";
+                if (datasetIndex === 1) targetStatusText = "processing";
+                if (datasetIndex === 2) targetStatusText = "failed";
+
+                openChartClickDetailsPopup(targetMinistry, targetStatusText);
+              }
+            },
+            plugins: {
+              legend: { display: true, position: "bottom" },
+              tooltip: {
+                backgroundColor: "rgba(15, 23, 42, 0.9)",
+                callbacks: {
+                  label: function (context) {
+                    const index = context.dataIndex;
+                    return ` ${context.dataset.label}: ${context.raw}/${totalData[index]} CSDL`;
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: {
+                  font: { size: 10, weight: "semibold" },
+                  color: "#64748b",
+                },
+              },
+              y: {
+                beginAtZero: true,
+                grid: { color: "#f1f5f9" },
+                ticks: { stepSize: 1 },
+              },
+            },
+          },
+        });
+      };
+
+      window.onMinistrySearchTrigger = function () {
+        const input = document.getElementById("boNganhLineChartSearchInput");
+        if (window.tableState) {
+          window.tableState.boNganhFilter = input ? input.value : "";
+          window.tableState.currentPage = 1;
+        }
+        window.initMultipleBarChart();
+        if (typeof window.renderTableEngine === "function") {
+          window.renderTableEngine();
+        }
+      };
+
+      // 3. POP-UP CHI TIẾT KHI CLICK VÀO CỘT BIỂU ĐỒ (Tối ưu giao diện & tính năng mới)
+      function openChartClickDetailsPopup(ministryName, statusType) {
+        if (!window.coreDataSource) return;
+
+        // Lọc danh sách dữ liệu theo Bộ ngành và Trạng thái click
+        const details = window.coreDataSource.filter(
+          (item) =>
+            item.boNganh === ministryName && item.statusType === statusType,
+        );
+
+        let progressBadgeStyle = "bg-slate-50 text-slate-700 border-slate-200";
+        if (statusType === "passed")
+          progressBadgeStyle =
+            "bg-emerald-50 text-emerald-700 border-emerald-200";
+        if (statusType === "processing")
+          progressBadgeStyle = "bg-amber-50 text-amber-700 border-amber-200";
+        if (statusType === "failed")
+          progressBadgeStyle = "bg-rose-50 text-rose-700 border-rose-200";
+
+        const modalTitle = document.getElementById("chartModalTitle");
+        const modalContentBox = document.getElementById(
+          "chartModalListContent",
+        );
+
+        if (!modalTitle || !modalContentBox) return;
+
+        modalTitle.innerHTML = `<i class="fa-solid fa-folder-open text-slate-500 mr-2"></i>Chi tiết CSDL - <span class="font-bold text-slate-800">${ministryName}</span>`;
+
+        if (details.length === 0) {
+          modalContentBox.innerHTML = `
+            <div class="text-center p-8 text-slate-400 text-sm font-medium">
+                <i class="fa-solid fa-inbox text-2xl block mb-2 text-slate-300"></i>
+                Không tìm thấy cơ sở dữ liệu nào ở trạng thái này.
+            </div>`;
+        } else {
+          modalContentBox.innerHTML = details
+            .map((d, index) => {
+              let progressLabel = "";
+              let progressValue = d.progress || 0;
+              let extraContentHtml = ""; // Chứa thông tin bổ sung tùy thuộc trạng thái
+
+              // Định dạng số bản ghi dạng chuỗi (Ví dụ: 98.450.231)
+              const formattedRecords = d.syncedRecords
+                ? new Intl.NumberFormat("vi-VN").format(d.syncedRecords)
+                : "0";
+
+              // TRƯỜNG HỢP 1: CSDL ĐÃ HOÀN THÀNH
+              if (d.statusType === "passed") {
+                progressLabel = "🟢 Đã hoàn thành";
+                extraContentHtml = `
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center gap-2 text-xs">
+                        <div class="px-2.5 py-1 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-100 flex items-center gap-1.5 font-medium">
+                            <i class="fa-solid fa-database text-emerald-500 text-[11px]"></i>
+                            Số bản ghi đã đồng bộ: <span class="font-bold font-mono text-[13px]">${formattedRecords}</span> bản ghi
+                        </div>
+                    </div>
+                `;
+              }
+              // TRƯỜNG HỢP 2: CSDL ĐANG XÂY DỰNG
+              else if (d.statusType === "processing") {
+                progressLabel = `🟡 Tiến độ: ${d.progress}%`;
+
+                // Giả lập phân tách 3 trạng thái tiêu chí (Ví dụ minh họa dựa trên cấu trúc boolean sẵn có)
+                const mapping = [
+                  {
+                    name: "Pháp lý",
+                    val: d.pl,
+                    status: d.pl ? "passed" : "processing",
+                  },
+                  {
+                    name: "Tài chính",
+                    val: d.tc,
+                    status: d.tc ? "passed" : "processing",
+                  },
+                  { name: "Hạ tầng", val: d.ht, status: "failed" }, // Ép trạng thái mẫu chưa đáp ứng
+                  {
+                    name: "Dữ liệu",
+                    val: d.dl,
+                    status: d.dl ? "passed" : "processing",
+                  },
+                  {
+                    name: "Phần mềm",
+                    val: d.pm,
+                    status: d.pm ? "passed" : "processing",
+                  },
+                  { name: "ATTT", val: d.attt, status: "failed" }, // Ép trạng thái mẫu chưa đáp ứng
+                ];
+
+                const passedItems = mapping
+                  .filter((c) => c.status === "passed")
+                  .map(
+                    (c) =>
+                      `<span class="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-md"><i class="fa-solid fa-check text-[9px]"></i> ${c.name}</span>`,
+                  )
+                  .join("");
+                const processingItems = mapping
+                  .filter((c) => c.status === "processing")
+                  .map(
+                    (c) =>
+                      `<span class="inline-flex items-center gap-1 text-amber-700 bg-amber-50 border border-amber-100 px-2 py-0.5 rounded-md"><i class="fa-solid fa-spinner fa-spin text-[9px]"></i> ${c.name}</span>`,
+                  )
+                  .join("");
+                const failedItems = mapping
+                  .filter((c) => c.status === "failed")
+                  .map(
+                    (c) =>
+                      `<span class="inline-flex items-center gap-1 text-rose-700 bg-rose-50 border border-rose-100 px-2 py-0.5 rounded-md"><i class="fa-solid fa-xmark text-[9px]"></i> ${c.name}</span>`,
+                  )
+                  .join("");
+
+                extraContentHtml = `
+                    <div class="mt-3 pt-3 border-t border-dashed border-slate-200 bg-slate-50/70 p-3 rounded-xl text-[11px] space-y-2">
+                        ${passedItems ? `<div class="flex items-start gap-1.5"><span class="font-bold text-slate-500 shrink-0 w-24">Đã đáp ứng:</span> <div class="flex flex-wrap gap-1.5">${passedItems}</div></div>` : ""}
+                        ${processingItems ? `<div class="flex items-start gap-1.5"><span class="font-bold text-amber-600 shrink-0 w-24">Đang xây dựng:</span> <div class="flex flex-wrap gap-1.5">${processingItems}</div></div>` : ""}
+                        ${failedItems ? `<div class="flex items-start gap-1.5"><span class="font-bold text-rose-500 shrink-0 w-24">Chưa đáp ứng:</span> <div class="flex flex-wrap gap-1.5">${failedItems}</div></div>` : ""}
+                    </div>
+                    
+                    <div class="mt-2 space-y-1.5 text-xs bg-white p-2.5 border border-slate-100 rounded-lg shadow-3xs">
+                        <p class="text-slate-700"><span class="font-semibold text-blue-600">🔎 Đánh giá CSDL:</span> ${d.danhGiaCsdl || "Chưa có thông tin"}</p>
+                        <p class="text-slate-700"><span class="font-semibold text-indigo-600">📝 Nhận xét:</span> ${d.nhanXet || "Chưa có thông tin"}</p>
+                        <p class="text-slate-700"><span class="font-semibold text-rose-600">⚠️ Khó khăn vướng mắc:</span> ${d.khoKhan || "Chưa có thông tin"}</p>
+                        <p class="text-slate-700"><span class="font-semibold text-emerald-600">💡 Kiến nghị đề xuất:</span> ${d.kienNghi || "Chưa có thông tin"}</p>
+                    </div>
+                `;
+              }
+              // TRƯỜNG HỢP 3: CSDL CHƯA XÂY DỰNG
+              else if (d.statusType === "failed") {
+                progressLabel = "🔴 Chưa xây dựng";
+                progressValue = 0;
+                extraContentHtml = `
+                    <div class="mt-3 space-y-2 text-xs bg-rose-50/30 border border-rose-100 p-3 rounded-xl">
+                        <p class="text-slate-700"><span class="font-semibold text-rose-600">⚠️ Khó khăn vướng mắc:</span> ${d.khoKhan || "Chưa có thông tin"}</p>
+                        <p class="text-slate-700"><span class="font-semibold text-emerald-600">💡 Kiến nghị đề xuất:</span> ${d.kienNghi || "Chưa có thông tin"}</p>
+                    </div>
+                `;
+              }
+
+              return `
+                <div class="p-4 border border-slate-200/70 rounded-xl bg-white shadow-xs hover:border-slate-300 transition-all space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                        <div class="space-y-1.5">
+                            <div class="flex items-start gap-2.5">
+                                <span class="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 mt-0.5">#${index + 1}</span>
+                                <h4 class="text-sm font-bold text-slate-900 leading-snug">${d.csdl}</h4>
+                            </div>
+                            
+                            <div class="pl-8 space-y-1 text-xs">
+                                <p class="text-slate-600"><i class="fa-solid fa-building text-slate-400 mr-1.5 w-3.5 text-center"></i><span class="text-slate-400">Bộ ngành:</span> ${d.boNganh}</p>
+                                <p class="text-slate-600"><i class="fa-solid fa-users text-slate-400 mr-1.5 w-3.5 text-center"></i><span class="text-slate-400">Đơn vị chủ quản:</span> ${d.chuQuan}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="sm:text-right shrink-0 pl-8 sm:pl-0 flex flex-col items-start sm:items-end gap-1.5">
+                            <span class="inline-block px-2.5 py-0.5 rounded-full border text-[11px] font-bold ${progressBadgeStyle}">
+                                ${progressLabel}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="pl-8 pr-2">
+                        <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                            <div class="h-full rounded-full ${d.statusType === "passed" ? "bg-emerald-500" : d.statusType === "failed" ? "bg-slate-300" : "bg-amber-500"}" style="width: ${progressValue}%"></div>
+                        </div>
+                    </div>
+
+                    ${extraContentHtml}
+                </div>
+            `;
+            })
+            .join("");
+        }
+
+        const container = document.getElementById("chartDetailsDialog");
+        if (container) {
+          container.classList.remove("hidden");
+          setTimeout(() => {
+            const box = document.getElementById("chartDialogBoxStructure");
+            if (box) box.classList.remove("scale-95", "opacity-0");
+          }, 20);
+        }
+      }
+
+      // HÀM ĐÓNG POP-UP CÓ TRÌNH HOÃN ĐỂ CHẠY ANIMATION MƯỢT MÀ
+      window.closeChartClickDetailsPopup = function () {
+        const box = document.getElementById("chartDialogBoxStructure");
+        if (box) box.classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          const container = document.getElementById("chartDetailsDialog");
+          if (container) container.classList.add("hidden");
+        }, 140);
+      };
+
+      // --- ĐĂNG KÝ CÁC SỰ KIỆN ĐÓNG THÔNG MINH (ESC & CLICK OUTSIDE) ---
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("chartDetailsDialog");
+        const dialogBox = document.getElementById("chartDialogBoxStructure");
+
+        if (container && dialogBox) {
+          // 1. Click ra bên ngoài vùng nội dung chính (Backdrop click) để đóng
+          container.addEventListener("click", (event) => {
+            if (!dialogBox.contains(event.target)) {
+              window.closeChartClickDetailsPopup();
+            }
+          });
+        }
+
+        // 2. Nhấn nút ESC (Escape) trên bàn phím để đóng nhanh pop-up
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" || event.keyCode === 27) {
+            if (container && !container.classList.contains("hidden")) {
+              window.closeChartClickDetailsPopup();
+            }
+          }
+        });
+
+        // Binding lại nút search cho chart như mã cũ
+        const btnSearch = document.querySelector(
+          "#boNganhLineChartSearchInput + button",
+        );
+        if (btnSearch) {
+          btnSearch.setAttribute("onclick", "window.onMinistrySearchTrigger()");
+        }
+        window.initMultipleBarChart();
+      });
+      document.addEventListener("DOMContentLoaded", () => {
+        if (typeof window.initMultipleBarChart === "function")
+          window.initMultipleBarChart();
+
+        if (window.coreDataSource && window.coreDataSource.length > 0) {
+          if (typeof window.renderTableEngine === "function")
+            window.renderTableEngine();
+        }
+      });
+
+      // 1. ĐỊNH NGHĨA DỮ LIỆU TIÊU CHÍ THÀNH PHẦN CHI TIẾT
+      const criteriaData1 = {
+        "Pháp lý": [
+          {
+            id: 1,
+            q: "Đã có cơ sở pháp lý để triển khai xây dựng CSDL?",
+            passed: 75,
+          },
+          {
+            id: 2,
+            q: "Đã ban hành quy trình thu thập, tạo lập dữ liệu?",
+            passed: 60,
+          },
+          {
+            id: 3,
+            q: "Đã ban hành danh mục trường thông tin của CSDL?",
+            passed: 45,
+          },
+        ],
+        "Tài chính": [
+          { id: 4, q: "Đã đăng ký nhu cầu vốn triển khai?", passed: 80 },
+          { id: 5, q: "Đã được bố trí kinh phí triển khai?", passed: 55 },
+        ],
+        "Hạ tầng": [
+          {
+            id: 6,
+            q: "CSDL đã được triển khai trên hạ tầng tập trung?",
+            passed: 70,
+          },
+          {
+            id: 7,
+            q: "Hạ tầng đang vận hành tại TTDL đạt tiêu chuẩn?",
+            passed: 65,
+          },
+        ],
+        "Dữ liệu": [
+          { id: 8, q: "Dữ liệu bảo đảm 'đúng'?", passed: 85 },
+          { id: 9, q: "Dữ liệu bảo đảm 'đủ'?", passed: 78 },
+          { id: 10, q: "Dữ liệu bảo đảm 'sạch'?", passed: 62 },
+          { id: 11, q: "Dữ liệu bảo đảm 'sống'?", passed: 40 },
+        ],
+        "Phần mềm": [
+          {
+            id: 12,
+            q: "Có phần mềm ứng dụng nội bộ xử lý nghiệp vụ?",
+            passed: 90,
+          },
+          { id: 13, q: "Hỗ trợ bóc tách dữ liệu tự động?", passed: 70 },
+        ],
+        ATTT: [
+          {
+            id: 14,
+            q: "Hệ thống được phê duyệt hồ sơ cấp độ ATTT?",
+            passed: 100,
+          },
+          { id: 15, q: "Đã triển khai giám sát SOC đầy đủ?", passed: 50 },
+        ],
+      };
+
+      window.tableState = {
+        boNganhFilter: "",
+        subGlobalFilter: "",
+        statusFilter: "all",
+        advancedFilter: "all",
+        sortDirection: "desc",
+        currentPage: 1,
+        rowsPerPage: 10,
+        hiddenColumns: {
+          chuQuan: false,
+          tieuChiCon: false,
+          danhGiaChung: false,
+        },
+        // ---- BỔ SUNG 3 THUỘC TÍNH NÀY ----
+        useProgressSlider: false,
+        sliderMin: 0,
+        sliderMax: 100,
+      };
+
+      let _internalCoreData = window.coreDataSource || [];
+      Object.defineProperty(window, "coreDataSource", {
+        get: function () {
+          return _internalCoreData;
+        },
+        set: function (newData) {
+          _internalCoreData = newData;
+          if (typeof window.renderTableEngine === "function") {
+            window.renderTableEngine();
+          }
+        },
+        configurable: true,
+      });
+
+      window.renderTableEngine = function () {
+        const dataSource = window.coreDataSource || [];
+        const tbody = document.getElementById("reactTableBody");
+        if (!tbody) return;
+
+        // 1. Trạng thái Đang tải dữ liệu (Nền tối, căn trái, colspan đầy đủ 16 cột)
+        if (!dataSource || dataSource.length === 0) {
+          tbody.innerHTML = `
+      <tr>
+        <td colspan="16" class="p-12 text-left text-slate-400 font-medium bg-[#0d1e32]">
+          <i class="fa-solid fa-spinner fa-spin mr-2 text-emerald-500 text-base"></i>
+          Đang tải dữ liệu cấu phần dữ liệu...
+        </td>
+      </tr>`;
+          return;
+        }
+
+        let filteredData = [...dataSource];
+
+        // --- Đoạn xử lý logic Filters dữ liệu (Giữ nguyên của bạn) ---
+        if (window.tableState.boNganhFilter) {
+          const keywordBoNganh = window.tableState.boNganhFilter
+            .toLowerCase()
+            .trim();
+          filteredData = filteredData.filter(
+            (d) =>
+              d.boNganh && d.boNganh.toLowerCase().includes(keywordBoNganh),
+          );
+        }
+        if (window.tableState.subGlobalFilter) {
+          const keywordSub = window.tableState.subGlobalFilter
+            .toLowerCase()
+            .trim();
+          filteredData = filteredData.filter(
+            (d) =>
+              (d.chuQuan && d.chuQuan.toLowerCase().includes(keywordSub)) ||
+              (d.csdl && d.csdl.toLowerCase().includes(keywordSub)),
+          );
+        }
+        if (window.tableState.statusFilter !== "all") {
+          filteredData = filteredData.filter(
+            (d) => d.statusType === window.tableState.statusFilter,
+          );
+        }
+        if (window.tableState.useProgressSlider) {
+          filteredData = filteredData.filter((d) => {
+            let currentProgress =
+              d.statusType === "passed"
+                ? 100
+                : d.statusType === "failed"
+                  ? 0
+                  : parseInt(d.progress, 10) || 0;
+            return (
+              currentProgress >= window.tableState.sliderMin &&
+              currentProgress <= window.tableState.sliderMax
+            );
+          });
+        }
+        filteredData.sort((a, b) =>
+          window.tableState.sortDirection === "asc"
+            ? (a.progress || 0) - (b.progress || 0)
+            : (b.progress || 0) - (a.progress || 0),
+        );
+
+        const totalRows = filteredData.length;
+        const totalPages =
+          Math.ceil(totalRows / window.tableState.rowsPerPage) || 1;
+        if (window.tableState.currentPage > totalPages)
+          window.tableState.currentPage = totalPages;
+
+        const startIndex =
+          (window.tableState.currentPage - 1) * window.tableState.rowsPerPage;
+        const endIndex = Math.min(
+          startIndex + window.tableState.rowsPerPage,
+          totalRows,
+        );
+        const paginatedData = filteredData.slice(startIndex, endIndex);
+
+        tbody.innerHTML = "";
+
+        // 2. Trạng thái Không tìm thấy dữ liệu (Nền tối, căn trái, colspan 16)
+        if (totalRows === 0) {
+          tbody.innerHTML = `
+      <tr>
+        <td colspan="16" class="p-12 text-left text-slate-400 font-medium bg-[#0d1e32]">
+          <i class="fa-solid fa-folder-open mr-2 text-slate-500 text-base"></i>
+          Không tìm thấy bản ghi dữ liệu phù hợp.
+        </td>
+      </tr>`;
+          return;
+        }
+
+        // 3. Render các dòng dữ liệu chuẩn
+        paginatedData.forEach((row, index) => {
+          const dotValid = `
+      <div class="relative flex items-center justify-start w-6 h-6 group/dot cursor-pointer">
+          <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 group-hover/dot:opacity-0 group-hover/dot:scale-50 transition-all duration-150"></div>
+          <i class="fa-solid fa-eye text-emerald-500 text-[10px] absolute opacity-0 scale-50 group-hover/dot:opacity-100 group-hover/dot:scale-100 transition-all duration-150"></i>
+      </div>`;
+
+          const dotInvalid = `
+      <div class="relative flex items-center justify-start w-6 h-6 group/dot cursor-pointer">
+          <div class="w-2.5 h-2.5 rounded-full bg-rose-500 group-hover/dot:opacity-0 group-hover/dot:scale-50 transition-all duration-150"></div>
+          <i class="fa-solid fa-eye text-rose-500 text-[10px] absolute opacity-0 scale-50 group-hover/dot:opacity-100 group-hover/dot:scale-100 transition-all duration-150"></i>
+      </div>`;
+
+          let badgeStatus = "";
+          let textProgress = "";
+
+          if (row.statusType === "passed") {
+            badgeStatus = `<span class="inline-flex items-center px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold uppercase tracking-wider">Đã xong</span>`;
+            textProgress = `<span class="text-emerald-400 font-bold font-mono">100%</span>`;
+          } else if (row.statusType === "processing") {
+            badgeStatus = `<span class="inline-flex items-center px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-bold uppercase tracking-wider">Đang xây dựng</span>`;
+            textProgress = `<span class="text-amber-400 font-bold font-mono">${row.progress || 0}%</span>`;
+          } else {
+            badgeStatus = `<span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 text-[10px] font-bold uppercase tracking-wider">Dự thảo</span>`;
+            textProgress = `<span class="text-slate-500 font-medium">Dự thảo</span>`;
+          }
+
+          const rowDataString = JSON.stringify(row).replace(/"/g, "&quot;");
+          const tr = document.createElement("tr");
+
+          // Class của dòng bảng quay về mặc định thuần túy, không flex/block
+          tr.className =
+            "hover:bg-slate-900/40 border-b border-slate-800/60 text-[11px] transition-colors text-slate-300";
+
+          tr.innerHTML = `
+      <td class="p-2.5 text-left font-mono text-slate-500 font-bold">${startIndex + index + 1}</td>
+      <td class="p-2.5 text-left font-semibold text-slate-200 whitespace-normal break-words">${row.boNganh || ""}</td>
+      <td class="p-2.5 text-left text-slate-400 col-sub-holder ${window.tableState.hiddenColumns.chuQuan ? "hidden" : ""} whitespace-normal break-words">${row.chuQuan || ""}</td>
+      <td class="p-2.5 text-left text-slate-300 font-medium whitespace-normal break-words">${row.csdl || ""}</td>
+      <td class="p-2.5 text-left">${textProgress}</td>
+      
+      <td class="p-2.5 text-left col-sub-criteria ${window.tableState.hiddenColumns.tieuChiCon ? "hidden" : ""}" onclick="event.stopPropagation(); window.openSubPopupFromTable(${rowDataString}, 'pl')">${row.pl ? dotValid : dotInvalid}</td>
+      <td class="p-2.5 text-left col-sub-criteria ${window.tableState.hiddenColumns.tieuChiCon ? "hidden" : ""}" onclick="event.stopPropagation(); window.openSubPopupFromTable(${rowDataString}, 'tc')">${row.tc ? dotValid : dotInvalid}</td>
+      <td class="p-2.5 text-left col-sub-criteria ${window.tableState.hiddenColumns.tieuChiCon ? "hidden" : ""}" onclick="event.stopPropagation(); window.openSubPopupFromTable(${rowDataString}, 'ht')">${row.ht ? dotValid : dotInvalid}</td>
+      <td class="p-2.5 text-left col-sub-criteria ${window.tableState.hiddenColumns.tieuChiCon ? "hidden" : ""}" onclick="event.stopPropagation(); window.openSubPopupFromTable(${rowDataString}, 'dl')">${row.dl ? dotValid : dotInvalid}</td>
+      <td class="p-2.5 text-left col-sub-criteria ${window.tableState.hiddenColumns.tieuChiCon ? "hidden" : ""}" onclick="event.stopPropagation(); window.openSubPopupFromTable(${rowDataString}, 'pm')">${row.pm ? dotValid : dotInvalid}</td>
+      <td class="p-2.5 text-left col-sub-criteria ${window.tableState.hiddenColumns.tieuChiCon ? "hidden" : ""}" onclick="event.stopPropagation(); window.openSubPopupFromTable(${rowDataString}, 'attt')">${row.attt ? dotValid : dotInvalid}</td>
+
+      <td class="p-2.5 text-left col-sub-eval ${window.tableState.hiddenColumns.danhGiaChung ? "hidden" : ""}">${badgeStatus}</td>
+      
+      <td class="p-2.5 text-left text-slate-400 whitespace-normal break-words">
+          <div class="flex items-start gap-1.5">
+              <i class="fa-solid fa-magnifying-glass-chart text-blue-500 text-[10px] mt-0.5 shrink-0"></i>
+              <span>${row.danhGiaCsdl || '<span class="text-slate-600 italic">Chưa đánh giá</span>'}</span>
+          </div>
+      </td>
+      <td class="p-2.5 text-left text-slate-400 whitespace-normal break-words">
+          <div class="flex items-start gap-1.5">
+              <i class="fa-solid fa-triangle-exclamation text-rose-500 text-[10px] mt-0.5 shrink-0"></i>
+              <span>${row.khoKhan || '<span class="text-slate-600 italic">Không có</span>'}</span>
+          </div>
+      </td>
+      <td class="p-2.5 text-left text-slate-400 whitespace-normal break-words">
+          <div class="flex items-start gap-1.5">
+              <i class="fa-solid fa-hand-holding-hand text-emerald-500 text-[10px] mt-0.5 shrink-0"></i>
+              <span>${row.kienNghi || '<span class="text-slate-600 italic">Không có</span>'}</span>
+          </div>
+      </td>
+
+      <td class="p-2.5 text-left">
+          <button onclick="openShadcnDialog(${row.id})" class="w-6 h-6 rounded border border-slate-800 bg-slate-950 text-slate-500 hover:text-slate-200 flex items-center justify-center transition-all">
+              <i class="fa-solid fa-expand text-[10px]"></i>
+          </button>
+      </td>
+    `;
+          tbody.appendChild(tr);
+        });
+
+        const counterRows = document.getElementById("counterRowsSummary");
+        if (counterRows) {
+          counterRows.textContent = `Hiển thị từ ${startIndex + 1} đến ${endIndex} trên tổng số ${totalRows} hệ thống CSDL được lọc.`;
+        }
+        window.updatePaginationUI(totalRows);
+      };
+
+      window.toggleProgressSort = function () {
+        window.tableState.sortDirection =
+          window.tableState.sortDirection === "desc" ? "asc" : "desc";
+        const label = document.getElementById("sortLabelText");
+        if (label)
+          label.textContent =
+            window.tableState.sortDirection === "desc"
+              ? "Giảm dần"
+              : "Tăng dần";
+        window.renderTableEngine();
+      };
+
+      window.toggleColumnMenuDropdown = function (event) {
+        if (event) event.stopPropagation();
+        const dropdown = document.getElementById("columnDisplayDropdownMenu");
+        if (dropdown) dropdown.classList.toggle("hidden");
+      };
+
+      window.toggleTableColDynamic = function (type, checkbox) {
+        if (!window.tableState.hiddenColumns.hasOwnProperty(type)) return;
+        window.tableState.hiddenColumns[type] = !checkbox.checked;
+
+        if (type === "chuQuan") {
+          document
+            .querySelectorAll("th.col-sub-holder")
+            .forEach((el) => el.classList.toggle("hidden", !checkbox.checked));
+        } else if (type === "tieuChiCon") {
+          document
+            .querySelectorAll("th.col-sub-criteria")
+            .forEach((el) => el.classList.toggle("hidden", !checkbox.checked));
+        } else if (type === "danhGiaChung") {
+          document
+            .querySelectorAll("th.col-sub-eval")
+            .forEach((el) => el.classList.toggle("hidden", !checkbox.checked));
+        }
+        window.renderTableEngine();
+      };
+
+      document.addEventListener("click", () => {
+        const dropdown = document.getElementById("columnDisplayDropdownMenu");
+        if (dropdown) dropdown.classList.add("hidden");
+      });
+
+      window.onTableStateChange = function () {
+        const subInput = document.getElementById("donViCSDLSearchInput");
+        window.tableState.subGlobalFilter = subInput ? subInput.value : "";
+        window.tableState.currentPage = 1;
+        window.renderTableEngine();
+      };
+
+      // Khởi tạo bộ lưu trữ cache toàn cục
+      let activeCriteriaCache = null;
+
+      /**
+       * Hàm cầu nối trung gian hỗ trợ mở nhanh Sub-Popup trực tiếp từ Table Cell
+       */
+      window.openSubPopupFromTable = function (rowObj, fieldCode) {
+        if (!rowObj || !fieldCode) return;
+
+        // Nạp dữ liệu dòng được chọn vào cache trước để sub-popup đọc căn cứ pháp lý lý thuyết/thực tế
+        activeCriteriaCache = rowObj;
+
+        const mapping = {
+          pl: { key: "Pháp lý", icon: "fa-scale-balanced" },
+          tc: { key: "Tài chính", icon: "fa-coins" },
+          ht: { key: "Hạ tầng", icon: "fa-server" },
+          dl: { key: "Dữ liệu", icon: "fa-database" },
+          pm: { key: "Phần mềm", icon: "fa-laptop-code" },
+          attt: { key: "ATTT", icon: "fa-shield-halved" },
+        };
+
+        const target = mapping[fieldCode];
+        if (!target) return;
+
+        const isPassed = rowObj[fieldCode] ? 1 : 0;
+
+        // Kích hoạt hiển thị popup chi tiết tiêu chí trực tiếp lên màn hình
+        if (typeof window.openSubPopup === "function") {
+          window.openSubPopup(target.key, isPassed, target.icon);
+        }
+      };
+
+      window.openShadcnDialog = function (rowId) {
+        const dataSource = window.coreDataSource || [];
+        const item = dataSource.find((d) => d.id === rowId);
+        if (!item) return;
+
+        const modal = document.getElementById("chiTietDanhGia");
+        if (!modal) return;
+
+        activeCriteriaCache = item;
+
+        // Thiết lập diện mạo rộng rãi cho Modal
+        const modalContentContainer = modal.querySelector(
+          '.bg-white, [class*="bg-white"]',
+        );
+        if (modalContentContainer) {
+          modalContentContainer.className =
+            "bg-white w-full max-w-6xl h-[85vh] max-h-[90vh] rounded-2xl shadow-xl border border-slate-100 flex flex-col overflow-hidden transition-all duration-200 relative animate-in fade-in zoom-in-95";
+        }
+
+        // Đổ Metadata cơ bản
+        if (document.getElementById("dialogMetaSTT"))
+          document.getElementById("dialogMetaSTT").innerHTML =
+            `<i class="fa-solid fa-fingerprint mr-1"></i>STT-${String(item.id).padStart(2, "0")}`;
+        if (document.getElementById("dialogMetaCsdlName"))
+          document.getElementById("dialogMetaCsdlName").textContent = item.csdl;
+
+        const elBoNganh =
+          document.getElementById("dialogMetaBoNghanh") ||
+          document.getElementById("dialogMetaBoNganh");
+        if (elBoNganh)
+          elBoNganh.innerHTML = `<i class="fa-solid fa-building text-slate-400 mr-2"></i><span class="text-slate-500 inline-block w-24">Bộ ban ngành:</span><span class="font-semibold text-slate-800">${item.boNganh}</span>`;
+        if (document.getElementById("dialogMetaChuQuan"))
+          document.getElementById("dialogMetaChuQuan").innerHTML =
+            `<i class="fa-solid fa-users text-slate-400 mr-2"></i><span class="text-slate-500 inline-block w-24">Đơn vị chủ quản:</span><span class="font-medium text-slate-700">${item.chuQuan}</span>`;
+
+        // Thanh tiến độ (Progress bar)
+        let progressValue = item.progress || 0;
+        let progressColorClass = "bg-amber-500";
+        const elProgText = document.getElementById("dialogProgressText");
+        if (elProgText) {
+          if (item.statusType === "passed") {
+            elProgText.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i>Đã hoàn thành`;
+            progressColorClass = "bg-emerald-500";
+            progressValue = 100;
+          } else if (item.statusType === "failed") {
+            elProgText.innerHTML = `<i class="fa-solid fa-circle-minus text-rose-500 mr-1"></i>Chưa làm`;
+            progressColorClass = "bg-slate-200";
+            progressValue = 0;
+          } else {
+            elProgText.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-amber-500 mr-1"></i>Tiến độ: ${progressValue}%`;
+          }
+        }
+        const progressBar = document.getElementById("dialogProgressBar");
+        if (progressBar) {
+          progressBar.className = `h-full rounded-full transition-all duration-500 ${progressColorClass}`;
+          progressBar.style.width = `${progressValue}%`;
+        }
+
+        // Xử lý nạp các ô Grid tiêu chí thành phần (Pháp lý, Tài chính, ...)
+        const criteriaConfig = [
+          { key: "Pháp lý", val: item.pl, icon: "fa-scale-balanced" },
+          { key: "Tài chính", val: item.tc, icon: "fa-coins" },
+          { key: "Hạ tầng", val: item.ht, icon: "fa-server" },
+          { key: "Dữ liệu", val: item.dl, icon: "fa-database" },
+          { key: "Phần mềm", val: item.pm, icon: "fa-laptop-code" },
+          { key: "ATTT", val: item.attt, icon: "fa-shield-halved" },
+        ];
+        const gridBox = document.getElementById("dialogCriteriaGridBox");
+        if (gridBox) {
+          gridBox.innerHTML = criteriaConfig
+            .map((c) => {
+              const bgClass = c.val
+                ? "bg-emerald-50/60 border-emerald-200 text-emerald-900"
+                : "bg-rose-50/40 border-rose-100 text-slate-500";
+              const statusBadge = c.val
+                ? "<span class='px-2 py-0.5 rounded bg-emerald-500 text-white text-[10px] font-bold'>Đạt</span>"
+                : "<span class='px-2 py-0.5 rounded bg-rose-400 text-white text-[10px] font-bold'>Chưa đạt</span>";
+              return `
+                <div onclick="openSubPopup('${c.key}', ${c.val ? 1 : 0}, '${c.icon}')" class="border rounded-xl p-3 flex items-center justify-between cursor-pointer transition-all hover:scale-[1.01] bg-white ${bgClass}">
+                    <div class="flex items-center gap-2 truncate">
+                        <div class="w-8 h-8 rounded-lg bg-white border flex items-center justify-center text-slate-700 shrink-0"><i class="fa-solid ${c.icon} text-xs"></i></div>
+                        <span class="font-bold text-xs text-slate-800">${c.key}</span>
+                    </div>
+                    ${statusBadge}
+                </div>
+            `;
+            })
+            .join("");
+        }
+
+        // --- ĐOẠN PHÁT TRIỂN MỚI: ĐỔ DỮ LIỆU NHẬN XÉT, KHÓ KHĂN, KIẾN NGHỊ VÀO MODAL ---
+        const detailAnalysisBox = document.getElementById(
+          "dialogDetailAnalysisBox",
+        );
+        if (detailAnalysisBox) {
+          detailAnalysisBox.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-3">
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass-chart text-blue-500"></i> Đánh giá hiện trạng CSDL
+                        </h5>
+                        <p class="text-slate-600 text-xs mt-1 bg-white p-2.5 rounded-lg border border-slate-100 min-h-[50px]">
+                            ${item.danhGiaCsdl || '<span class="text-slate-400 italic">Chưa có dữ liệu đánh giá chi tiết.</span>'}
+                        </p>
+                    </div>
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-comment-dots text-indigo-500"></i> Nhận xét từ tổ kiểm tra
+                        </h5>
+                        <p class="text-slate-600 text-xs mt-1 bg-white p-2.5 rounded-lg border border-slate-100 min-h-[50px]">
+                            ${item.nhanXet || '<span class="text-slate-400 italic">Chưa có nhận xét cụ thể.</span>'}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl border border-rose-100 bg-rose-50/20 space-y-3">
+                    <div>
+                        <h5 class="text-xs font-bold text-rose-900 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Khó khăn, vướng mắc tồn đọng
+                        </h5>
+                        <p class="text-slate-700 text-xs mt-1 bg-white p-2.5 rounded-lg border border-rose-100 min-h-[50px]">
+                            ${item.khoKhan || '<span class="text-slate-400 italic">Ghi nhận: Không có khó khăn, vướng mắc lớn.</span>'}
+                        </p>
+                    </div>
+                    <div>
+                        <h5 class="text-xs font-bold text-emerald-900 flex items-center gap-2">
+                            <i class="fa-solid fa-hand-holding-hand text-emerald-500"></i> Kiến nghị & Đề xuất giải pháp
+                        </h5>
+                        <p class="text-slate-700 text-xs mt-1 bg-white p-2.5 rounded-lg border border-emerald-100 min-h-[50px]">
+                            ${item.kienNghi || '<span class="text-slate-400 italic">Chưa có đề xuất được ghi nhận.</span>'}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        `;
+        }
+
+        const generalBadge = document.getElementById(
+          "dialogGeneralStatusBadge",
+        );
+        if (generalBadge) {
+          generalBadge.innerHTML =
+            item.statusType === "passed"
+              ? `<span class="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-bold text-[11px]">Đã xây dựng</span>`
+              : item.statusType === "failed"
+                ? `<span class="px-3 py-1 bg-rose-50 text-rose-700 border border-rose-200 rounded-full font-bold text-[11px]">Chưa xây dựng</span>`
+                : `<span class="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full font-bold text-[11px]">Đang xây dựng</span>`;
+        }
+
+        modal.classList.remove("hidden");
+      };
+
+      /**
+       * Mở Sidebar bằng cách xóa class hidden, thêm class flex
+       */
+      window.openLegalLeftSidebar = function () {
+        const sidebar = document.getElementById("legalLeftSidebar");
+        if (sidebar) {
+          sidebar.classList.remove("hidden");
+          sidebar.classList.add("flex");
+        }
+      };
+
+      /**
+       * Đóng Sidebar bằng cách xóa class flex, thêm lại class hidden
+       */
+      window.closeLegalLeftSidebar = function () {
+        const sidebar = document.getElementById("legalLeftSidebar");
+        if (sidebar) {
+          sidebar.classList.remove("flex");
+          sidebar.classList.add("hidden");
+        }
+      };
+
+      // ==========================================
+      // HÀM XỬ LÝ QUẢN LÝ POPUP PHỤ TIÊU CHÍ CHI TIẾT
+      // ==========================================
+
+      window.openSubPopup = function (criteriaKey, isPassed, iconClass) {
+        if (!activeCriteriaCache) return;
+
+        const subPopup = document.getElementById("popupTieuChiChiTiet");
+        const headerTitle = document.getElementById("subPopupHeaderTitle");
+        const bodyContent = document.getElementById("subPopupBodyContent");
+
+        if (!subPopup || !headerTitle || !bodyContent) return;
+
+        // 1. Tạo Header cho Popup phụ
+        const badgeStatus = isPassed
+          ? "<span class='px-2 py-0.5 rounded-md bg-emerald-500 text-white text-[10px] font-bold'><i class='fa-solid fa-check mr-1'></i> Đạt tiêu chuẩn</span>"
+          : "<span class='px-2 py-0.5 rounded-md bg-rose-400 text-white text-[10px] font-bold'><i class='fa-solid fa-xmark mr-1'></i> Chưa đáp ứng</span>";
+
+        headerTitle.innerHTML = `
+        <div class="w-8 h-8 rounded-lg bg-slate-200/60 border border-slate-200 flex items-center justify-center text-slate-800">
+            <i class="fa-solid ${iconClass} text-sm"></i>
+        </div>
+        <div class="flex items-center gap-2">
+            <h5 class="font-bold text-slate-900 text-sm">Tiêu chí: ${criteriaKey}</h5>
+            ${badgeStatus}
+        </div>
+    `;
+
+        // 2. Lấy danh sách văn bản căn cứ pháp lý & Tiêu chí thành phần (Sửa đổi đồng bộ criteriaData1)
+        const subList = criteriaData1[criteriaKey] || [];
+        const basisArray =
+          activeCriteriaCache.legalBasis &&
+          activeCriteriaCache.legalBasis.length > 0
+            ? activeCriteriaCache.legalBasis
+            : [
+                `Căn cứ văn bản chỉ đạo hệ thống & Quy chuẩn vận hành kỹ thuật liên quan đến phân hệ ${criteriaKey}.`,
+              ];
+
+        const basisHtml = basisArray
+          .map(
+            (b) => `
+        <div class="text-slate-600 font-medium text-[12px] leading-relaxed py-0.5 text-left">
+            <i class="fa-solid fa-bookmark text-amber-500 mr-2"></i>${b}
+        </div>
+    `,
+          )
+          .join("");
+
+        const subItemsHtml = subList
+          .map(
+            (sub) => `
+        <div class="p-3 border border-slate-100 rounded-xl bg-slate-50/50 hover:bg-slate-50 transition-colors space-y-2 relative">
+            <i onclick="window.openLegalLeftSidebar()" 
+               class="fa-solid fa-up-right-and-down-left-from-center absolute top-3 right-3 text-slate-400 text-[12px] hover:scale-110 hover:text-black cursor-pointer transition-all"></i>
+            
+            <div class="flex flex-col gap-2 text-left">
+                <p class="text-xs font-semibold text-slate-800 leading-normal pr-4">
+                    <i class="fa-regular fa-circle-question text-slate-400 mr-1.5"></i>${sub.q}
+                </p>
+                <span class="text-[10px] font-bold ${isPassed ? "text-emerald-700 bg-emerald-50 border-emerald-100" : "text-slate-400 bg-slate-100 border-slate-200"} px-2 py-0.5 rounded-md border self-start">
+                    Mức độ đáp ứng: ${isPassed ? sub.passed + "%" : "0%"}
+                </span>
+            </div>
+        </div>
+    `,
+          )
+          .join("");
+
+        // 3. Đổ dữ liệu vào vùng nội dung
+        bodyContent.innerHTML = `
+        <div class="p-3.5 bg-amber-50/40 border border-amber-100 rounded-xl space-y-1.5 animate-in fade-in-50 duration-200">
+            <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400 block text-left"><i class="fa-solid fa-scroll mr-1"></i>Hồ sơ tài liệu / Căn cứ pháp lý</span>
+            <div class="space-y-1">${basisHtml}</div>
+        </div>
+        
+        <div class="space-y-2.5">
+            <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400 block text-left"><i class="fa-solid fa-list-check mr-1"></i>Danh mục tiêu chí thành phần kiểm tra</span>
+            <div class="space-y-2">${subItemsHtml || '<p class="text-slate-400 italic">Không có dữ liệu tiêu chí con.</p>'}</div>
+        </div>
+    `;
+
+        subPopup.classList.remove("hidden");
+      };
+
+      // Đóng Popup phụ độc lập
+      window.closeSubPopup = function () {
+        const subPopup = document.getElementById("popupTieuChiChiTiet");
+        if (subPopup) subPopup.classList.add("hidden");
+      };
+
+      // Hàm xử lý khi bấm ra vùng trống bên ngoài của Sub Popup để Close
+      window.handleSubPopupBackdropClick = function (event) {
+        const subPopup = document.getElementById("popupTieuChiChiTiet");
+        if (event.target === subPopup) {
+          closeSubPopup();
+        }
+      };
+
+      // BỔ SUNG SỰ KIỆN PHÍM TẮT: NHẤN ESC ĐỂ TỰ ĐỘNG ĐÓNG POPUP
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" || event.keyCode === 27) {
+          // Ưu tiên đóng popup phụ trước
+          const subPopup = document.getElementById("popupTieuChiChiTiet");
+          if (subPopup && !subPopup.classList.contains("hidden")) {
+            closeSubPopup();
+            return;
+          }
+          // Sau đó đóng popup lớn
+          const mainModal = document.getElementById("chiTietDanhGia");
+          if (mainModal && !mainModal.classList.contains("hidden")) {
+            closeShadcnDialog();
+          }
+        }
+      });
+
+      function closeShadcnDialog() {
+        const modal = document.getElementById("chiTietDanhGia");
+        if (modal) modal.classList.add("hidden");
+        activeCriteriaCache = null; // giải phóng bộ nhớ tạm
+      }
+
+      /**
+       * Hàm xử lý chuyển trang (Lùi trang hoặc Tiến trang)
+       * @param {number} direction - Nhận giá trị -1 (Lùi trang) hoặc 1 (Tiến trang)
+       */
+      window.goToPage = function (direction) {
+        // 1. Tính toán lại tổng số dòng sau khi đã qua bộ lọc (Filter)
+        const dataSource = window.coreDataSource || [];
+        let filteredData = [...dataSource];
+
+        if (window.tableState.boNganhFilter) {
+          const keywordBoNganh = window.tableState.boNganhFilter
+            .toLowerCase()
+            .trim();
+          filteredData = filteredData.filter(
+            (d) =>
+              d.boNganh && d.boNganh.toLowerCase().includes(keywordBoNganh),
+          );
+        }
+
+        if (window.tableState.subGlobalFilter) {
+          const keywordSub = window.tableState.subGlobalFilter
+            .toLowerCase()
+            .trim();
+          filteredData = filteredData.filter(
+            (d) =>
+              (d.chuQuan && d.chuQuan.toLowerCase().includes(keywordSub)) ||
+              (d.csdl && d.csdl.toLowerCase().includes(keywordSub)),
+          );
+        }
+
+        if (window.tableState.statusFilter !== "all") {
+          filteredData = filteredData.filter(
+            (d) => d.statusType === window.tableState.statusFilter,
+          );
+        }
+
+        const totalRows = filteredData.length;
+        const totalPages =
+          Math.ceil(totalRows / window.tableState.rowsPerPage) || 1;
+
+        // 2. Cập nhật trang hiện tại dựa trên hướng click
+        const targetPage = window.tableState.currentPage + direction;
+
+        // Kiểm tra chặn nếu vượt quá giới hạn trang cho phép
+        if (targetPage >= 1 && targetPage <= totalPages) {
+          window.tableState.currentPage = targetPage;
+
+          // 3. Render lại dữ liệu bảng cho trang mới
+          window.renderTableEngine();
+        }
+      };
+
+      /**
+       * Hàm cập nhật trạng thái hiển thị của các nút phân trang và text thông báo
+       * @param {number} totalRows - Tổng số dòng sau khi lọc
+       */
+      window.updatePaginationUI = function (totalRows) {
+        const totalPages =
+          Math.ceil(totalRows / window.tableState.rowsPerPage) || 1;
+
+        // Đảm bảo trang hiện tại không vượt quá tổng số trang hợp lệ
+        if (window.tableState.currentPage > totalPages) {
+          window.tableState.currentPage = totalPages;
+        }
+
+        // 1. Cập nhật Text hiển thị: "Trang X / Y"
+        const paginationInfo = document.getElementById("paginationInfo");
+        if (paginationInfo) {
+          paginationInfo.textContent = `Trang ${window.tableState.currentPage} / ${totalPages}`;
+        }
+
+        // 2. Vô hiệu hóa (Disable) nút bấm nếu ở trang đầu hoặc trang cuối
+        const prevPageBtn = document.getElementById("prevPageBtn");
+        const nextPageBtn = document.getElementById("nextPageBtn");
+
+        if (prevPageBtn) {
+          prevPageBtn.disabled = window.tableState.currentPage === 1;
+        }
+        if (nextPageBtn) {
+          nextPageBtn.disabled = window.tableState.currentPage === totalPages;
+        }
+      };
+
+      /**
+       * Hàm xử lý khi người dùng thay đổi số lượng hàng hiển thị trên một trang
+       */
+      window.onRowsPerPageChange = function () {
+        const select = document.getElementById("rowsPerPageSelect");
+        if (!select) return;
+
+        // Cập nhật cấu hình rowsPerPage mới và quay về trang 1 để tránh lỗi lệch index
+        window.tableState.rowsPerPage = parseInt(select.value, 10) || 10;
+        window.tableState.currentPage = 1;
+
+        // Render lại giao diện
+        window.renderTableEngine();
+      };
+
+      /**
+       * Hàm ẩn/hiện container Slider khi click checkbox
+       */
+      window.toggleProgressSlider = function (checkbox) {
+        const container = document.getElementById("sliderContainer");
+        window.tableState.useProgressSlider = checkbox.checked;
+
+        if (checkbox.checked) {
+          container.classList.remove("hidden");
+        } else {
+          container.classList.add("hidden");
+          // Reset lại giá trị lọc về mặc định khi tắt tính năng
+          window.tableState.sliderMin = 0;
+          window.tableState.sliderMax = 100;
+          document.getElementById("sliderMinInput").value = 0;
+          document.getElementById("sliderMaxInput").value = 100;
+          window.updateSliderTrackUI();
+        }
+        window.tableState.currentPage = 1; // Reset về trang 1
+        window.renderTableEngine();
+      };
+
+      /**
+       * Hàm đồng bộ giá trị kéo từ giao diện vào logic bộ lọc
+       */
+      window.onSliderInputChange = function () {
+        const minInput = document.getElementById("sliderMinInput");
+        const maxInput = document.getElementById("sliderMaxInput");
+
+        let minVal = parseInt(minInput.value, 10);
+        let maxVal = parseInt(maxInput.value, 10);
+
+        // Xử lý chặn nếu người dùng kéo nút Min vượt quá nút Max
+        if (minVal > maxVal) {
+          let temp = minVal;
+          minVal = maxVal;
+          maxVal = temp;
+        }
+
+        window.tableState.sliderMin = minVal;
+        window.tableState.sliderMax = maxVal;
+
+        // Cập nhật giao diện thanh kéo và nhãn văn bản
+        window.updateSliderTrackUI();
+
+        // Thực thi lọc dữ liệu tức thì (Real-time Filter)
+        window.tableState.currentPage = 1;
+        window.renderTableEngine();
+      };
+
+      /**
+       * Hàm vẽ lại thanh màu xanh đại diện khoảng cách giữa 2 nút kéo
+       */
+      window.updateSliderTrackUI = function () {
+        const min = window.tableState.sliderMin;
+        const max = window.tableState.sliderMax;
+
+        document.getElementById("sliderRangeLabel").textContent =
+          `${min}% - ${max}%`;
+
+        const activeTrack = document.getElementById("sliderActiveTrack");
+        if (activeTrack) {
+          activeTrack.style.left = `${min}%`;
+          activeTrack.style.right = `${100 - max}%`;
+        }
+      };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document
+          .getElementById("qualityLineChart")
+          .getContext("2d");
+
+        // Mảng nhãn tháng hiển thị ở trục X
+        const labels = [
+          "01/2025",
+          "02/2025",
+          "03/2025",
+          "04/2025",
+          "05/2025",
+          "06/2025",
+          "07/2025",
+        ];
+
+        // Cấu hình dữ liệu của 8 đường khớp với số liệu mẫu
+        const data = {
+          labels: labels,
+          datasets: [
+            {
+              label: "Tổng số dữ liệu",
+              data: [85.2, 89.45, 94.3, 99.8, 104.75, 110.2, 115.6],
+              borderColor: "#3b82f6", // Xanh dương
+              backgroundColor: "#3b82f6",
+            },
+            {
+              label: "Dữ liệu đã đồng bộ về C12",
+              data: [68.1, 71.3, 75.6, 79.9, 83.7, 87.9, 92.1],
+              borderColor: "#10b981", // Xanh lá
+              backgroundColor: "#10b981",
+            },
+            {
+              label: 'Dữ liệu "đúng"',
+              data: [62.3, 65.4, 69.2, 73.0, 76.6, 80.4, 84.5],
+              borderColor: "#a855f7", // Tím
+              backgroundColor: "#a855f7",
+            },
+            {
+              label: 'Dữ liệu "đủ"',
+              data: [58.9, 61.8, 65.2, 68.8, 72.3, 75.9, 79.6],
+              borderColor: "#f59e0b", // Vàng cam
+              backgroundColor: "#f59e0b",
+            },
+            {
+              label: 'Dữ liệu "sạch"',
+              data: [45.2, 47.8, 50.9, 53.8, 56.6, 59.7, 62.9],
+              borderColor: "#22d3ee", // Xanh cyan
+              backgroundColor: "#22d3ee",
+            },
+            {
+              label: 'Dữ liệu "sống"',
+              data: [38.6, 41.9, 43.9, 46.7, 49.3, 52.1, 54.9],
+              borderColor: "#ec4899", // Hồng
+              backgroundColor: "#ec4899",
+            },
+            {
+              label: 'Dữ liệu "đúng, đủ, sạch, sống"',
+              data: [28.7, 30.8, 32.8, 35.9, 37.2, 39.6, 42.1],
+              borderColor: "#2dd4bf", // Teal
+              backgroundColor: "#2dd4bf",
+            },
+            {
+              label: 'Dữ liệu "đúng, đủ, sạch, sống" đã đồng bộ',
+              data: [22.6, 24.3, 26.1, 28.0, 29.8, 31.9, 33.9],
+              borderColor: "#ef4444", // Đỏ
+              backgroundColor: "#ef4444",
+            },
+          ],
+        };
+
+        // Cấu hình hiển thị Chart
+        const config = {
+          type: "line",
+          data: data,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+              padding: { top: 20, bottom: 10 },
+            },
+            elements: {
+              line: { tension: 0.15, borderWidth: 1.5 },
+              point: { radius: 3, hoverRadius: 5 },
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: {
+                  color: "#64748b",
+                  font: { size: 10, family: "monospace" },
+                },
+              },
+              y: {
+                min: 0,
+                max: 140,
+                ticks: {
+                  color: "#64748b",
+                  font: { size: 10, family: "monospace" },
+                  stepSize: 20,
+                  callback: function (value) {
+                    return value === 0 ? "0" : value + "M";
+                  },
+                },
+                grid: { color: "rgba(51, 65, 85, 0.25)" },
+              },
+            },
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  color: "#94a3b8",
+                  font: { size: 10 },
+                  boxWidth: 12,
+                  boxHeight: 2,
+                  padding: 15,
+                },
+              },
+              tooltip: {
+                backgroundColor: "#091524",
+                titleColor: "#f1f5f9",
+                bodyColor: "#cbd5e1",
+                borderColor: "#334155",
+                borderWidth: 1,
+                textDirection: "left",
+                callbacks: {
+                  label: function (context) {
+                    return ` ${context.dataset.label}: ${(context.raw * 1000000).toLocaleString()} bản ghi`;
+                  },
+                },
+              },
+            },
+          },
+          // Custom Plugin: Vẽ text hiển thị số liệu ngay trên các nút điểm (giống hình mẫu)
+          // Thay thế đoạn code plugin cũ trong phần khởi tạo config của bạn:
+          plugins: [
+            {
+              id: "customPointsLabels",
+              afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                ctx.save();
+
+                // Cấu hình font chữ to và rõ nét hơn
+                ctx.font =
+                  'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.textAlign = "center";
+                ctx.textBaseline = "bottom";
+
+                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                  const meta = chart.getDatasetMeta(datasetIndex);
+
+                  meta.data.forEach((element, index) => {
+                    const dataValue = dataset.data[index];
+                    const formattedText = (dataValue * 1000000).toLocaleString(
+                      "vi-VN",
+                    );
+
+                    const x = element.x;
+                    // Đẩy trục Y lên cao một chút (-10) để không dính vào node tròn
+                    const y = element.y - 10;
+
+                    // KỸ THUẬT LÀM RÕ NÉT: Vẽ hiệu ứng viền bóng màu nền tối đè lên đường line
+                    ctx.strokeStyle = "#0d1e32";
+                    ctx.lineWidth = 3;
+                    ctx.strokeText(formattedText, x, y);
+
+                    // Vẽ chữ chính màu sắc nét lên trên cùng
+                    ctx.fillStyle = dataset.borderColor;
+                    ctx.fillText(formattedText, x, y);
+                  });
+                });
+
+                ctx.restore();
+              },
+            },
+          ],
+        };
+
+        // Khởi tạo biểu đồ thực tế
+        new Chart(ctx, config);
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1. KHỞI TẠO TẦN SUẤT TRUNG BÌNH (GAUGE CHART BÁN NGUYỆT)
+        const ctxGauge = document
+          .getElementById("gaugeFrequencyChart")
+          .getContext("2d");
+        new Chart(ctxGauge, {
+          type: "doughnut",
+          data: {
+            datasets: [
+              {
+                data: [62, 38], // Tương đương tỷ lệ kim đo biểu mẫu ~1.86% trên thang đo
+                backgroundColor: ["#3b82f6", "#1e293b"], // Xanh dương biểu đồ và nền thanh xám
+                borderWidth: 0,
+                circumference: 180, // Giới hạn tạo hình bán nguyệt
+                rotation: 270,
+                cutout: "82%",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: false },
+            },
+          },
+        });
+
+        // 2. KHỞI TẠO SỐ BẢN GHI HÀNG NGÀY (MINI AREA CHART)
+        const ctxArea = document
+          .getElementById("miniAreaChart")
+          .getContext("2d");
+
+        // Tạo gradient dải màu trong suốt cho vùng đổ bóng phía dưới đường line
+        const gradient = ctxArea.createLinearGradient(0, 0, 0, 100);
+        gradient.addColorStop(0, "rgba(16, 185, 129, 0.25)");
+        gradient.addColorStop(1, "rgba(16, 185, 129, 0.00)");
+
+        new Chart(ctxArea, {
+          type: "line",
+          data: {
+            labels: [
+              "09/07",
+              "10/07",
+              "11/07",
+              "12/07",
+              "13/07",
+              "14/07",
+              "15/07",
+            ],
+            datasets: [
+              {
+                data: [6.2, 8.5, 7.1, 5.4, 6.8, 7.9, 9.1], // Chỉ số tăng trưởng dữ liệu
+                borderColor: "#10b981", // Màu xanh lá sắc nét
+                borderWidth: 1.5,
+                fill: true,
+                backgroundColor: gradient,
+                pointRadius: 2,
+                pointBackgroundColor: "#10b981",
+                tension: 0.35, // Làm mượt các góc uốn cong của đồ thị
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: {
+                  color: "#475569",
+                  font: { size: 9, family: "monospace" },
+                },
+              },
+              y: {
+                min: 0,
+                max: 12,
+                grid: { color: "rgba(51, 65, 85, 0.15)" },
+                ticks: {
+                  color: "#475569",
+                  font: { size: 9, family: "monospace" },
+                  stepSize: 4,
+                  callback: function (val) {
+                    return val === 0 ? "0" : val + "K";
+                  },
+                },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: "#091524",
+                titleColor: "#f1f5f9",
+                bodyColor: "#cbd5e1",
+                borderColor: "#334155",
+                borderWidth: 1,
+              },
+            },
+          },
+        });
+      });
     </script>
   </body>
 </html>
