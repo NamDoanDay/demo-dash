@@ -2631,6 +2631,38 @@
       .province-tooltip.show {
         opacity: 1;
       }
+      /* Khung chứa Icon vát góc công nghệ góc 45 độ */
+      .cyber-icon-wrapper {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      /* Đổ bóng mịn viền xung quanh Card theo dải màu ảnh gốc */
+      .cyber-box-cyan {
+        box-shadow: inset 0 0 12px rgba(0, 210, 255, 0.05);
+      }
+      .cyber-box-amber {
+        box-shadow: inset 0 0 12px rgba(255, 183, 0, 0.05);
+      }
+      .cyber-box-pink {
+        box-shadow: inset 0 0 12px rgba(255, 0, 127, 0.05);
+      }
+      .cyber-box-purple {
+        box-shadow: inset 0 0 12px rgba(79, 107, 179, 0.05);
+      }
+
+      /* Hiệu ứng nhấp nháy dòng quét Neon tinh tế khi di chuột */
+      .cyber-box-cyan:hover,
+      .cyber-box-amber:hover,
+      .cyber-box-pink:hover,
+      .cyber-box-purple:hover {
+        transform: translateY(-1px);
+        background-color: rgba(255, 255, 255, 0.02);
+      }
     </style>
   </head>
   <body class="bg-section">
@@ -4186,29 +4218,484 @@
           </div>
         </section>
 
-        <section
-          class="view h-screen w-screen overflow-hidden text-white"
-          id="digitalMap"
-        >
+        <section class="view h-screen w-full text-white" id="digitalMap">
           <div class="p-4 h-full flex flex-col gap-4 overflow-hidden">
-            <!-- HEADER -->
-            <header class="flex-shrink-0">
-              <h1>Bản đồ số tiến độ triển khai cơ sở dữ liệu quốc gia</h1>
-            </header>
+            <div
+              class="w-full flex flex-row items-center justify-center gap-[2px]"
+            >
+              <i class="w-8 h-8 fa-solid fa-earth-asia !text-xl"></i>
+              <h1 class="!text-xl font-black uppercase tracking-tight">
+                Bản đồ số tiến độ triển khai cơ sở dữ liệu quốc gia
+              </h1>
+            </div>
+
+            <!-- BỘ 2: MA TRẬN PHÂN TÁCH TRẠNG THÁI DỮ LIỆU -->
+            <div class="grid grid-cols-4 gap-2 rounded-lg">
+              <!-- CARD 1: ĐÃ KHAI THÁC -->
+              <div
+                class="bg-[#040d1a]/80 border border-[#2ebf53]/20 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden h-fit shadow-[0_0_10px_rgba(46,191,83,0.02)]"
+                style="
+                  clip-path: polygon(0 0, 100% 0, 100% 90%, 93% 100%, 0 100%);
+                "
+              >
+                <div
+                  class="absolute bottom-0 right-0 w-2 h-2 bg-[#2ebf53] rotate-45 translate-x-1 translate-y-1"
+                ></div>
+
+                <!-- Top Row: Toàn quốc & Icon -->
+                <div
+                  class="flex justify-between items-center leading-none mb-1.5"
+                >
+                  <span
+                    class="text-xs text-[#2ebf53] font-bold tracking-wider uppercase border border-[#2ebf53]/30 rounded-full px-1.5 py-0.5 bg-[#2ebf53]/5 font-mono scale-90 origin-left"
+                  >
+                    TOÀN QUỐC
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <!-- Icon tròn thu nhỏ đưa lên đây -->
+                    <div
+                      class="w-7 h-7 rounded-full border border-[#2ebf53]/20 bg-[#2ebf53]/5 flex items-center justify-center relative flex-shrink-0"
+                    >
+                      <div
+                        class="absolute inset-0 rounded-full border border-dashed border-[#2ebf53]/10 animate-[spin_30s_linear_infinite]"
+                      ></div>
+                      <i
+                        class="fa-solid fa-database text-[#2ebf53] text-[10px]"
+                      ></i>
+                    </div>
+                    <div
+                      class="text-[#a4ccf4]/30 text-[9px] tracking-widest cursor-pointer select-none"
+                    >
+                      •••
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Row: Thông tin chính & Tỷ lệ + Donut -->
+                <div
+                  class="flex justify-between items-center pt-1 border-t border-[#a4ccf4]/5"
+                >
+                  <div class="flex flex-col gap-0.5">
+                    <h3
+                      class="text-[9.5px] font-bold text-[#a4ccf4]/90 tracking-wide uppercase"
+                    >
+                      ĐÃ KHAI THÁC
+                    </h3>
+                    <div class="flex items-baseline gap-0.5">
+                      <span
+                        class="text-xl font-black text-[#2ebf53] leading-none drop-shadow-[0_0_6px_rgba(46,191,83,0.3)]"
+                        >116</span
+                      >
+                      <span
+                        class="text-[7.5px] text-[#2ebf53]/60 font-bold uppercase tracking-wider"
+                        >CSDL</span
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Tỷ lệ & Donut đưa lên cùng dòng -->
+                  <div class="flex items-center gap-1.5">
+                    <div class="flex flex-col items-end leading-none">
+                      <span
+                        class="text-[7.5px] text-[#a4ccf4]/40 font-bold uppercase"
+                        >TỶ LỆ</span
+                      >
+                      <span
+                        class="text-xs font-black text-[#2ebf53] tracking-tight"
+                        >(54.0%)</span
+                      >
+                    </div>
+                    <div class="relative w-6 h-6 flex-shrink-0">
+                      <svg
+                        class="w-full h-full transform -rotate-90"
+                        viewBox="0 0 36 36"
+                      >
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#102030"
+                          stroke-width="5"
+                        ></circle>
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#2ebf53"
+                          stroke-width="5"
+                          stroke-dasharray="40 100"
+                          stroke-linecap="round"
+                        ></circle>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 2: ĐANG XÂY DỰNG -->
+              <div
+                class="bg-[#040d1a]/80 border border-[#ffd014]/20 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden h-fit shadow-[0_0_10px_rgba(255,208,20,0.02)]"
+                style="
+                  clip-path: polygon(0 0, 100% 0, 100% 90%, 93% 100%, 0 100%);
+                "
+              >
+                <div
+                  class="absolute bottom-0 right-0 w-2 h-2 bg-[#ffd014] rotate-45 translate-x-1 translate-y-1"
+                ></div>
+
+                <!-- Top Row: Toàn quốc & Icon -->
+                <div
+                  class="flex justify-between items-center leading-none mb-1.5"
+                >
+                  <span
+                    class="text-xs text-[#ffd014] font-bold tracking-wider uppercase border border-[#ffd014]/30 rounded-full px-1.5 py-0.5 bg-[#ffd014]/5 font-mono scale-90 origin-left"
+                  >
+                    TOÀN QUỐC
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <!-- Icon tròn thu nhỏ đưa lên đây -->
+                    <div
+                      class="w-7 h-7 rounded-full border border-[#ffd014]/20 bg-[#ffd014]/5 flex items-center justify-center relative flex-shrink-0"
+                    >
+                      <div
+                        class="absolute inset-0 rounded-full border border-dashed border-[#ffd014]/10 animate-[spin_40s_linear_infinite]"
+                      ></div>
+                      <i
+                        class="fa-solid fa-screwdriver-wrench text-[#ffd014] text-[10px]"
+                      ></i>
+                    </div>
+                    <div
+                      class="text-[#a4ccf4]/30 text-[9px] tracking-widest cursor-pointer select-none"
+                    >
+                      •••
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Row: Thông tin chính & Tỷ lệ + Donut -->
+                <div
+                  class="flex justify-between items-center pt-1 border-t border-[#a4ccf4]/5"
+                >
+                  <div class="flex flex-col gap-0.5">
+                    <h3
+                      class="text-[9.5px] font-bold text-[#a4ccf4]/90 tracking-wide uppercase"
+                    >
+                      ĐANG XÂY DỰNG
+                    </h3>
+                    <div class="flex items-baseline gap-0.5">
+                      <span
+                        class="text-xl font-black text-[#ffd014] leading-none drop-shadow-[0_0_6px_rgba(255,208,20,0.3)]"
+                        >102</span
+                      >
+                      <span
+                        class="text-[7.5px] text-[#ffd014]/60 font-bold uppercase tracking-wider"
+                        >CSDL</span
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Tỷ lệ & Donut đưa lên cùng dòng -->
+                  <div class="flex items-center gap-1.5">
+                    <div class="flex flex-col items-end leading-none">
+                      <span
+                        class="text-[7.5px] text-[#a4ccf4]/40 font-bold uppercase"
+                        >TỶ LỆ</span
+                      >
+                      <span
+                        class="text-xs font-black text-[#ffd014] tracking-tight"
+                        >(43.3%)</span
+                      >
+                    </div>
+                    <div class="relative w-6 h-6 flex-shrink-0">
+                      <svg
+                        class="w-full h-full transform -rotate-90"
+                        viewBox="0 0 36 36"
+                      >
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#102030"
+                          stroke-width="5"
+                        ></circle>
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#ffd014"
+                          stroke-width="5"
+                          stroke-dasharray="13.3 100"
+                          stroke-linecap="round"
+                        ></circle>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 3: CHƯA SỬ DỤNG -->
+              <div
+                class="bg-[#040d1a]/80 border border-[#ff007f]/20 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden h-fit shadow-[0_0_10px_rgba(255,0,127,0.02)]"
+                style="
+                  clip-path: polygon(0 0, 100% 0, 100% 90%, 93% 100%, 0 100%);
+                "
+              >
+                <div
+                  class="absolute bottom-0 right-0 w-2 h-2 bg-[#ff007f] rotate-45 translate-x-1 translate-y-1"
+                ></div>
+
+                <!-- Top Row: Toàn quốc & Icon -->
+                <div
+                  class="flex justify-between items-center leading-none mb-1.5"
+                >
+                  <span
+                    class="text-xs text-[#ff007f] font-bold tracking-wider uppercase border border-[#ff007f]/30 rounded-full px-1.5 py-0.5 bg-[#ff007f]/5 font-mono scale-90 origin-left"
+                  >
+                    TOÀN QUỐC
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <!-- Icon tròn thu nhỏ đưa lên đây -->
+                    <div
+                      class="w-7 h-7 rounded-full border border-[#ff007f]/20 bg-[#ff007f]/5 flex items-center justify-center relative flex-shrink-0"
+                    >
+                      <div
+                        class="absolute inset-0 rounded-full border border-dashed border-[#ff007f]/10 animate-[spin_35s_linear_infinite]"
+                      ></div>
+                      <i
+                        class="fa-solid fa-triangle-exclamation text-[#ff007f] text-[10px]"
+                      ></i>
+                    </div>
+                    <div
+                      class="text-[#a4ccf4]/30 text-[9px] tracking-widest cursor-pointer select-none"
+                    >
+                      •••
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Row: Thông tin chính & Tỷ lệ + Donut -->
+                <div
+                  class="flex justify-between items-center pt-1 border-t border-[#a4ccf4]/5"
+                >
+                  <div class="flex flex-col gap-0.5">
+                    <h3
+                      class="text-[9.5px] font-bold text-[#a4ccf4]/90 tracking-wide uppercase"
+                    >
+                      CHƯA SỬ DỤNG
+                    </h3>
+                    <div class="flex items-baseline gap-0.5">
+                      <span
+                        class="text-xl font-black text-[#ff007f] leading-none drop-shadow-[0_0_6px_rgba(255,0,127,0.3)]"
+                        >75</span
+                      >
+                      <span
+                        class="text-[7.5px] text-[#ff007f]/60 font-bold uppercase tracking-wider"
+                        >CSDL</span
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Tỷ lệ & Donut đưa lên cùng dòng -->
+                  <div class="flex items-center gap-1.5">
+                    <div class="flex flex-col items-end leading-none">
+                      <span
+                        class="text-[7.5px] text-[#a4ccf4]/40 font-bold uppercase"
+                        >TỶ LỆ</span
+                      >
+                      <span
+                        class="text-xs font-black text-[#ff007f] tracking-tight"
+                        >(34.7%)</span
+                      >
+                    </div>
+                    <div class="relative w-6 h-6 flex-shrink-0">
+                      <svg
+                        class="w-full h-full transform -rotate-90"
+                        viewBox="0 0 36 36"
+                      >
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#102030"
+                          stroke-width="5"
+                        ></circle>
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#ff007f"
+                          stroke-width="5"
+                          stroke-dasharray="6.7 100"
+                          stroke-linecap="round"
+                        ></circle>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 4: CHƯA TRIỂN KHAI -->
+              <div
+                class="bg-[#040d1a]/80 border border-[#007fff]/20 rounded-lg p-2 flex flex-col justify-between relative overflow-hidden h-fit shadow-[0_0_10px_rgba(0,127,255,0.02)]"
+                style="
+                  clip-path: polygon(0 0, 100% 0, 100% 90%, 93% 100%, 0 100%);
+                "
+              >
+                <div
+                  class="absolute bottom-0 right-0 w-2 h-2 bg-[#007fff] rotate-45 translate-x-1 translate-y-1"
+                ></div>
+
+                <!-- Top Row: Toàn quốc & Icon -->
+                <div
+                  class="flex justify-between items-center leading-none mb-1.5"
+                >
+                  <span
+                    class="text-xs text-[#007fff] font-bold tracking-wider uppercase border border-[#007fff]/30 rounded-full px-1.5 py-0.5 bg-[#007fff]/5 font-mono scale-90 origin-left"
+                  >
+                    TOÀN QUỐC
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <!-- Icon tròn thu nhỏ đưa lên đây -->
+                    <div
+                      class="w-7 h-7 rounded-full border border-[#007fff]/20 bg-[#007fff]/5 flex items-center justify-center relative flex-shrink-0"
+                    >
+                      <div
+                        class="absolute inset-0 rounded-full border border-dashed border-[#007fff]/10 animate-[spin_25s_linear_infinite]"
+                      ></div>
+                      <i
+                        class="fa-solid fa-lock text-[#007fff] text-[10px]"
+                      ></i>
+                    </div>
+                    <div
+                      class="text-[#a4ccf4]/30 text-[9px] tracking-widest cursor-pointer select-none"
+                    >
+                      •••
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Row: Thông tin chính & Tỷ lệ + Donut -->
+                <div
+                  class="flex justify-between items-center pt-1 border-t border-[#a4ccf4]/5"
+                >
+                  <div class="flex flex-col gap-0.5">
+                    <h3
+                      class="text-[9.5px] font-bold text-[#a4ccf4]/90 tracking-wide uppercase"
+                    >
+                      CHƯA TRIỂN KHAI
+                    </h3>
+                    <div class="flex items-baseline gap-0.5">
+                      <span
+                        class="text-xl font-black text-[#007fff] leading-none drop-shadow-[0_0_6px_rgba(0,127,255,0.3)]"
+                        >46</span
+                      >
+                      <span
+                        class="text-[7.5px] text-[#007fff]/60 font-bold uppercase tracking-wider"
+                        >CSDL</span
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Tỷ lệ & Donut đưa lên cùng dòng -->
+                  <div class="flex items-center gap-1.5">
+                    <div class="flex flex-col items-end leading-none">
+                      <span
+                        class="text-[7.5px] text-[#a4ccf4]/40 font-bold uppercase"
+                        >TỶ LỆ</span
+                      >
+                      <span
+                        class="text-xs font-black text-[#007fff] tracking-tight"
+                        >(40.0%)</span
+                      >
+                    </div>
+                    <div class="relative w-6 h-6 flex-shrink-0">
+                      <svg
+                        class="w-full h-full transform -rotate-90"
+                        viewBox="0 0 36 36"
+                      >
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#102030"
+                          stroke-width="5"
+                        ></circle>
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="16"
+                          fill="none"
+                          stroke="#007fff"
+                          stroke-width="5"
+                          stroke-dasharray="40 100"
+                          stroke-linecap="round"
+                        ></circle>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- MAIN BODY SECTION -->
-            <main class="flex-1 flex gap-4 overflow-hidden min-h-[480px]">
+            <main class="flex-1 flex gap-4 overflow-hidden">
               <!-- CỘT TRÁI: DANH SÁCH TỈNH THÀNH -->
               <section
-                class="w-[280px] flex-shrink-0 hud-panel p-4 flex flex-col overflow-hidden"
+                class="w-[280px] flex-shrink-0 hud-panel p-4 flex flex-col overflow-hidden relative group/sidebar border-l-2 border-l-[#00e5ff] bg-gradient-to-b from-[#041527]/90 to-[#020b14]/95 rounded-2xl"
               >
+                <!-- Lớp phủ hiệu ứng quét Radar / Scanline chuyển động toàn khu vực -->
+                <div
+                  class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] bg-[size:100%_4px,3px_100%] z-20 opacity-40"
+                ></div>
+                <div
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#00e5ff]/5 to-transparent -translate-y-full animate-[scan_3s_linear_infinite] z-20"
+                ></div>
+
+                <!-- Chi tiết cơ khí góc giả tưởng (Góc Neon định vị) -->
+                <div
+                  class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-[#00e5ff] shadow-[0_0_8px_#00e5ff]"
+                ></div>
+                <div
+                  class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-[#00e5ff] shadow-[0_0_8px_#00e5ff]"
+                ></div>
+
+                <!-- Tiêu đề HUD với hiệu ứng nhiễu Glitch & Hologram -->
+
                 <h2
-                  class="text-[#00e5ff] text-sm font-semibold uppercase tracking-wider mb-3 border-b border-[#104b75] pb-2 flex-shrink-0"
+                  class="mb-4 border-b border-[#104b75]/60 pb-2.5 flex-shrink-0 relative flex items-center gap-2 justify-between shadow-[0_1px_0_rgba(0,e5,ff,0.1)]"
                 >
-                  Tiến độ 34 Địa phương
+                  <span
+                    class="text-sm text-[#e25cff] uppercase font-black font-sans drop-shadow-[0_0_8px_rgba(226,92,255,0.6)] flex items-center gap-2 font-mono relative"
+                  >
+                    <!-- Đốm sáng particle nhấp nháy cạnh tiêu đề -->
+                    <span
+                      class="w-1.5 h-1.5 bg-[#ff007f] inline-block rounded-full animate-ping absolute -left-3"
+                    ></span>
+                    <span
+                      class="text-sm !text-[#e25cff] uppercase font-black font-sans drop-shadow-[0_0_8px_rgba(226,92,255,0.6)]"
+                    ></span>
+                    Tiến độ 34 địa phương
+                  </span>
+                  <!-- Ký hiệu mã hóa trang trí tăng tính Tech -->
+                  <span
+                    class="font-mono text-[9px] text-[#1d5f9c] tracking-normal animate-pulse select-none"
+                    >[MAP_ONLINE]</span
+                  >
                 </h2>
-                <div id="province-list" class="flex-1 overflow-y-auto pr-1">
-                  <!-- JS sinh danh sách -->
+
+                <!-- Khung chứa danh sách tỉnh thành với thanh cuộn Neon -->
+                <div
+                  id="province-list"
+                  class="cyber-scrollbar flex-1 overflow-y-auto pr-1.5 space-y-1 min-h-0 z-10"
+                >
+                  <!-- JS sinh danh sách (Hãy đảm bảo cấu trúc class sinh ra khớp với mẫu CSS bên dưới) -->
                 </div>
               </section>
 
@@ -4216,385 +4703,651 @@
               <section class="flex-1 flex gap-4 overflow-hidden">
                 <!-- BẢN ĐỒ VIỆT NAM (ĐÃ NÂNG CẤP LƯỚI NỀN VÀ GLOW EFFECT) -->
                 <div
-                  class="flex-1 hud-panel p-4 flex flex-col map-hud-bg overflow-hidden"
+                  class="flex-1 hud-panel p-4 flex flex-col map-hud-bg overflow-hidden relative"
                 >
                   <div
-                    class="text-xs text-[#00e5ff] tracking-widest uppercase mb-2 flex-shrink-0 font-medium"
+                    class="text-xs text-[#00e5ff] tracking-widest uppercase mb-2 flex-shrink-0 font-medium z-10"
                   >
                     <i
                       class="fa-solid fa-satellite-dish mr-1.5 animate-pulse"
                     ></i>
-                    Khu vực bản đồ số
+                    MAP_DIGITAL_ZONE
                   </div>
-                  <!-- Vòng tròn radar trang trí góc dưới bên trái chuẩn Cyberpunk hình 2 -->
+
+                  <!-- Vòng tròn radar công nghệ lớn đặt tại TRUNG TÂM LAYERS -->
                   <div
-                    class="absolute bottom-4 left-4 w-28 h-28 border border-cyan-500/10 rounded-full pointer-events-none flex items-center justify-center"
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-2 border-cyan-500/20 rounded-full pointer-events-none flex items-center justify-center opacity-80 filter drop-shadow-[0_0_8px_rgba(6,182,212,0.3)]"
                   >
                     <div
-                      class="w-20 h-20 border border-cyan-500/20 rounded-full border-dashed animate-spin"
-                      style="animation-duration: 10s"
+                      class="w-44 h-44 border-2 border-cyan-500/30 rounded-full border-dashed animate-[spin_12s_linear_infinite]"
+                      style="animation-direction: reverse"
                     ></div>
                     <div
-                      class="absolute w-12 h-12 border border-cyan-500/30 rounded-full"
+                      class="absolute w-28 h-28 border-4 border-cyan-500/20 rounded-full"
+                    ></div>
+                    <div
+                      class="absolute w-14 h-14 border-2 border-cyan-400/50 rounded-full border-dotted animate-pulse shadow-[inset_0_0_10px_rgba(6,182,212,0.3)]"
                     ></div>
                   </div>
+
+                  <!-- Vùng không gian bản đồ và Lớp phủ Box Trạng Thái góc trên bên phải -->
                   <div
-                    id="map-container"
-                    class="flex-1 w-full h-full flex items-center justify-center overflow-hidden"
+                    class="flex-1 w-full h-full relative overflow-hidden z-10"
                   >
-                    <!-- Bản đồ SVG được đưa vào đây -->
+                    <!-- BOX 1: TRẠNG THÁI HỆ THỐNG (ĐÃ THU NHỎ & ABSOLUTE TOP RIGHT) -->
+                    <div
+                      class="absolute -top-2 right-1 z-20 p-2 w-[280px] bg-[#020511]/90 backdrop-blur-md border border-[#2d124d] rounded-xl shadow-[0_0_20px_rgba(147,51,234,0.25)] font-mono select-none"
+                    >
+                      <!-- Lớp phủ ma trận sọc ngang mờ (Scanlines) -->
+                      <div
+                        class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.12)_50%)] bg-[size:100%_4px] opacity-30"
+                      ></div>
+
+                      <!-- Đường viền bo góc Cyber ngoài cùng -->
+                      <div
+                        class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#8b5cf6]"
+                      ></div>
+                      <div
+                        class="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#ec4899]"
+                      ></div>
+                      <div
+                        class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#ec4899]"
+                      ></div>
+                      <div
+                        class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#3b82f6]"
+                      ></div>
+
+                      <!-- Tiêu đề Header & Button Xem chi tiết -->
+                      <div
+                        class="flex items-center justify-between border-b border-[#1b1c3a]/60 pb-1.5 mb-2"
+                      >
+                        <h3
+                          id="box-title-status"
+                          class="text-[10px] text-[#e25cff] uppercase font-black font-sans tracking-wider drop-shadow-[0_0_6px_rgba(226,92,255,0.6)]"
+                        >
+                          TRẠNG THÁI HỆ THỐNG
+                        </h3>
+
+                        <button
+                          title="Xem chi tiết"
+                          class="group cursor-pointer flex items-center gap-1 px-1 py-0.5 rounded border border-[#e25cff]/30 bg-[#e25cff]/5 text-[#e25cff] hover:bg-[#e25cff]/15 hover:border-[#e25cff] hover:text-white transition-all duration-200 font-mono tracking-wider shadow-[0_0_6px_rgba(226,92,255,0.1)] hover:shadow-[0_0_10px_rgba(226,92,255,0.3)] focus:outline-none"
+                        >
+                          <i
+                            class="fa-solid fa-expand text-[12px] opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"
+                          ></i>
+                        </button>
+                      </div>
+
+                      <!-- Grid 2x2 chứa 4 thẻ trạng thái nhỏ gọn -->
+                      <div class="grid grid-cols-2 gap-1.5">
+                        <!-- CARD 1: KHAI THÁC -->
+                        <div
+                          class="cursor-pointer bg-[#031b24]/50 border border-[#00d2ff]/20 p-1.5 rounded-lg flex items-center gap-2 transition-all duration-200 hover:border-[#00d2ff]/50"
+                        >
+                          <div
+                            class="w-6 h-6 rounded flex items-center justify-center border border-[#00d2ff]/40 bg-[#022530] text-[#00e5ff] flex-shrink-0"
+                          >
+                            <i class="fa-solid fa-cube text-xs"></i>
+                          </div>
+                          <div class="flex flex-col min-w-0">
+                            <span
+                              class="text-[#00e5ff] text-[8px] font-bold tracking-tight truncate"
+                              >KHAI THÁC</span
+                            >
+                            <strong
+                              id="st-khai-thac-val"
+                              class="text-sm text-white font-sans font-bold leading-none mt-0.5"
+                              >8</strong
+                            >
+                          </div>
+                        </div>
+
+                        <!-- CARD 2: XÂY DỰNG -->
+                        <div
+                          class="cursor-pointer bg-[#1f1a07]/50 border border-[#ffb700]/20 p-1.5 rounded-lg flex items-center gap-2 transition-all duration-200 hover:border-[#ffb700]/50"
+                        >
+                          <div
+                            class="w-6 h-6 rounded flex items-center justify-center border border-[#ffb700]/40 bg-[#2d2305] text-[#ffb700] flex-shrink-0"
+                          >
+                            <i
+                              class="fa-solid fa-gear text-xs animate-[spin_15s_linear_infinite]"
+                            ></i>
+                          </div>
+                          <div class="flex flex-col min-w-0">
+                            <span
+                              class="text-[#ffb700] text-[8px] font-bold tracking-tight truncate"
+                              >XÂY DỰNG</span
+                            >
+                            <strong
+                              id="st-xaydung-val"
+                              class="text-sm text-white font-sans font-bold leading-none mt-0.5"
+                              >3</strong
+                            >
+                          </div>
+                        </div>
+
+                        <!-- CARD 3: CHƯA SỬ DỤNG -->
+                        <div
+                          class="cursor-pointer bg-[#220716]/50 border border-[#ff007f]/20 p-1.5 rounded-lg flex items-center gap-2 transition-all duration-200 hover:border-[#ff007f]/50"
+                        >
+                          <div
+                            class="w-6 h-6 rounded flex items-center justify-center border border-[#ff007f]/40 bg-[#33041c] text-[#ff007f] flex-shrink-0"
+                          >
+                            <i class="fa-regular fa-folder-open text-xs"></i>
+                          </div>
+                          <div class="flex flex-col min-w-0">
+                            <span
+                              class="text-[#ff007f] text-[8px] font-bold tracking-tight truncate"
+                              >C.SỬ DỤNG</span
+                            >
+                            <strong
+                              id="st-chua-dung-val"
+                              class="text-sm text-white font-sans font-bold leading-none mt-0.5"
+                              >1</strong
+                            >
+                          </div>
+                        </div>
+
+                        <!-- CARD 4: CHƯA TRIỂN KHAI -->
+                        <div
+                          class="cursor-pointer bg-[#0a122c]/50 border border-[#4f6bb3]/20 p-1.5 rounded-lg flex items-center gap-2 transition-all duration-200 hover:border-[#4f6bb3]/50"
+                        >
+                          <div
+                            class="w-6 h-6 rounded flex items-center justify-center border border-[#4f6bb3]/40 bg-[#0f1b3f] text-[#a2bfff] flex-shrink-0"
+                          >
+                            <i class="fa-solid fa-lock text-xs"></i>
+                          </div>
+                          <div class="flex flex-col min-w-0">
+                            <span
+                              class="text-[#a2bfff] text-[8px] font-bold tracking-tight truncate"
+                              >CHƯA TK</span
+                            >
+                            <strong
+                              id="st-chua-tk-val"
+                              class="text-sm text-white font-sans font-bold leading-none mt-0.5"
+                              >3</strong
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Khung chứa bản đồ SVG nguyên bản -->
+                    <div
+                      id="map-container"
+                      class="w-full h-full flex items-center justify-center"
+                    >
+                      <!-- Bản đồ SVG được đưa vào đây -->
+                    </div>
                   </div>
                 </div>
 
                 <!-- BẢNG THÔNG TIN CHI TIẾT (PHẢI) -->
                 <div
-                  class="w-[420px] flex-shrink-0 flex flex-col gap-3 overflow-y-auto pr-1"
+                  class="w-[420px] flex-shrink-0 flex flex-col gap-3 overflow-hidden pr-1 relative group/datapanel h-full max-h-full min-h-0"
                 >
-                  <!-- Box 1: Trạng thái chi tiết -->
-                  <div class="hud-panel p-4">
-                    <h3
-                      id="box-title-status"
-                      class="text-xs text-[#00e5ff] uppercase tracking-wider font-semibold border-b border-[#104b75] pb-2 mb-3"
+                  <!-- Lớp phủ ma trận nhiễu dòng (Scanline Effect) -->
+                  <div
+                    class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[size:100%_4px] z-20 opacity-30"
+                  ></div>
+
+                  <!-- Box 1: Tiến độ theo thời gian (Chiếm trọn bề ngang phía trên) -->
+                  <div
+                    class="flex-1 min-h-0 bg-gradient-to-b from-[#041527]/90 to-[#020b14]/95 p-2 flex flex-col border border-[#00e5ff]/20 relative"
+                    style="
+                      clip-path: polygon(
+                        0 0,
+                        100% 0,
+                        100% 90%,
+                        95% 100%,
+                        0 100%
+                      );
+                    "
+                  >
+                    <div
+                      class="absolute top-0 left-0 w-1.5 h-1.5 bg-[#00e5ff]"
+                    ></div>
+                    <div
+                      class="text-[9px] text-[#00e5ff] uppercase tracking-[0.12em] font-bold mb-1 flex justify-between items-center px-1 flex-shrink-0"
                     >
-                      Trạng thái chi tiết
-                    </h3>
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                      <div
-                        class="bg-[rgba(40,167,69,0.08)] border border-[rgba(40,167,69,0.3)] p-2.5 flex justify-between items-center rounded"
-                      >
-                        <span class="text-[#2ebf53]"
-                          ><i class="fa-regular fa-circle-check mr-1.5"></i> Đã
-                          khai thác:</span
-                        >
-                        <strong
-                          id="st-khai-thac-val"
-                          class="text-lg text-[#2ebf53] font-bold"
-                          >0</strong
-                        >
-                      </div>
-                      <div
-                        class="bg-[rgba(255,193,7,0.08)] border border-[rgba(255,193,7,0.3)] p-2.5 flex justify-between items-center rounded"
-                      >
-                        <span class="text-[#ffd014]"
-                          ><i class="fa-solid fa-gear mr-1.5"></i> Đang xây
-                          dựng:</span
-                        >
-                        <strong
-                          id="st-xaydung-val"
-                          class="text-lg text-[#ffd014] font-bold"
-                          >0</strong
-                        >
-                      </div>
-                      <div
-                        class="bg-[rgba(220,53,69,0.08)] border border-[rgba(220,53,69,0.3)] p-2.5 flex justify-between items-center rounded"
-                      >
-                        <span class="text-[#e43b4c]"
-                          ><i class="fa-regular fa-folder-open mr-1.5"></i> Chưa
-                          sử dụng:</span
-                        >
-                        <strong
-                          id="st-chua-dung-val"
-                          class="text-lg text-[#e43b4c] font-bold"
-                          >0</strong
-                        >
-                      </div>
-                      <div
-                        class="bg-[rgba(140,160,180,0.08)] border border-[rgba(140,160,180,0.3)] p-2.5 flex justify-between items-center rounded"
-                      >
-                        <span class="text-[#ced4da]"
-                          ><i class="fa-solid fa-lock mr-1.5"></i> Chưa triển
-                          khai:</span
-                        >
-                        <strong
-                          id="st-chua-tk-val"
-                          class="text-lg text-[#ced4da] font-bold"
-                          >0</strong
-                        >
-                      </div>
+                      <span>
+                        <i
+                          class="fa-solid fa-chart-line mr-1 text-[#ff007f]"
+                        ></i>
+                        Tiến độ theo thời gian
+                      </span>
+                      <span class="text-[7px] text-[#528bb2]">[MS_441]</span>
+                    </div>
+                    <div
+                      class="flex-1 relative bg-[radial-gradient(rgba(0,229,255,0.03)_1px,transparent_1px)] bg-[size:8px_8px] border border-[#1d5f9c]/20 p-1 min-h-0"
+                    >
+                      <canvas id="time-chart" class="w-full h-full"></canvas>
                     </div>
                   </div>
 
-                  <!-- Box 2: Đánh giá 8 tiêu chí -->
-                  <div class="hud-panel p-4 flex-1">
-                    <h3
-                      id="box-title-evaluation"
-                      class="text-xs text-[#00e5ff] uppercase tracking-wider font-semibold border-b border-[#104b75] pb-2 mb-3"
+                  <!-- Hàng Ngang Phía Dưới: Chia đôi không gian cho 2 Box chỉ số tròn -->
+                  <div
+                    class="flex gap-3 h-[135px] flex-shrink-0 w-full min-h-0"
+                  >
+                    <!-- Box 2: Tiến độ chung (Bên trái) -->
+                    <div
+                      class="flex-1 bg-gradient-to-b from-[#041527]/90 to-[#020b14]/95 p-2 flex flex-col items-center justify-between text-center relative border border-[#ff007f]/20"
+                      style="
+                        clip-path: polygon(
+                          12px 0,
+                          100% 0,
+                          100% 100%,
+                          0 100%,
+                          0 12px
+                        );
+                      "
                     >
-                      Đánh giá 8 tiêu chí chuyên sâu
-                    </h3>
-                    <ul class="flex flex-col gap-2 text-xs">
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
+                      <div
+                        class="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#ff007f]"
+                      ></div>
+                      <div
+                        class="text-[9px] text-[#ff007f] uppercase tracking-widest font-bold flex-shrink-0"
                       >
-                        <span class="text-[#a4ccf4]">1. Pháp lý</span>
-                        <span class="font-medium" id="c1">-</span>
-                      </li>
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
+                        Tiến độ triển khai
+                      </div>
+
+                      <div
+                        class="relative w-14 h-14 flex items-center justify-center filter drop-shadow-[0_0_5px_rgba(0,229,255,0.4)] my-1"
                       >
-                        <span class="text-[#a4ccf4]">2. Tài chính</span>
-                        <span class="font-medium" id="c2">-</span>
-                      </li>
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
-                      >
-                        <span class="text-[#a4ccf4]">3. Hạ tầng</span>
-                        <span class="font-medium" id="c3">-</span>
-                      </li>
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
-                      >
-                        <span class="text-[#a4ccf4]">4. Dữ liệu</span>
-                        <span class="font-medium" id="c4">-</span>
-                      </li>
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
-                      >
-                        <span class="text-[#a4ccf4]">5. Phần mềm</span>
-                        <span class="font-medium" id="c5">-</span>
-                      </li>
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
-                      >
-                        <span class="text-[#a4ccf4]">6. An ninh an toàn</span>
-                        <span class="font-medium" id="c6">-</span>
-                      </li>
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
-                      >
-                        <span class="text-[#a4ccf4]"
-                          >7. Ứng dụng kết nối chia sẻ</span
+                        <!-- Vòng phân đoạn công nghệ viền ngoài -->
+                        <div
+                          class="absolute w-[calc(100%+6px)] h-[calc(100%+6px)] rounded-full border border-t-[#00e5ff] border-r-transparent border-b-transparent border-l-[#ff007f]/40 animate-[spin_4s_linear_infinite]"
+                        ></div>
+
+                        <svg
+                          class="w-full h-full transform -rotate-90"
+                          viewBox="0 0 100 100"
                         >
-                        <span class="font-medium" id="c7">-</span>
-                      </li>
-                      <li
-                        class="flex justify-between items-center bg-[rgba(255,255,255,0.02)] p-2 rounded"
-                      >
-                        <span class="text-[#a4ccf4]"
-                          >8. Thủ tục hành chính</span
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="42"
+                            fill="transparent"
+                            stroke="rgba(11,36,58,0.4)"
+                            stroke-width="6"
+                          />
+                          <circle
+                            id="overall-progress-ring"
+                            cx="50"
+                            cy="50"
+                            r="42"
+                            fill="transparent"
+                            stroke="#00e5ff"
+                            stroke-width="6"
+                            stroke-dasharray="263.8"
+                            stroke-dashoffset="180"
+                            stroke-linecap="round"
+                          />
+                        </svg>
+                        <div
+                          id="overall-per-text"
+                          class="absolute text-xs font-black text-white tracking-tighter drop-shadow-[0_0_3px_#00e5ff]"
                         >
-                        <span class="font-medium" id="c8">-</span>
-                      </li>
-                    </ul>
+                          0%
+                        </div>
+                      </div>
+
+                      <div
+                        class="text-[8px] text-[#528bb2] uppercase tracking-widest font-bold bg-[rgba(16,75,117,0.15)] px-2 py-0.5 border border-[#164b75]/40 w-full truncate"
+                      >
+                        Hoàn thành
+                      </div>
+                    </div>
+
+                    <!-- Box 3: Tổng quan địa phương (Bên phải - Tự động co giãn theo flex-1 để lấp đầy 420px) -->
+                    <div
+                      class="flex-1 bg-gradient-to-b from-[#041527]/90 to-[#020b14]/95 p-2 flex flex-col items-center justify-between text-center relative border border-[#00e5ff]/20 rounded-sm overflow-hidden"
+                      style="
+                        clip-path: polygon(
+                          0 0,
+                          88% 0,
+                          100% 12px,
+                          100% 100%,
+                          0 100%
+                        );
+                      "
+                    >
+                      <div
+                        class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#00e5ff]"
+                      ></div>
+                      <div
+                        class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#00e5ff]"
+                      ></div>
+
+                      <div
+                        class="text-[9px] text-[#00e5ff] uppercase tracking-[0.1em] font-bold flex items-center justify-center gap-1 w-full truncate flex-shrink-0"
+                      >
+                        <span
+                          class="inline-block w-1 h-1 rounded-full bg-[#00e5ff] animate-ping"
+                        ></span>
+                        Tổng quan địa phương
+                      </div>
+
+                      <div
+                        class="relative w-14 h-14 flex items-center justify-center filter drop-shadow-[0_0_5px_rgba(0,229,255,0.4)] my-1"
+                      >
+                        <!-- Vòng tròn Radar Xoay Chậm -->
+                        <div
+                          class="absolute inset-0 rounded-full border border-dashed border-[#00e5ff]/30 animate-[spin_10s_linear_infinite]"
+                        ></div>
+                        <!-- Hiệu ứng Quét Radar Hồng ngoại -->
+                        <div
+                          class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#ff007f]/0 via-[#ff007f]/5 to-[#ff007f]/20 animate-[spin_2.5s_linear_infinite] opacity-70 pointer-events-none"
+                        ></div>
+
+                        <svg
+                          class="w-full h-full transform -rotate-90"
+                          viewBox="0 0 100 100"
+                        >
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="42"
+                            fill="transparent"
+                            stroke="rgba(16,75,117,0.2)"
+                            stroke-width="6"
+                          />
+                          <circle
+                            class="progress-ring-circle"
+                            cx="50"
+                            cy="50"
+                            r="42"
+                            fill="transparent"
+                            stroke="url(#cyberCyan)"
+                            stroke-width="6"
+                            stroke-dasharray="251.2"
+                            stroke-dashoffset="65"
+                            stroke-linecap="round"
+                          />
+                          <defs>
+                            <linearGradient
+                              id="cyberCyan"
+                              x1="0%"
+                              y1="0%"
+                              x2="100%"
+                              y2="100%"
+                            >
+                              <stop offset="0%" stop-color="#ff007f" />
+                              <stop offset="60%" stop-color="#00e5ff" />
+                              <stop offset="100%" stop-color="#0055ff" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div
+                          class="absolute text-center flex flex-col justify-center items-center scale-90"
+                        >
+                          <span
+                            class="text-[7px] text-[#528bb2] tracking-widest leading-none"
+                            >TOTAL</span
+                          >
+                          <span
+                            id="total-ratio-val"
+                            class="text-xs font-black text-white my-0.5 tracking-tighter drop-shadow-[0_0_3px_rgba(255,255,255,0.5)]"
+                            >15/15</span
+                          >
+                          <span
+                            class="text-[6px] text-[#ff007f] font-bold tracking-wider bg-[#ff007f]/10 px-0.5 rounded-[1px] border border-[#ff007f]/20"
+                            >DB_NET</span
+                          >
+                        </div>
+                      </div>
+
+                      <div
+                        class="text-[8px] text-[#528bb2] uppercase tracking-widest font-bold bg-[rgba(16,75,117,0.15)] px-2 py-0.5 border border-[#164b75]/40 w-full truncate"
+                      >
+                        CSDL xây dựng
+                      </div>
+                    </div>
                   </div>
                 </div>
               </section>
             </main>
 
             <!-- THỐNG KÊ HÀNG DƯỚI -->
-            <footer class="h-[140px] flex-shrink-0 flex gap-4 w-full">
+            <footer
+              class="h-[140px] flex-shrink-0 flex gap-4 w-full text-white font-mono select-none relative p-1 min-h-0"
+            >
+              <!-- Lớp phủ ma trận sọc nhiễu quét ngang (Scanlines Effect) -->
               <div
-                class="w-[280px] flex-shrink-0 hud-panel p-3 flex flex-col items-center justify-center relative"
-              >
-                <div
-                  class="text-[10px] text-[#528bb2] uppercase tracking-wider absolute top-1.5 text-center w-full"
-                >
-                  Tổng quan 34 địa phương
-                </div>
-                <div
-                  class="relative w-20 h-20 flex items-center justify-center mt-2"
-                >
-                  <svg class="w-full h-full" viewBox="0 0 100 100">
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="40"
-                      fill="transparent"
-                      stroke="#09253f"
-                      stroke-width="8"
-                    />
-                    <circle
-                      class="progress-ring-circle"
-                      cx="50"
-                      cy="50"
-                      r="40"
-                      fill="transparent"
-                      stroke="url(#cyanGlow)"
-                      stroke-width="8"
-                      stroke-dasharray="251.2"
-                      stroke-dashoffset="50"
-                    />
-                    <defs>
-                      <linearGradient
-                        id="cyanGlow"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stop-color="#00ffff" />
-                        <stop offset="100%" stop-color="#0055ff" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div class="absolute text-center">
-                    <div class="text-[10px] text-[#528bb2] leading-none">
-                      TỔNG SỐ
-                    </div>
-                    <div
-                      id="total-ratio-val"
-                      class="text-base font-bold text-white leading-tight"
-                    >
-                      15/15
-                    </div>
-                    <div class="text-[9px] text-[#00e5ff] leading-none">
-                      CSDL
-                    </div>
-                  </div>
-                </div>
-              </div>
+                class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.12)_50%)] bg-[size:100%_4px] z-20 opacity-40"
+              ></div>
 
-              <div class="flex-1 grid grid-cols-4 gap-3">
-                <div
-                  class="hud-panel p-2.5 flex flex-col justify-between items-center bg-opacity-40"
-                >
-                  <div class="text-[11px] text-[#528bb2] font-medium">
-                    Đã khai thác
-                  </div>
-                  <div class="my-1 text-emerald-400 text-lg">
-                    <i class="fa-solid fa-database"></i>
-                  </div>
-                  <div class="text-center">
-                    <div
-                      id="bot-kt-num"
-                      class="text-xl font-bold text-emerald-400 leading-none"
-                    >
-                      0
-                    </div>
-                    <div
-                      id="bot-kt-per"
-                      class="text-[10px] text-[#528bb2] mt-0.5"
-                    >
-                      (0%)
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="hud-panel p-2.5 flex flex-col justify-between items-center bg-opacity-40"
-                >
-                  <div class="text-[11px] text-[#528bb2] font-medium">
-                    Đang xây dựng
-                  </div>
-                  <div class="my-1 text-amber-400 text-lg">
-                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                  </div>
-                  <div class="text-center">
-                    <div
-                      id="bot-xd-num"
-                      class="text-xl font-bold text-amber-400 leaning-none"
-                    >
-                      0
-                    </div>
-                    <div
-                      id="bot-xd-per"
-                      class="text-[10px] text-[#528bb2] mt-0.5"
-                    >
-                      (0%)
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="hud-panel p-2.5 flex flex-col justify-between items-center bg-opacity-40"
-                >
-                  <div class="text-[11px] text-[#528bb2] font-medium">
-                    Chưa sử dụng
-                  </div>
-                  <div class="my-1 text-rose-400 text-lg">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                  </div>
-                  <div class="text-center">
-                    <div
-                      id="bot-cd-num"
-                      class="text-xl font-bold text-rose-400 leading-none"
-                    >
-                      0
-                    </div>
-                    <div
-                      id="bot-cd-per"
-                      class="text-[10px] text-[#528bb2] mt-0.5"
-                    >
-                      (0%)
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="hud-panel p-2.5 flex flex-col justify-between items-center bg-opacity-40"
-                >
-                  <div class="text-[11px] text-[#528bb2] font-medium">
-                    Chưa triển khai
-                  </div>
-                  <div class="my-1 text-blue-400 text-lg">
-                    <i class="fa-solid fa-lock"></i>
-                  </div>
-                  <div class="text-center">
-                    <div
-                      id="bot-ctk-num"
-                      class="text-xl font-bold text-blue-400 leading-none"
-                    >
-                      0
-                    </div>
-                    <div
-                      id="bot-ctk-per"
-                      class="text-[10px] text-[#528bb2] mt-0.5"
-                    >
-                      (0%)
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+              <!-- Box 2: Đánh giá 8 tiêu chí -->
               <div
-                class="w-[140px] flex-shrink-0 hud-panel p-2 flex flex-col items-center justify-between text-center"
+                class="hud-panel p-3 flex-1 flex flex-col overflow-hidden relative border-r-2 border-r-[#ff007f] bg-gradient-to-tr from-[#041527]/90 to-[#020b14]/95 rounded-2xl select-none"
               >
-                <div class="text-[10px] text-[#528bb2] uppercase font-semibold">
-                  Tiến độ chung
-                </div>
+                <!-- Góc định vị Neon Hồng -->
                 <div
-                  class="relative w-16 h-16 flex items-center justify-center"
+                  class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-[#ff007f] shadow-[0_0_6px_#ff007f]"
+                ></div>
+
+                <!-- Header: Tiêu đề & Button Mở rộng Cyber Style -->
+                <div
+                  class="flex items-center justify-between pb-1.5 mb-2 border-b border-[#104b75]/30"
                 >
-                  <svg class="w-full h-full" viewBox="0 0 100 100">
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="42"
-                      fill="transparent"
-                      stroke="#0b243a"
-                      stroke-width="6"
-                    />
-                    <circle
-                      id="overall-progress-ring"
-                      cx="50"
-                      cy="50"
-                      r="42"
-                      fill="transparent"
-                      stroke="#00e5ff"
-                      stroke-width="6"
-                      stroke-dasharray="263.8"
-                      stroke-dashoffset="87.8"
-                    />
-                  </svg>
-                  <div
-                    id="overall-per-text"
-                    class="absolute text-sm font-bold text-white"
+                  <h3
+                    id="box-title-evaluation"
+                    class="text-[11px] text-[#e25cff] uppercase font-black font-sans drop-shadow-[0_0_8px_rgba(226,92,255,0.6)] flex items-center gap-1.5"
                   >
-                    0%
-                  </div>
-                </div>
-                <div class="text-[9px] text-[#528bb2] mb-1">Hoàn thành</div>
-              </div>
+                    <span>
+                      <i
+                        class="fa-solid fa-shield-halved text-[#00e5ff] animate-pulse"
+                      ></i>
+                      EVALUATION_CRITERIA.8
+                    </span>
+                    <span
+                      class="text-[8px] text-[#ff007f]/50 font-normal opacity-80"
+                      >[METRICS_SECURE]</span
+                    >
+                  </h3>
 
-              <div class="w-[260px] flex-shrink-0 hud-panel p-2 flex flex-col">
-                <div
-                  class="text-[10px] text-[#528bb2] uppercase font-semibold mb-1 text-center"
+                  <!-- Button Xem chi tiết kèm icon expand được thiết kế lại nhỏ gọn, tinh tế -->
+                  <button
+                    title="Xem chi tiết"
+                    class="group cursor-pointer flex items-center gap-1.5 px-2 py-0.5 rounded border border-[#e25cff]/30 bg-[#e25cff]/5 text-[#e25cff] hover:bg-[#e25cff]/15 hover:border-[#e25cff] hover:text-white transition-all duration-200 text-[9px] font-mono tracking-wider shadow-[0_0_4px_rgba(226,92,255,0.1)] focus:outline-none"
+                  >
+                    <span>XEM CHI TIẾT</span>
+                    <i
+                      class="fa-solid fa-expand text-[8px] opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-200"
+                    ></i>
+                  </button>
+                </div>
+
+                <!-- Danh sách tiêu chí cấu trúc GRID 4 CỘT (2 HÀNG) phù hợp hoàn hảo với chiều cao footer -->
+                <ul
+                  class="cyber-scrollbar flex-1 grid grid-cols-4 gap-1.5 text-[10px] overflow-y-auto pr-1 font-mono min-h-0 content-start"
                 >
-                  Tiến độ theo thời gian
-                </div>
-                <div class="flex-1 relative">
-                  <canvas id="time-chart"></canvas>
-                </div>
+                  <!-- 01 // PHÁP LÝ -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >01</span
+                      >
+                      <i
+                        class="fa-solid fa-scale-balanced text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">PHÁP LÝ</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c1"
+                      >-</span
+                    >
+                  </li>
+
+                  <!-- 02 // TÀI CHÍNH -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >02</span
+                      >
+                      <i
+                        class="fa-solid fa-wallet text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">TÀI CHÍNH</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c2"
+                      >-</span
+                    >
+                  </li>
+
+                  <!-- 03 // HẠ TẦNG -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >03</span
+                      >
+                      <i
+                        class="fa-solid fa-server text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">HẠ TẦNG</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c3"
+                      >-</span
+                    >
+                  </li>
+
+                  <!-- 04 // DỮ LIỆU -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >04</span
+                      >
+                      <i
+                        class="fa-solid fa-database text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">DỮ LIỆU</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c4"
+                      >-</span
+                    >
+                  </li>
+
+                  <!-- 05 // PHẦN MỀM -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >05</span
+                      >
+                      <i
+                        class="fa-solid fa-laptop-code text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">PHẦN MỀM</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c5"
+                      >-</span
+                    >
+                  </li>
+
+                  <!-- 06 // AN NINH AN TOÀN -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >06</span
+                      >
+                      <i
+                        class="fa-solid fa-shield-virus text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">AN NINH</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c6"
+                      >-</span
+                    >
+                  </li>
+
+                  <!-- 07 // KẾT NỐI CHIA SẺ -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >07</span
+                      >
+                      <i
+                        class="fa-solid fa-network-wired text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">KẾT NỐI</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c7"
+                      >-</span
+                    >
+                  </li>
+
+                  <!-- 08 // THỦ TỤC HÀNH CHÍNH -->
+                  <li
+                    class="cyber-criterion-item flex justify-between items-center p-1.5 rounded relative overflow-hidden bg-[#051c33]/40 border border-[#104b75]/20 hover:border-[#00e5ff]/30 transition-all h-fit"
+                  >
+                    <div
+                      class="flex items-center gap-1.5 text-[#a4ccf4] z-10 min-w-0"
+                    >
+                      <span
+                        class="text-[8px] text-white/40 font-bold flex-shrink-0"
+                        >08</span
+                      >
+                      <i
+                        class="fa-solid fa-file-signature text-[#00e5ff]/80 w-3 text-center text-[11px] flex-shrink-0"
+                      ></i>
+                      <span class="truncate tracking-wide">HÀNH CHÍNH</span>
+                    </div>
+                    <span
+                      class="font-bold text-[#00e5ff] z-10 filter drop-shadow-[0_0_4px_#00e5ff] ml-1 flex-shrink-0"
+                      id="c8"
+                      >-</span
+                    >
+                  </li>
+                </ul>
               </div>
             </footer>
-
             <div
               id="province-tooltip"
               class="province-tooltip rounded hud-panel shadow-2xl"
@@ -13834,6 +14587,7 @@
     </script>
     <!-- ban do so -->
     <script>
+      // Database cấu trúc mẫu tương ứng với giao diện hình ảnh của bạn
       const PROVINCES_DATA = {
         "Hà Nội": {
           max: 15,
@@ -13925,8 +14679,90 @@
           ctk: 15,
           criteria: [3, 3, 3, 3, 3, 3, 3, 3],
         },
+        "Tuyên Quang": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Lào Cai": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Thái Nguyên": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Phú Thọ": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Bắc Ninh": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Hưng Yên": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Ninh Bình": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Thanh Hóa": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
+        "Hà Tĩnh": {
+          max: 15,
+          current: null,
+          kt: 0,
+          xd: 0,
+          cd: 0,
+          ctk: 15,
+          criteria: [3, 3, 3, 3, 3, 3, 3, 3],
+        },
       };
 
+      // Dictionary chuyển đổi ngược SimpleMaps Key
       const MAP_MAPPING = {
         "VN-HN": "Hà Nội",
         "VN-HP": "Hải Phòng",
@@ -13938,6 +14774,15 @@
         "VN-CB": "Cao Bằng",
         "VN-LS": "Lạng Sơn",
         "VN-NA": "Nghệ An",
+        "VN-TQ": "Tuyên Quang",
+        "VN-LC": "Lào Cai",
+        "VN-TN": "Thái Nguyên",
+        "VN-PT": "Phú Thọ",
+        "VN-BN": "Bắc Ninh",
+        "VN-HY": "Hưng Yên",
+        "VN-NB": "Ninh Bình",
+        "VN-TH": "Thanh Hóa",
+        "VN-HT": "Hà Tĩnh",
       };
 
       const CRIT_CONFIG = {
@@ -13983,18 +14828,18 @@
         const total = data.max || 15;
         document.getElementById("total-ratio-val").textContent =
           `${data.current || 0}/${total}`;
-        document.getElementById("bot-kt-num").textContent = data.kt;
-        document.getElementById("bot-kt-per").textContent =
-          `(${((data.kt / total) * 100).toFixed(1)}%)`;
-        document.getElementById("bot-xd-num").textContent = data.xd;
-        document.getElementById("bot-xd-per").textContent =
-          `(${((data.xd / total) * 100).toFixed(1)}%)`;
-        document.getElementById("bot-cd-num").textContent = data.cd;
-        document.getElementById("bot-cd-per").textContent =
-          `(${((data.cd / total) * 100).toFixed(1)}%)`;
-        document.getElementById("bot-ctk-num").textContent = data.ctk;
-        document.getElementById("bot-ctk-per").textContent =
-          `(${((data.ctk / total) * 100).toFixed(1)}%)`;
+        // document.getElementById("bot-kt-num").textContent = data.kt;
+        // document.getElementById("bot-kt-per").textContent =
+        //   `(${((data.kt / total) * 100).toFixed(1)}%)`;
+        // document.getElementById("bot-xd-num").textContent = data.xd;
+        // document.getElementById("bot-xd-per").textContent =
+        //   `(${((data.xd / total) * 100).toFixed(1)}%)`;
+        // document.getElementById("bot-cd-num").textContent = data.cd;
+        // document.getElementById("bot-cd-per").textContent =
+        //   `(${((data.cd / total) * 100).toFixed(1)}%)`;
+        // document.getElementById("bot-ctk-num").textContent = data.ctk;
+        // document.getElementById("bot-ctk-per").textContent =
+        //   `(${((data.ctk / total) * 100).toFixed(1)}%)`;
 
         const percent =
           data.current !== null ? Math.round((data.current / total) * 100) : 0;
