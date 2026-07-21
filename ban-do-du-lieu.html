@@ -2784,7 +2784,7 @@
                   Phân loại
                 </button>
                 <button
-                  id="subtab-phanloai"
+                  id="subtab-giamsat"
                   onclick="handleSubTabClick('giamsat')"
                   class="subtab w-full text-left px-3 py-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
                 >
@@ -5530,7 +5530,7 @@
 
         <section class="view h-screen w-full text-white" id="giamSat">
           <header
-            class="flex justify-between items-center px-3 py-1.5 rounded mb-2 shrink-0"
+            class="flex justify-between items-center px-6 py-3 rounded mb-2 shrink-0"
           >
             <div class="flex items-center gap-3">
               <h1
@@ -5581,7 +5581,9 @@
           </header>
 
           <!-- ================= MAIN DASHBOARD GRID (Co giãn tự động theo 100vh) ================= -->
-          <div class="grid grid-cols-12 gap-2 flex-1 min-h-0 overflow-hidden">
+          <div
+            class="grid grid-cols-12 gap-2 flex-1 min-h-0 overflow-hidden px-6"
+          >
             <div class="col-span-3 h-full flex flex-col min-h-0">
               <div class="card-panel p-2.5 h-full flex flex-col min-h-0">
                 <div class="flex justify-between items-center mb-2 shrink-0">
@@ -5593,12 +5595,12 @@
                   <div class="flex items-center gap-1.5">
                     <div class="relative">
                       <i
-                        class="fa-solid fa-magnifying-glass absolute left-2 top-1.5 text-slate-500 text-[9px]"
+                        class="fa-solid fa-magnifying-glass absolute left-2 top-2 text-slate-500 text-[12px]"
                       ></i>
                       <input
                         type="text"
                         placeholder="Tìm kiếm..."
-                        class="bg-[#050e1a] border border-slate-700/80 rounded pl-5 pr-1.5 py-0.5 text-[9px] w-28 text-slate-200 focus:outline-none focus:border-cyan-500"
+                        class="border border-slate-700/80 rounded !pl-6 pr-1.5 py-0.5 text-[9px] text-black w-28 focus:outline-none focus:border-cyan-500"
                       />
                     </div>
                     <div
@@ -10187,7 +10189,8 @@
           .classList.toggle("on", id === "digitalMap"); // Cập nhật theo ID mới của bạn
 
         // Nút Báo cáo thống kê (tabDash) sẽ sáng nếu đang ở màn hình Dashboard lớn HOẶC Màn hình chi tiết
-        const isDashGroup = id === "viewDash" || id === "detailDash";
+        const isDashGroup =
+          id === "viewDash" || id === "detailDash" || id == "giamSat";
         document.getElementById("tabDash").classList.toggle("on", isDashGroup);
 
         // 4. Nếu đi lệch ra ngoài cụm Dashboard (ví dụ sang Bản đồ hoặc Danh sách), tự động đóng Dropdown lại
