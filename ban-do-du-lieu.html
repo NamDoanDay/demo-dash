@@ -2663,6 +2663,18 @@
         transform: translateY(-1px);
         background-color: rgba(255, 255, 255, 0.02);
       }
+      .card-panel {
+        background-color: #0d1e32;
+        border: 1px solid #102a45;
+        border-radius: 6px;
+      }
+
+      .table-custom th {
+        color: #64748b;
+        font-weight: 500;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
     </style>
   </head>
   <body class="bg-section">
@@ -5513,6 +5525,277 @@
               class="province-tooltip rounded hud-panel shadow-2xl"
               role="tooltip"
             ></div>
+          </div>
+        </section>
+
+        <section class="view h-screen w-full text-white" id="giamSat">
+          <header
+            class="flex justify-between items-center px-3 py-1.5 rounded mb-2 shrink-0"
+          >
+            <div class="flex items-center gap-3">
+              <h1
+                class="text-base font-extrabold uppercase tracking-wide text-slate-100 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-shield-halved text-cyan-400"></i>
+                TTDLQG Bảng Điều Hành Giám Sát Đồng Bộ Dữ Liệu Realtime
+              </h1>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <!-- Thẻ Filter Bộ Ngành -->
+              <div class="relative flex items-center">
+                <i
+                  class="fa-solid fa-filter absolute left-2.5 text-slate-400 text-[10px] pointer-events-none"
+                ></i>
+                <select
+                  id="agency-filter"
+                  class="bg-[#050e1a] text-slate-200 text-[10px] font-medium border border-slate-700/80 rounded-lg pl-7 pr-7 py-1 outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 cursor-pointer appearance-none hover:bg-[#071326] transition-all"
+                >
+                  <option value="all">Tất cả Bộ / Ngành (12)</option>
+                  <option value="bca">Bộ Công an</option>
+                  <option value="btc">Bộ Tài chính</option>
+                  <option value="byt">Bộ Y tế</option>
+                  <option value="bgtvt">Bộ Giao thông Vận tải</option>
+                  <option value="bct">Bộ Công Thương</option>
+                  <option value="bkd">Bộ KH & Đầu tư</option>
+                  <option value="btp">Bộ Tư pháp</option>
+                  <option value="bltnmt">Bộ TN & Môi trường</option>
+                  <option value="bldtbxh">Bộ LĐ-TB & Xã hội</option>
+                  <option value="bgd">Bộ Giáo dục & Đào tạo</option>
+                  <option value="bnn">Bộ NN & PTNT</option>
+                  <option value="bnv">Bộ Nội vụ</option>
+                </select>
+                <!-- Mũi tên Custom xổ xuống -->
+                <i
+                  class="fa-solid fa-chevron-down absolute right-2.5 text-slate-500 text-[8px] pointer-events-none"
+                ></i>
+              </div>
+
+              <!-- Nút LIVE giữ nguyên của bạn -->
+              <span
+                class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-950/80 border border-green-800 text-green-500 font-semibold text-[10px] animate-pulse"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> LIVE
+              </span>
+            </div>
+          </header>
+
+          <!-- ================= MAIN DASHBOARD GRID (Co giãn tự động theo 100vh) ================= -->
+          <div class="grid grid-cols-12 gap-2 flex-1 min-h-0 overflow-hidden">
+            <div class="col-span-3 h-full flex flex-col min-h-0">
+              <div class="card-panel p-2.5 h-full flex flex-col min-h-0">
+                <div class="flex justify-between items-center mb-2 shrink-0">
+                  <h2
+                    class="text-cyan-400 font-bold uppercase text-[11px] tracking-wider"
+                  >
+                    Giám sát trạng thái CSDL
+                  </h2>
+                  <div class="flex items-center gap-1.5">
+                    <div class="relative">
+                      <i
+                        class="fa-solid fa-magnifying-glass absolute left-2 top-1.5 text-slate-500 text-[9px]"
+                      ></i>
+                      <input
+                        type="text"
+                        placeholder="Tìm kiếm..."
+                        class="bg-[#050e1a] border border-slate-700/80 rounded pl-5 pr-1.5 py-0.5 text-[9px] w-28 text-slate-200 focus:outline-none focus:border-cyan-500"
+                      />
+                    </div>
+                    <div
+                      class="flex border border-slate-700/80 rounded overflow-hidden"
+                    >
+                      <button class="bg-blue-600 px-1.5 py-0.5 text-white">
+                        <i class="fa-solid fa-border-all text-[9px]"></i>
+                      </button>
+                      <button
+                        class="bg-[#071326] px-1.5 py-0.5 text-slate-400 hover:text-white"
+                      >
+                        <i class="fa-solid fa-list text-[9px]"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Container Render Các Bảng Trạng Thái (Tự co giãn ẩn cuộn xấu) -->
+                <div
+                  id="db-status-container"
+                  class="flex flex-col gap-2 flex-1 h-full min-h-0"
+                ></div>
+              </div>
+            </div>
+
+            <div class="col-span-9 h-full flex flex-col gap-2 min-h-0">
+              <!-- ROW 1: Card Tổng quan hệ thống (Thiết kế lại Grid Ngang cực gọn) -->
+              <div class="card-panel p-2.5 shrink-0">
+                <h2
+                  class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-2"
+                >
+                  Tổng quan hệ thống
+                </h2>
+                <!-- Bỏ flex-row, overflow-x-auto ở đây để JS tự dựng layout 6 cột full width -->
+                <div id="system-overview-container" class="w-full"></div>
+              </div>
+
+              <!-- ROW 2: Card Chỉ số chi tiết + Card Số lượng bản ghi (Phân chia 1/2 chiều cao dư) -->
+              <div class="grid grid-cols-12 gap-2 flex-1 min-h-0">
+                <!-- Card Chỉ số chi tiết (Col 1-4) -->
+                <div
+                  class="col-span-4 card-panel p-2 flex flex-col justify-between h-full min-h-0"
+                >
+                  <div class="flex justify-between items-center mb-1 shrink-0">
+                    <span
+                      class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider"
+                    >
+                      Chỉ số chi tiết
+                    </span>
+                    <select
+                      class="bg-[#050e1a] text-slate-300 text-[9px] border border-slate-700/80 rounded px-1.5 py-0.5 outline-none"
+                    >
+                      <option>Hôm nay</option>
+                      <option>Tuần này</option>
+                    </select>
+                  </div>
+
+                  <div
+                    class="flex flex-col justify-between flex-1 bg-[#050e1a]/40 border border-slate-800/60 rounded p-2 min-h-0 overflow-hidden"
+                  >
+                    <div>
+                      <div
+                        class="text-[9px] text-slate-400 font-semibold uppercase tracking-wide"
+                      >
+                        Dữ liệu đồng bộ
+                      </div>
+                      <div class="flex items-baseline gap-1 mt-0.5">
+                        <span
+                          class="text-xl font-extrabold text-white tracking-tight"
+                          >235.000</span
+                        >
+                        <span class="text-[9px] text-slate-400">bản ghi</span>
+                      </div>
+                      <div class="text-[8px] text-slate-500">
+                        (Total Logged Records)
+                      </div>
+                    </div>
+
+                    <!-- Canvas Sparkline co giãn linh hoạt -->
+                    <div class="flex-1 w-full min-h-[30px] max-h-[45px] mt-1">
+                      <canvas id="sparklineChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Số lượng bản ghi đồng bộ (Col 5-12) -->
+                <div
+                  class="col-span-8 card-panel p-2 flex flex-col h-full min-h-0"
+                >
+                  <h2
+                    class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
+                  >
+                    Số lượng bản ghi đồng bộ
+                    <span
+                      class="text-[8px] text-slate-500 font-normal lowercase"
+                      >(Đơn vị: bản ghi)</span
+                    >
+                  </h2>
+                  <div class="flex-1 w-full min-h-0">
+                    <canvas id="recordsLineChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ROW 3: Báo cáo đồng bộ phút + Trạng thái Queue (Phân chia 1/2 chiều cao dư) -->
+              <div class="grid grid-cols-12 gap-2 flex-1 min-h-0">
+                <!-- Báo cáo đồng bộ theo phút (Col 1-7) -->
+                <div
+                  class="col-span-7 card-panel p-2 flex flex-col h-full min-h-0"
+                >
+                  <h2
+                    class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
+                  >
+                    Báo cáo đồng bộ theo phút
+                    <span
+                      class="text-[8px] text-slate-500 font-normal lowercase"
+                      >(Đơn vị: bản ghi)</span
+                    >
+                  </h2>
+                  <div class="flex-1 w-full min-h-0">
+                    <canvas id="minuteChart"></canvas>
+                  </div>
+                </div>
+
+                <!-- Trạng thái Queue (Col 8-12) -->
+                <div
+                  class="col-span-5 card-panel p-2 flex flex-col h-full min-h-0"
+                >
+                  <h2
+                    class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
+                  >
+                    Trạng thái hàng đợi xử lý
+                  </h2>
+                  <div
+                    id="queue-container"
+                    class="space-y-1.5 text-[9px] flex-1 overflow-y-auto"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- ROW 4: Trung tâm cảnh báo + Luồng nhật ký realtime -->
+              <div class="grid grid-cols-12 gap-2 flex-1 min-h-0">
+                <!-- Trung tâm cảnh báo (Col 1-4) -->
+                <div
+                  class="col-span-4 card-panel p-2 flex flex-col justify-between h-full min-h-0"
+                >
+                  <div class="flex flex-col min-h-0 flex-1">
+                    <h2
+                      class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1.5 shrink-0"
+                    >
+                      Trung tâm cảnh báo
+                    </h2>
+                    <div
+                      id="alerts-container"
+                      class="space-y-1 overflow-y-auto flex-1"
+                    ></div>
+                  </div>
+                  <div class="mt-1 shrink-0">
+                    <a
+                      href="#"
+                      class="text-blue-400 text-[9px] hover:underline font-semibold"
+                    >
+                      Xem tất cả cảnh báo &rarr;
+                    </a>
+                  </div>
+                </div>
+
+                <div
+                  class="col-span-8 card-panel p-2 flex flex-col h-full min-h-0"
+                >
+                  <div class="flex justify-between items-center mb-1 shrink-0">
+                    <h2
+                      class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider"
+                    >
+                      Luồng nhật ký realtime
+                    </h2>
+                    <div class="flex gap-1">
+                      <button
+                        class="bg-blue-600 hover:bg-blue-500 text-white text-[9px] px-1.5 py-0.5 rounded flex items-center gap-1"
+                      >
+                        <i class="fa-solid fa-play text-[7px]"></i> Tiếp tục
+                      </button>
+                      <button
+                        class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[9px] px-1.5 py-0.5 rounded flex items-center gap-1 border border-slate-700"
+                      >
+                        <i class="fa-solid fa-pause text-[7px]"></i> Tạm dừng
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    id="realtime-logs-container"
+                    class="overflow-x-auto flex-1 min-h-0"
+                  ></div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -9853,6 +10136,8 @@
       function handleSubTabClick(tabId) {
         if (tabId === "chitiet") {
           switchView("detailDash");
+        } else if (tabId === "giamsat") {
+          switchView("giamSat");
         } else {
           switchView("viewDash");
           if (typeof switchTab === "function") {
@@ -15227,6 +15512,824 @@
             switchProvince(activeProvinceName);
             bindMapEvents();
           });
+      });
+    </script>
+    <script>
+      // 1. Dữ liệu Giám sát Trạng thái CSDL
+      const dbStatusData = [
+        {
+          type: "connected",
+          title: "Đang kết nối",
+          total: 138,
+          icon: "fa-regular fa-circle-check",
+          headerBg: "bg-emerald-950/60 border-emerald-900/60 text-emerald-400",
+          cardBg: "bg-[#051711] border-emerald-900/60",
+          borderTable: "border-emerald-900/30",
+          divideTable: "divide-emerald-950/40",
+          footerBg: "border-emerald-900/40 bg-emerald-950/20 text-cyan-400",
+          items: [
+            {
+              stt: 1,
+              agency: "Bộ Công an",
+              csdl: "CSDL Dân cư",
+              status: "Đang kết nối",
+              color: "text-emerald-600",
+            },
+            {
+              stt: 1,
+              agency: "Bộ Công an",
+              csdl: "CSDL Định danh",
+              status: "Đang kết nối",
+              color: "text-emerald-600",
+            },
+            {
+              stt: 1,
+              agency: "Bộ Công an",
+              csdl: "CSDL Căn cước",
+              status: "Đang kết nối",
+              color: "text-emerald-600",
+            },
+            {
+              stt: 2,
+              agency: "Bộ Tài chính",
+              csdl: "CSDL Thuế",
+              status: "Đang kết nối",
+              color: "text-emerald-600",
+            },
+            {
+              stt: 2,
+              agency: "Bộ Tài chính",
+              csdl: "CSDL Hải quan",
+              status: "Đang kết nối",
+              color: "text-emerald-600",
+            },
+            {
+              stt: 2,
+              agency: "Bộ Tài chính",
+              csdl: "CSDL Kho bạc",
+              status: "Đang kết nối",
+              color: "text-emerald-600",
+            },
+          ],
+        },
+        {
+          type: "disconnected",
+          title: "Mất kết nối",
+          total: 7,
+          icon: "fa-regular fa-circle-xmark",
+          headerBg: "bg-red-950 border-red-900 text-red-400",
+          cardBg: "bg-[#1f090d] border-red-900",
+          borderTable: "border-red-900",
+          divideTable: "divide-red-950",
+          footerBg: "border-red-900 bg-red-950 text-red-400",
+          items: [
+            {
+              stt: 1,
+              agency: "Bộ Công an",
+              csdl: "CSDL Định danh",
+              status: "Mất kết nối",
+              color: "text-red-500",
+            },
+            {
+              stt: 2,
+              agency: "Bộ Tài chính",
+              csdl: "CSDL Hải quan",
+              status: "Mất kết nối",
+              color: "text-red-500",
+            },
+            {
+              stt: 3,
+              agency: "Bộ Y tế",
+              csdl: "CSDL Tiêm chủng",
+              status: "Mất kết nối",
+              color: "text-red-500",
+            },
+            {
+              stt: 4,
+              agency: "Bộ Công Thương",
+              csdl: "CSDL Dự án",
+              status: "Mất kết nối",
+              color: "text-red-500",
+            },
+            {
+              stt: 5,
+              agency: "Bộ Nông nghiệp & MT",
+              csdl: "CSDL Thủy sản",
+              status: "Mất kết nối",
+              color: "text-red-500",
+            },
+            {
+              stt: 6,
+              agency: "Bộ Giao thông vận tải",
+              csdl: "CSDL Đăng kiểm",
+              status: "Mất kết nối",
+              color: "text-red-500",
+            },
+            {
+              stt: 7,
+              agency: "Bộ Thông tin & Truyền thông",
+              csdl: "CSDL Báo chí",
+              status: "Mất kết nối",
+              color: "text-red-500",
+            },
+          ],
+        },
+        {
+          type: "unconnected",
+          title: "Chưa kết nối",
+          total: 10,
+          icon: "fa-solid fa-minus-circle",
+          headerBg: "bg-slate-900 border-slate-800 text-slate-300",
+          cardBg: "bg-[#0a1221] border-slate-800",
+          borderTable: "border-slate-800",
+          divideTable: "divide-slate-800",
+          footerBg: "border-slate-800 bg-slate-900 text-blue-400",
+          items: [
+            {
+              stt: 1,
+              agency: "Bộ Kế hoạch & Đầu tư",
+              csdl: "CSDL Đầu tư công",
+              status: "Chưa kết nối",
+              color: "text-slate-500",
+            },
+            {
+              stt: 2,
+              agency: "Bộ Tư pháp",
+              csdl: "CSDL Hộ tịch",
+              status: "Chưa kết nối",
+              color: "text-slate-500",
+            },
+            {
+              stt: 3,
+              agency: "Bộ Văn hóa, Thể thao & DL",
+              csdl: "CSDL Di sản văn hóa",
+              status: "Chưa kết nối",
+              color: "text-slate-500",
+            },
+            {
+              stt: 4,
+              agency: "Bộ Nội vụ",
+              csdl: "CSDL Cán bộ công chức",
+              status: "Chưa kết nối",
+              color: "text-slate-500",
+            },
+            {
+              stt: 5,
+              agency: "Bộ Quốc phòng",
+              csdl: "CSDL Nghĩa vụ quân sự",
+              status: "Chưa kết nối",
+              color: "text-slate-500",
+            },
+          ],
+        },
+      ];
+
+      // 2. Dữ liệu Trung tâm Cảnh báo
+      const alertData = [
+        { time: "08:45", msg: "Mất kết nối CSDL Thuế", level: "error" },
+        { time: "08:50", msg: "API Hải quan chậm (>3s)", level: "warning" },
+        { time: "08:55", msg: "Queue đầy (Threshold 90%)", level: "warning" },
+        { time: "08:59", msg: "Không nhận dữ liệu 30 phút", level: "error" },
+      ];
+
+      // 3. Dữ liệu Hàng đợi (Queue)
+      const queueData = [
+        {
+          label: "Đang chờ (Pending)",
+          icon: "fa-hourglass-start text-amber-500",
+          barBg: "bg-amber-500",
+          percent: "78%",
+          value: "1254",
+        },
+        {
+          label: "Đang xử lý (Active)",
+          icon: "fa-gears text-blue-500",
+          barBg: "bg-blue-600",
+          percent: "18%",
+          value: "232",
+        },
+        {
+          label: "Thành công (Success)",
+          icon: "fa-circle-check text-emerald-500",
+          barBg: "bg-emerald-500",
+          percent: "95%",
+          value: "15.200",
+        },
+        {
+          label: "Thất bại (DLQ)",
+          icon: "fa-circle-xmark text-red-500",
+          barBg: "bg-red-500",
+          percent: "2%",
+          value: "25",
+        },
+      ];
+
+      // --- HÀM RENDER 3 BẢNG CSDL ---
+      function renderDbStatus() {
+        const container = document.getElementById("db-status-container");
+        if (!container) return;
+
+        container.innerHTML = dbStatusData
+          .map((group) => {
+            const rows = group.items
+              .map(
+                (item) => `
+        <tr class="hover:bg-white/5 transition-colors">
+          <td class="py-1 px-1.5 font-mono">${item.stt}</td>
+          <td class="py-1 px-1.5 whitespace-nowrap">${item.agency}</td>
+          <td class="py-1 px-1.5">${item.csdl}</td>
+          <td class="py-1 px-1.5 ${item.color} whitespace-nowrap">
+            <i class="w-2 h-2 fa-solid fa-circle text-[6px] align-middle animate-pulse"></i> ${item.status}
+          </td>
+        </tr>
+      `,
+              )
+              .join("");
+
+            return `
+        <!-- Sửa h-48 thành flex-1 h-full min-h-0 để chia đều 3 box đầy khung -->
+        <div class="${group.cardBg} border rounded flex flex-col flex-1 h-full min-h-0 overflow-hidden">
+          
+          <!-- Header Box -->
+          <div class="${group.headerBg} border-b p-1.5 px-2 flex justify-between items-center shrink-0">
+            <span class="font-bold text-[10px] uppercase flex items-center gap-1.5">
+              <i class="${group.icon}"></i> ${group.title} (${group.total} CSDL)
+            </span>
+          </div>
+
+          <!-- Body Table (Co giãn flex-1 + cuộn nội dung nếu quá dài) -->
+          <div class="p-1 overflow-y-auto flex-1 min-h-0 custom-scrollbar">
+            <table class="w-full text-left text-[10px]">
+              <thead class="sticky top-0 ${group.cardBg} z-10">
+                <tr class="text-slate-400 border-b ${group.borderTable}">
+                  <th class="py-1 px-1.5">STT</th>
+                  <th class="py-1 px-1.5">BỘ/NGÀNH</th>
+                  <th class="py-1 px-1.5">TÊN CSDL</th>
+                  <th class="py-1 px-1.5">TRẠNG THÁI</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y ${group.divideTable} text-slate-300">
+                ${rows}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Footer Box -->
+          <div class="p-1 text-center border-t ${group.footerBg} shrink-0">
+            <a href="#" class="text-[10px] hover:underline font-semibold block">
+              Xem tất cả ${group.total} CSDL &rarr;
+            </a>
+          </div>
+
+        </div>
+      `;
+          })
+          .join("");
+      }
+      // --- HÀM RENDER CẢNH BÁO ---
+      function renderAlerts() {
+        const container = document.getElementById("alerts-container");
+        if (!container) return;
+
+        container.innerHTML = alertData
+          .map((item) => {
+            const isError = item.level === "error";
+            const bgClass = isError
+              ? "bg-red-950/30 border-red-900/50"
+              : "bg-amber-950/30 border-amber-900/50";
+            const iconClass = isError ? "text-red-500" : "text-amber-500";
+            const textClass = isError ? "text-red-400" : "text-amber-400";
+
+            return `
+        <div class="${bgClass} border p-1.5 rounded flex items-center gap-2">
+          <i class="fa-solid fa-bell ${iconClass} text-xs"></i>
+          <div class="text-[10px]">
+            <span class="text-slate-400 font-mono">[${item.time}]</span>
+            <span class="${textClass} font-medium">${item.msg}</span>
+          </div>
+        </div>
+      `;
+          })
+          .join("");
+      }
+
+      // --- HÀM RENDER HÀNG ĐỢI (QUEUE) ---
+      function renderQueue() {
+        const container = document.getElementById("queue-container");
+        if (!container) return;
+
+        container.innerHTML = queueData
+          .map(
+            (item) => `
+      <div class="flex items-center gap-2">
+        <span class="w-24 text-slate-300 flex items-center gap-1">
+          <i class="fa-solid ${item.icon}"></i> ${item.label}
+        </span>
+        <div class="flex-1 bg-slate-800 h-3 rounded overflow-hidden">
+          <div class="${item.barBg} h-full" style="width: ${item.percent}"></div>
+        </div>
+        <span class="w-10 font-mono text-right text-slate-300">${item.value}</span>
+      </div>
+    `,
+          )
+          .join("");
+      }
+
+      // --- HÀM KHỞI TẠO CHARTS (An toàn chống crash null) ---
+      function initCharts() {
+        // 1. Minute Bar Chart (Hàng ngang)
+        const canvasMinute = document.getElementById("minuteChart");
+        if (canvasMinute) {
+          if (Chart.getChart("minuteChart"))
+            Chart.getChart("minuteChart").destroy();
+          new Chart(canvasMinute.getContext("2d"), {
+            type: "bar",
+            data: {
+              labels: [
+                "09:00",
+                "09:01",
+                "09:02",
+                "09:03",
+                "09:04",
+                "09:05",
+                "09:06",
+                "09:07",
+                "09:08",
+                "09:09",
+              ],
+              datasets: [
+                {
+                  label: "Số bản ghi",
+                  data: [
+                    1200, 1900, 3000, 5000, 2300, 3400, 2100, 1800, 2900, 4100,
+                  ],
+                  backgroundColor: "#06b6d4",
+                  borderRadius: 2,
+                },
+              ],
+            },
+            options: {
+              indexAxis: "y", // Đổi sang hàng ngang
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: {
+                  grid: { color: "#1e293b" },
+                  ticks: { color: "#64748b", font: { size: 9 } },
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { color: "#64748b", font: { size: 9 } },
+                },
+              },
+            },
+          });
+        }
+
+        // 2. Records Line Chart (Mẫu gốc 6 đường theo yêu cầu)
+        const canvasRecords = document.getElementById("recordsLineChart");
+        if (canvasRecords) {
+          if (Chart.getChart("recordsLineChart"))
+            Chart.getChart("recordsLineChart").destroy();
+
+          const ctxRecords = canvasRecords.getContext("2d");
+          new Chart(ctxRecords, {
+            type: "line",
+            data: {
+              labels: [
+                "00:00",
+                "02:00",
+                "04:00",
+                "06:00",
+                "08:00",
+                "10:00",
+                "12:00",
+                "14:00",
+                "16:00",
+                "18:00",
+                "20:00",
+                "22:00",
+              ],
+              datasets: [
+                {
+                  label: "Tổng số bản ghi",
+                  data: [
+                    300, 500, 800, 1100, 1400, 1600, 1900, 2100, 2400, 2600,
+                    2800, 3000,
+                  ],
+                  borderColor: "#3b82f6",
+                  backgroundColor: "#3b82f6",
+                  borderWidth: 1.5,
+                  pointRadius: 2,
+                  tension: 0.2,
+                },
+                {
+                  label: 'Bản ghi "đúng"',
+                  data: [
+                    250, 420, 680, 950, 1200, 1400, 1650, 1850, 2100, 2300,
+                    2450, 2650,
+                  ],
+                  borderColor: "#10b981",
+                  backgroundColor: "#10b981",
+                  borderWidth: 1.5,
+                  pointRadius: 2,
+                  tension: 0.2,
+                },
+                {
+                  label: 'Bản ghi "sai"',
+                  data: [
+                    50, 80, 120, 150, 200, 200, 250, 250, 300, 300, 350, 350,
+                  ],
+                  borderColor: "#ef4444",
+                  backgroundColor: "#ef4444",
+                  borderWidth: 1.5,
+                  pointRadius: 2,
+                  tension: 0.2,
+                },
+                {
+                  label: 'Bản ghi "sạch"',
+                  data: [
+                    150, 300, 450, 600, 750, 880, 1000, 1150, 1250, 1350, 1420,
+                    1500,
+                  ],
+                  borderColor: "#a855f7",
+                  backgroundColor: "#a855f7",
+                  borderWidth: 1.5,
+                  pointRadius: 2,
+                  tension: 0.2,
+                },
+                {
+                  label: 'Bản ghi "sống"',
+                  data: [
+                    100, 200, 300, 400, 500, 580, 650, 720, 800, 850, 900, 950,
+                  ],
+                  borderColor: "#06b6d4",
+                  backgroundColor: "#06b6d4",
+                  borderWidth: 1.5,
+                  pointRadius: 2,
+                  tension: 0.2,
+                },
+                {
+                  label: 'Bản ghi "đúng, đủ, sạch, sống"',
+                  data: [
+                    50, 120, 180, 250, 320, 400, 480, 550, 600, 640, 680, 720,
+                  ],
+                  borderColor: "#eab308",
+                  backgroundColor: "#eab308",
+                  borderWidth: 1.5,
+                  pointRadius: 2,
+                  tension: 0.2,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: "top",
+                  align: "start",
+                  labels: {
+                    boxWidth: 6,
+                    boxHeight: 6,
+                    usePointStyle: true,
+                    font: { size: 8 },
+                  },
+                },
+              },
+              scales: {
+                x: { grid: { color: "#0f243a" } },
+                y: {
+                  grid: { color: "#0f243a" },
+                  ticks: {
+                    callback: (value) => value + "K",
+                  },
+                  max: 3000,
+                },
+              },
+            },
+          });
+        }
+      }
+      // Chạy Render sau khi DOM được nạp hoàn tất
+      document.addEventListener("DOMContentLoaded", () => {
+        renderDbStatus();
+        renderAlerts();
+        renderQueue();
+
+        // Dùng requestAnimationFrame chờ DOM cập nhật vị trí canvas trước khi vẽ Chart
+        requestAnimationFrame(() => {
+          initCharts();
+        });
+      });
+      // 1. Dữ liệu Tổng quan hệ thống
+      const overviewData = {
+        kpis: [
+          {
+            title: "Tổng hệ thống",
+            value: "145",
+            unit: "CSDL",
+            percent: "",
+            icon: "fa-server",
+            colorClass: "text-blue-400",
+            bgClass: "bg-[#0b1c33] border-blue-900/40",
+            valueColor: "text-white",
+            dotColor: "",
+          },
+          {
+            title: "Đang kết nối",
+            value: "138",
+            unit: "",
+            percent: "(95,17%)",
+            icon: "fa-link",
+            colorClass: "text-emerald-400",
+            bgClass: "bg-[#062419] border-emerald-800/50",
+            valueColor: "text-emerald-400",
+            dotColor: "bg-emerald-400",
+          },
+          {
+            title: "Mất kết nối",
+            value: "7",
+            unit: "",
+            percent: "(4,83%)",
+            icon: "fa-link-slash",
+            colorClass: "text-red-500",
+            bgClass: "bg-[#290c13] border-red-800/50",
+            valueColor: "text-red-500",
+            dotColor: "bg-red-500",
+          },
+          {
+            title: "Chưa kết nối",
+            value: "10",
+            unit: "",
+            percent: "(6,90%)",
+            icon: "fa-wifi",
+            colorClass: "text-slate-400",
+            bgClass: "bg-[#121929] border-slate-700/50",
+            valueColor: "text-slate-300",
+            dotColor: "bg-slate-400",
+          },
+        ],
+        metrics: {
+          syncedData: "235.000",
+          syncSpeed: "3.250",
+          avgLatency: "1,3",
+        },
+      };
+
+      // 2. Dữ liệu Nhật ký Realtime
+      const logsData = [
+        {
+          time: "09:01:05",
+          agency: "Bộ Công an",
+          csdl: "CSDL Dân cư",
+          records: "1.500",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:01:02",
+          agency: "Bộ Tài chính",
+          csdl: "CSDL Thuế",
+          records: "850",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:01:01",
+          agency: "Bộ Công Thương",
+          csdl: "CSDL Doanh nghiệp",
+          records: "3.200",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:00:58",
+          agency: "Bộ Y tế",
+          csdl: "CSDL Dược",
+          records: "0",
+          status: "error",
+          statusText: "Thất bại (500)",
+        },
+        {
+          time: "09:00:54",
+          agency: "Bộ Giáo dục & Đào tạo",
+          csdl: "CSDL Học sinh",
+          records: "1.200",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:00:47",
+          agency: "Bộ Xây dựng",
+          csdl: "CSDL Dự án",
+          records: "980",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:00:41",
+          agency: "Bộ Nông nghiệp & PT",
+          csdl: "CSDL Đất đai",
+          records: "2.150",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:00:41",
+          agency: "Bộ Nông nghiệp & PT",
+          csdl: "CSDL Đất đai",
+          records: "2.150",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:00:41",
+          agency: "Bộ Nông nghiệp & PT",
+          csdl: "CSDL Đất đai",
+          records: "2.150",
+          status: "success",
+          statusText: "Thành công",
+        },
+        {
+          time: "09:00:41",
+          agency: "Bộ Nông nghiệp & PT",
+          csdl: "CSDL Đất đai",
+          records: "2.150",
+          status: "success",
+          statusText: "Thành công",
+        },
+      ];
+
+      // --- HÀM RENDER TỔNG QUAN HỆ THỐNG ---
+      // --- HÀM RENDER TỔNG QUAN HỆ THỐNG ---
+      function renderSystemOverview() {
+        const container = document.getElementById("system-overview-container");
+        if (!container) return;
+
+        // Sử dụng Grid 6 cột dàn đều 100% chiều ngang, thiết kế thẻ ngang (Horizontal Stat Cards)
+        let html = `<div class="grid grid-cols-6 gap-2 w-full">`;
+
+        // 1. Render 4 KPI chính
+        overviewData.kpis.forEach((item) => {
+          const dotHtml = item.dotColor
+            ? `<span class="w-1.5 h-1.5 rounded-full ${item.dotColor} inline-block"></span>`
+            : "";
+          const subText = item.unit ? item.unit : item.percent;
+
+          html += `
+      <div class="bg-[#050e1a]/60 border border-slate-800/80 p-2 rounded flex items-center justify-between hover:border-slate-700 transition-all">
+        <div class="flex flex-col justify-center overflow-hidden">
+          <div class="text-[9px] ${item.colorClass} font-bold uppercase tracking-wider truncate mb-0.5">
+            ${item.title}
+          </div>
+          <div class="text-base font-extrabold ${item.valueColor} leading-tight flex items-center gap-1">
+            ${item.value} ${dotHtml}
+          </div>
+          <div class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">${subText}</div>
+        </div>
+        <div class="${item.colorClass} text-base opacity-80 shrink-0 ml-1">
+          <i class="fa-solid ${item.icon}"></i>
+        </div>
+      </div>
+    `;
+        });
+
+        // 2. Render 2 Metrics còn lại (Gộp chung hàng 6 cột)
+        html += `
+    <!-- Metric 1: Sync Speed -->
+    <div class="bg-[#050e1a]/60 border border-slate-800/80 p-2 rounded flex items-center justify-between hover:border-slate-700 transition-all">
+      <div class="flex flex-col justify-center overflow-hidden">
+        <div class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider truncate mb-0.5">
+          Tốc độ đồng bộ
+        </div>
+        <div class="text-base font-extrabold text-emerald-400 leading-tight">
+          ${overviewData.metrics.syncSpeed}
+        </div>
+        <div class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">bản ghi/giây</div>
+      </div>
+      <div class="text-emerald-400 text-base opacity-80 shrink-0 ml-1">
+        <i class="fa-solid fa-gauge-high"></i>
+      </div>
+    </div>
+
+    <!-- Metric 2: Latency -->
+    <div class="bg-[#050e1a]/60 border border-slate-800/80 p-2 rounded flex items-center justify-between hover:border-slate-700 transition-all">
+      <div class="flex flex-col justify-center overflow-hidden">
+        <div class="text-[9px] text-amber-400 font-bold uppercase tracking-wider truncate mb-0.5">
+          Độ trễ trung bình
+        </div>
+        <div class="text-base font-extrabold text-amber-400 leading-tight">
+          ${overviewData.metrics.avgLatency}
+        </div>
+        <div class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">giây</div>
+      </div>
+      <div class="text-amber-400 text-base opacity-80 shrink-0 ml-1">
+        <i class="fa-regular fa-clock"></i>
+      </div>
+    </div>
+  `;
+
+        html += `</div>`;
+
+        // Cập nhật DOM
+        container.innerHTML = html;
+
+        // Trigger lại Chart
+        requestAnimationFrame(() => {
+          if (typeof initSparklineChart === "function") {
+            initSparklineChart();
+          }
+        });
+      }
+
+      // --- HÀM RENDER BẢNG NHẬT KÝ REALTIME ---
+      function renderRealtimeLogs() {
+        const container = document.getElementById("realtime-logs-container");
+
+        let rowsHtml = logsData
+          .map((log) => {
+            const isSuccess = log.status === "success";
+            const statusColor = isSuccess
+              ? "text-emerald-400"
+              : "text-red-500 font-semibold";
+
+            return `
+        <tr>
+          <td class="py-1.5 px-1 font-mono">${log.time}</td>
+          <td class="py-1.5 px-1">${log.agency}</td>
+          <td class="py-1.5 px-1">${log.csdl}</td>
+          <td class="py-1.5 px-1 text-right font-mono">${log.records}</td>
+          <td class="py-1.5 px-1 text-center ${statusColor}">
+            <i class="fa-solid fa-circle text-[8px] mr-1"></i>${log.statusText}
+          </td>
+        </tr>
+      `;
+          })
+          .join("");
+
+        container.innerHTML = `
+      <table class="w-full text-left border-collapse table-custom">
+        <thead>
+          <tr class="border-b border-[#142e4d]">
+            <th class="py-1.5 px-1"><i class="fa-regular fa-clock mr-1"></i>THỜI GIAN</th>
+            <th class="py-1.5 px-1">BỘ/NGÀNH</th>
+            <th class="py-1.5 px-1">CSDL</th>
+            <th class="py-1.5 px-1 text-right">SỐ BẢN GHI</th>
+            <th class="py-1.5 px-1 text-center">TRẠNG THÁI</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#0d223a] text-[11px] text-slate-300">
+          ${rowsHtml}
+        </tbody>
+      </table>
+    `;
+      }
+
+      // --- HÀM KHỞI TẠO SPARKLINE CHART (An toàn) ---
+      function initSparklineChart() {
+        const canvas = document.getElementById("sparklineChart");
+
+        // Kiểm tra an toàn: nếu canvas chưa tồn tại thì thoát hàm
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+
+        // Hủy instance cũ nếu đã tồn tại để tránh lỗi "Canvas is already in use"
+        const existingChart = Chart.getChart("sparklineChart");
+        if (existingChart) {
+          existingChart.destroy();
+        }
+
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["1", "2", "3", "4", "5", "6", "7", "8"],
+            datasets: [
+              {
+                data: [120, 150, 140, 180, 160, 210, 190, 235],
+                borderColor: "#3b82f6",
+                borderWidth: 1.5,
+                pointRadius: 0,
+                fill: true,
+                backgroundColor: "rgba(59, 130, 246, 0.1)",
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { x: { display: false }, y: { display: false } },
+          },
+        });
+      }
+      // Chạy các hàm Render sau khi DOM đã sẵn sàng
+      document.addEventListener("DOMContentLoaded", () => {
+        renderSystemOverview();
+        renderRealtimeLogs();
       });
     </script>
   </body>
