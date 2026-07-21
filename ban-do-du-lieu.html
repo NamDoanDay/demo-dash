@@ -2771,6 +2771,13 @@
                 >
                   Phân loại
                 </button>
+                <button
+                  id="subtab-phanloai"
+                  onclick="handleSubTabClick('giamsat')"
+                  class="subtab w-full text-left px-3 py-2 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                >
+                  Giám sát
+                </button>
               </div>
             </div>
 
@@ -3993,40 +4000,192 @@
                 </button>
               </div>
             </div>
+            <div class="kpis" id="dashKpisBoNganh">
+              <div
+                class="kpi kpi-status kpi-good kpi-active group w-full py-1.5 px-2.5 border border-emerald-500 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                onclick="openDashDetail('Đã xây dựng')"
+              >
+                <div
+                  class="kic w-8 h-8 rounded-md flex items-center justify-center text-xs shrink-0 transition-all duration-300 group-hover:scale-105"
+                  style="background: var(--good-bg); color: var(--good-ink)"
+                >
+                  🗄
+                </div>
 
+                <div class="kbody min-w-0 flex flex-col justify-center">
+                  <div
+                    class="klabel text-[9px] text-slate-400 font-bold uppercase truncate leading-tight"
+                  >
+                    CSDL ĐÃ XÂY DỰNG
+                  </div>
+                  <div class="flex items-center gap-1 mt-0.5">
+                    <div
+                      class="kval text-base font-black text-slate-900 leading-none"
+                      style="color: var(--good-ink)"
+                    >
+                      3
+                    </div>
+                    <div class="kdelta flex items-center scale-90 origin-left">
+                      <span class="up">▲ 4.1%</span> so với kỳ liền trước
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="kpi kpi-status kpi-warn group w-full py-1.5 px-2.5 border border-slate-100 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                onclick="openDashDetail('Đang xây dựng')"
+              >
+                <div
+                  class="kic w-8 h-8 rounded-md flex items-center justify-center text-xs shrink-0 transition-all duration-300 group-hover:scale-105"
+                  style="background: var(--warn-bg); color: #8a5a00"
+                >
+                  ⏳
+                </div>
+
+                <div class="kbody min-w-0 flex flex-col justify-center">
+                  <div
+                    class="klabel text-[9px] text-slate-400 font-bold uppercase truncate leading-tight"
+                  >
+                    CSDL ĐANG XÂY DỰNG
+                  </div>
+                  <div class="flex items-center gap-1 mt-0.5">
+                    <div
+                      class="kval text-base font-black text-slate-900 leading-none"
+                      style="color: #8a5a00"
+                    >
+                      110
+                    </div>
+                    <div class="kdelta flex items-center scale-90 origin-left">
+                      <span class="up">▲ 2.6%</span> so với kỳ liền trước
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="kpi kpi-status kpi-bad group w-full py-1.5 px-2.5 border border-slate-100 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                onclick="openDashDetail('Chưa xây dựng')"
+              >
+                <div
+                  class="kic w-8 h-8 rounded-md flex items-center justify-center text-xs shrink-0 transition-all duration-300 group-hover:scale-105"
+                  style="background: var(--critical-bg); color: #8f2020"
+                >
+                  ⚠
+                </div>
+
+                <div class="kbody min-w-0 flex flex-col justify-center">
+                  <div
+                    class="klabel text-[9px] text-slate-400 font-bold uppercase truncate leading-tight"
+                  >
+                    CSDL CHƯA XÂY DỰNG
+                  </div>
+                  <div class="flex items-center gap-1 mt-0.5">
+                    <div
+                      class="kval text-base font-black text-slate-900 leading-none"
+                      style="color: #8f2020"
+                    >
+                      0
+                    </div>
+                    <div class="kdelta flex items-center scale-90 origin-left">
+                      <span
+                        class="px-1 py-0.5 rounded text-[8px] font-bold flex items-center gap-0.5 border bg-slate-50 text-slate-700 border-slate-100"
+                      >
+                        <i class="fa-solid fa-arrow-trend-up text-[7px]"></i>+0%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="kpi kpi-status kpi-info group w-full py-1.5 px-2.5 border border-slate-100 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                onclick="openDashDetail('Cần xây dựng mới')"
+              >
+                <div
+                  class="kic w-8 h-8 rounded-md flex items-center justify-center text-xs shrink-0 transition-all duration-300 group-hover:scale-105"
+                  style="background: var(--blue-50); color: var(--blue-600)"
+                >
+                  ➕
+                </div>
+
+                <div class="kbody min-w-0 flex flex-col justify-center">
+                  <div
+                    class="klabel text-[9px] text-slate-400 font-bold uppercase truncate leading-tight"
+                  >
+                    CSDL CẦN XÂY DỰNG MỚI
+                  </div>
+                  <div class="flex items-center gap-1 mt-0.5">
+                    <div
+                      class="kval text-base font-black text-slate-900 leading-none"
+                      style="color: var(--blue-600)"
+                    >
+                      0
+                    </div>
+                    <div class="kdelta flex items-center scale-90 origin-left">
+                      <span
+                        class="px-1 py-0.5 rounded text-[8px] font-bold flex items-center gap-0.5 border bg-slate-50 text-slate-700 border-slate-100"
+                      >
+                        <i class="fa-solid fa-arrow-trend-up text-[7px]"></i>+0%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="kpi kpi-sync kpi-info kpi-nostat group w-full py-1.5 px-2.5 bg-gradient-to-br from-slate-950 to-slate-850 border border-slate-900 rounded-lg hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-800/50 transition-all duration-300 grid grid-rows-[auto_auto] gap-1 text-white cursor-pointer"
+              >
+                <div
+                  class="klabel flex items-center justify-between gap-3 w-full"
+                >
+                  <span
+                    class="text-[9px] font-bold text-slate-300 uppercase tracking-wider truncate leading-tight"
+                    >BẢN GHI ĐỒNG BỘ</span
+                  >
+                  <span
+                    class="syncper inline-flex p-0.5 rounded text-[8px] shrink-0 scale-90 origin-right"
+                    id="syncPeriod"
+                  >
+                    <button
+                      class="perbtn on px-1 py-0.5 rounded font-bold transition-all bg-white text-slate-950 shadow-3xs"
+                      onclick="setSyncPeriod('ngay', event)"
+                    >
+                      Ngày
+                    </button>
+                    <button
+                      class="perbtn px-1 py-0.5 rounded font-bold transition-all text-slate-400 hover:text-white"
+                      onclick="setSyncPeriod('tuan', event)"
+                    >
+                      Tuần
+                    </button>
+                    <button
+                      class="perbtn px-1 py-0.5 rounded font-bold transition-all text-slate-400 hover:text-white"
+                      onclick="setSyncPeriod('thang', event)"
+                    >
+                      Tháng
+                    </button>
+                  </span>
+                </div>
+                <div
+                  class="flex items-baseline justify-between gap-4 w-full leading-none"
+                >
+                  <div class="flex items-center gap-1">
+                    <div
+                      class="kval text-base font-black tracking-tight leading-none"
+                      style="color: var(--amber-400, #fbbf24)"
+                    >
+                      3.394.896
+                    </div>
+                    <div
+                      class="kdelta flex items-center scale-90 origin-left !text-white"
+                    >
+                      <span class="up">▲ 1.2%</span> so với kỳ liền trước
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- MAIN BỐ CỤC - CHO PHÉP SCROLL TỰ NHIÊN -->
             <div class="w-full flex flex-col gap-2 space-y-2">
               <!-- 1111 -->
               <div class="grid grid-cols-12 gap-2">
-                <!-- Card 1.1: Hiện trạng xây dựng CSDL -->
-                <div
-                  class="col-span-12 lg:col-span-5 p-2.5 bg-[#0d1e32] rounded-lg border border-slate-800 shadow-xl flex flex-col min-h-[280px]"
-                >
-                  <div class="flex items-center justify-between mb-1.5">
-                    <div>
-                      <h3
-                        class="text-slate-200 font-bold text-xs flex items-center gap-1.5"
-                      >
-                        <span class="w-1 h-3 bg-emerald-500 rounded-sm"></span>
-                        Hiện trạng xây dựng CSDL
-                      </h3>
-                      <p class="text-[10px] text-slate-500 mt-0">
-                        Thống kê Đã, Đang và Chưa xây dựng
-                      </p>
-                    </div>
-                    <span
-                      class="text-[9px] bg-slate-950/60 text-slate-400 border border-slate-800 px-1.5 py-0.5 rounded uppercase font-medium"
-                      >SL CSDL</span
-                    >
-                  </div>
-                  <div class="flex-1 w-full relative min-h-[200px]">
-                    <canvas
-                      id="multipleBarChartMinistries"
-                      class="w-full h-full"
-                    ></canvas>
-                  </div>
-                </div>
-
                 <!-- Card 1.2: Danh sách chi tiết (Tăng độ rộng lên 8/12 để bù chiều cao) -->
                 <div
                   class="col-span-12 lg:col-span-7 rounded-lg text-slate-300 shadow-xl bg-[#0d1e32] border border-slate-800 p-2.5 flex flex-col min-h-[280px]"
@@ -4121,64 +4280,39 @@
                     class="flex-1 w-full overflow-x-auto overflow-y-auto max-h-[200px]"
                   ></div>
                 </div>
+
+                <!-- Card 1.1: Hiện trạng xây dựng CSDL -->
+                <div
+                  class="col-span-12 lg:col-span-5 p-2.5 bg-[#0d1e32] rounded-lg border border-slate-800 shadow-xl flex flex-col min-h-[280px]"
+                >
+                  <div class="flex items-center justify-between mb-1.5">
+                    <div>
+                      <h3
+                        class="text-slate-200 font-bold text-xs flex items-center gap-1.5"
+                      >
+                        <span class="w-1 h-3 bg-emerald-500 rounded-sm"></span>
+                        Hiện trạng xây dựng CSDL
+                      </h3>
+                      <p class="text-[10px] text-slate-500 mt-0">
+                        Thống kê Đã, Đang và Chưa xây dựng
+                      </p>
+                    </div>
+                    <span
+                      class="text-[9px] bg-slate-950/60 text-slate-400 border border-slate-800 px-1.5 py-0.5 rounded uppercase font-medium"
+                      >SL CSDL</span
+                    >
+                  </div>
+                  <div class="flex-1 w-full relative min-h-[200px]">
+                    <canvas
+                      id="multipleBarChartMinistries"
+                      class="w-full h-full"
+                    ></canvas>
+                  </div>
+                </div>
               </div>
 
               <!-- ROW 2: Tổng quan chất lượng và đồng bộ dữ liệu & Dữ liệu & Đồng bộ về C12 -->
               <div class="grid grid-cols-12 gap-2">
-                <!-- Card 2.2: Dữ liệu & Đồng bộ về C12 (Chiếm 5/12) -->
-                <div
-                  class="col-span-12 lg:col-span-5 bg-[#0d1e32] border border-slate-800 rounded-xl p-4 text-slate-300 shadow-xl flex flex-col min-h-[500px]"
-                >
-                  <div
-                    class="flex items-center justify-between pb-3 border-b border-slate-800/60 mb-3"
-                  >
-                    <div>
-                      <div class="flex items-center gap-1.5">
-                        <h2
-                          class="text-sm font-bold text-slate-100 uppercase tracking-wide"
-                        >
-                          Dữ liệu & Đồng bộ về C12
-                        </h2>
-                        <i
-                          class="fa-regular fa-circle-question text-xs text-slate-500 cursor-pointer"
-                        ></i>
-                      </div>
-                      <p class="text-xs text-slate-400 mt-0.5">
-                        Tần suất bản ghi mới đồng bộ về C12
-                      </p>
-                    </div>
-
-                    <!-- Bộ lọc thời gian mini -->
-                    <div class="flex items-center gap-2 text-xs">
-                      <div
-                        class="flex items-center bg-[#091524] border border-slate-800 p-0.5 rounded"
-                      >
-                        <button
-                          class="px-2 py-0.5 bg-blue-600 text-white rounded text-[11px] font-medium"
-                        >
-                          Ngày
-                        </button>
-                        <button
-                          class="px-2 py-0.5 text-slate-400 hover:text-slate-200 text-[11px]"
-                        >
-                          Tháng
-                        </button>
-                      </div>
-                      <div
-                        class="flex items-center gap-1 bg-[#091524] border border-slate-800 rounded px-2 py-1 text-slate-300 font-mono text-[11px]"
-                      >
-                        <i class="fa-regular fa-calendar text-slate-500"></i>
-                        <span>01/07-15/07</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Vùng nội dung Render cấu trúc C12 -->
-                  <div
-                    id="dynamic-dashboard-content"
-                    class="flex-1 w-full overflow-y-auto"
-                  ></div>
-                </div>
                 <!-- Card 2.1: Tổng quan chất lượng và đồng bộ dữ liệu (Chiếm 7/12 để Line chart trải dài đẹp mắt) -->
                 <div
                   class="col-span-12 lg:col-span-7 gap-6 px-2 py-4 bg-[#0d1e32] rounded-xl text-slate-400 flex flex-col min-h-[500px]"
@@ -4207,9 +4341,37 @@
                     class="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-2 pt-3 border-t border-slate-800/60 text-xs"
                   ></div>
 
-                  <div class="text-[12px] text-slate-500 mt-2">
+                  <div class="text-[12px] text-slate-500">
                     Ghi chú: Dữ liệu được hệ thống tự động cập nhật hàng ngày.
                   </div>
+                </div>
+
+                <!-- Card 2.2: Dữ liệu & Đồng bộ về C12 (Chiếm 5/12) -->
+                <div
+                  class="col-span-12 lg:col-span-5 bg-[#0d1e32] border border-slate-800 rounded-xl p-4 text-slate-300 shadow-xl flex flex-col min-h-[500px]"
+                >
+                  <div
+                    class="flex items-center justify-between pb-3 border-b border-slate-800/60 mb-3"
+                  >
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <h2
+                          class="text-sm font-bold text-slate-100 uppercase tracking-wide"
+                        >
+                          Dữ liệu & Đồng bộ về C12
+                        </h2>
+                        <i
+                          class="fa-regular fa-circle-question text-xs text-slate-500 cursor-pointer"
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Vùng nội dung Render cấu trúc C12 -->
+                  <div
+                    id="dynamic-dashboard-content"
+                    class="flex-1 w-full overflow-y-auto space-y-2"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -11342,7 +11504,7 @@
         syncOk *= factor;
         const cards = [
           {
-            label: "CSDL ĐÃ XÂY DỰNG",
+            label: "Tổng số CSDL",
             val: bc.da,
             key: "da",
             status: "Đã xây dựng",
@@ -11353,7 +11515,18 @@
             hasDelta: true,
           },
           {
-            label: "CSDL ĐANG XÂY DỰNG",
+            label: "CSDL Quốc Gia",
+            val: bc.da,
+            key: "da",
+            status: "Đã xây dựng",
+            cls: "kpi-good",
+            icon: "🗄",
+            bg: "var(--good-bg)",
+            fg: "var(--good-ink)",
+            hasDelta: true,
+          },
+          {
+            label: "CSDL Dùng Chung",
             val: bc.dang,
             key: "dang",
             status: "Đang xây dựng",
@@ -11364,7 +11537,7 @@
             hasDelta: true,
           },
           {
-            label: "CSDL CHƯA XÂY DỰNG",
+            label: "CSDL Trọng Yếu",
             val: bc.chua,
             key: "chua",
             status: "Chưa xây dựng",
@@ -11375,7 +11548,7 @@
             hasDelta: false,
           },
           {
-            label: "CSDL CẦN XÂY DỰNG MỚI",
+            label: "CSDL Bắt buộc chia sẻ",
             val: bc.canxaymoi,
             key: "canxaymoi",
             status: "Cần xây dựng mới",
@@ -11423,7 +11596,7 @@
             })
             .join("") +
           `
-  <div class="kpi kpi-sync kpi-info kpi-nostat group w-full py-1.5 px-2.5 bg-gradient-to-br from-slate-950 to-slate-850 border border-slate-900 rounded-lg hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-800/50 transition-all duration-300 grid grid-rows-[auto_auto] gap-1 text-white cursor-pointer">
+  <div class="hidden kpi kpi-sync kpi-info kpi-nostat group w-full py-1.5 px-2.5 bg-gradient-to-br from-slate-950 to-slate-850 border border-slate-900 rounded-lg hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-800/50 transition-all duration-300 grid grid-rows-[auto_auto] gap-1 text-white cursor-pointer">
     <div class="klabel flex items-center justify-between gap-3 w-full">
       <span class="text-[9px] font-bold text-slate-300 uppercase tracking-wider truncate leading-tight">BẢN GHI ĐỒNG BỘ</span>
       <span class="syncper inline-flex p-0.5 rounded text-[8px] shrink-0 scale-90 origin-right" id="syncPeriod">
@@ -14065,7 +14238,7 @@
         // 1. DỰNG LAYOUT VÀ NỘI DUNG HTML BẰNG JAVASCRIPT
         container.innerHTML = `
     <!-- Khối biểu đồ hàng trên -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
       <div class="bg-[#091524] border border-slate-800/80 rounded-lg p-4 flex flex-col justify-between h-[220px]">
         <div class="flex items-center justify-between text-slate-400">
           <div class="flex items-center gap-2 text-[11px] font-bold">
@@ -14119,7 +14292,7 @@
         <span>Thành phần dữ liệu <span class="text-slate-500 font-normal lowercase">(bản ghi)</span></span>
         <i class="fa-regular fa-circle-question text-[10px] text-slate-600"></i>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
         ${renderCard("fa-database", "blue", "CSDL chuyên ngành", "142.560", "Dữ liệu phục vụ nghiệp vụ chuyên ngành")}
         ${renderCard("fa-server", "emerald", "CSDL quốc gia", "28.340", "Dữ liệu tổng hợp, dùng chung toàn quốc")}
         ${renderCard("fa-shield-halved", "purple", "CSDL trọng yếu", "9.875", "Dữ liệu bảo mật thông tin và hạ tầng")}
