@@ -1521,7 +1521,7 @@
       }
 
       .kpi {
-        background: var(--surface);
+        background: #0d1e32;
         border: 1px solid var(--ring);
         border-radius: var(--radius);
         box-shadow: var(--shadow);
@@ -1547,8 +1547,7 @@
 
       /* Thu nhỏ font label chữ hoa */
       .kpi .klabel {
-        font-size: 9px;
-        color: var(--ink-2);
+        font-size: 12px;
         font-weight: 700;
         text-transform: uppercase;
       }
@@ -1570,7 +1569,6 @@
       .kpi .kdelta {
         font-size: 12px;
         margin-top: 2px;
-        color: var(--ink-3);
         display: flex;
         align-items: center;
         gap: 4px;
@@ -4014,7 +4012,7 @@
             </div>
             <div class="kpis" id="dashKpisBoNganh">
               <div
-                class="kpi kpi-status kpi-good kpi-active group w-full py-1.5 px-2.5 border border-emerald-500 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                class="kpi bg-[#0d1e32] kpi-status kpi-good kpi-active group w-full py-2 px-3 border border-emerald-500 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
                 onclick="openDashDetail('Đã xây dựng')"
               >
                 <div
@@ -4024,9 +4022,11 @@
                   🗄
                 </div>
 
-                <div class="kbody min-w-0 flex flex-col justify-center">
+                <div
+                  class="kbody min-w-0 flex flex-col justify-center text-white"
+                >
                   <div
-                    class="klabel text-[9px] text-slate-400 font-bold uppercase truncate leading-tight"
+                    class="klabel text-[9px] font-bold uppercase truncate leading-tight"
                   >
                     CSDL ĐÃ XÂY DỰNG
                   </div>
@@ -4038,13 +4038,14 @@
                       3
                     </div>
                     <div class="kdelta flex items-center scale-90 origin-left">
-                      <span class="up">▲ 4.1%</span> so với kỳ liền trước
+                      <span class="up">▲ 4.1%</span>
                     </div>
                   </div>
+                  <span class="text-xs">so với kỳ liền trước</span>
                 </div>
               </div>
               <div
-                class="kpi kpi-status kpi-warn group w-full py-1.5 px-2.5 border border-slate-100 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                class="kpi kpi-status kpi-warn group w-full py-2 px-3 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
                 onclick="openDashDetail('Đang xây dựng')"
               >
                 <div
@@ -4068,13 +4069,14 @@
                       110
                     </div>
                     <div class="kdelta flex items-center scale-90 origin-left">
-                      <span class="up">▲ 2.6%</span> so với kỳ liền trước
+                      <span class="up">▲ 2.6%</span>
                     </div>
                   </div>
+                  <span class="text-xs">so với kỳ liền trước</span>
                 </div>
               </div>
               <div
-                class="kpi kpi-status kpi-bad group w-full py-1.5 px-2.5 border border-slate-100 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                class="kpi kpi-status kpi-bad group w-full py-2 px-3 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
                 onclick="openDashDetail('Chưa xây dựng')"
               >
                 <div
@@ -4108,7 +4110,7 @@
                 </div>
               </div>
               <div
-                class="kpi kpi-status kpi-info group w-full py-1.5 px-2.5 border border-slate-100 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
+                class="kpi kpi-status kpi-info group w-full py-2 px-3 rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer"
                 onclick="openDashDetail('Cần xây dựng mới')"
               >
                 <div
@@ -4142,7 +4144,7 @@
                 </div>
               </div>
               <div
-                class="kpi kpi-sync kpi-info kpi-nostat group w-full py-1.5 px-2.5 bg-gradient-to-br from-slate-950 to-slate-850 border border-slate-900 rounded-lg hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-800/50 transition-all duration-300 grid grid-rows-[auto_auto] gap-1 text-white cursor-pointer"
+                class="kpi kpi-sync kpi-info kpi-nostat group w-full py-2 px-3 bg-gradient-to-br from-slate-950 to-slate-850 border border-slate-900 rounded-lg hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-800/50 transition-all duration-300 grid grid-rows-[auto_auto] gap-1 text-white cursor-pointer"
               >
                 <div
                   class="klabel flex items-center justify-between gap-3 w-full"
@@ -4188,9 +4190,10 @@
                     <div
                       class="kdelta flex items-center scale-90 origin-left !text-white"
                     >
-                      <span class="up">▲ 1.2%</span> so với kỳ liền trước
+                      <span class="up">▲ 1.2%</span>
                     </div>
                   </div>
+                  <span class="text-xs">so với kỳ liền trước</span>
                 </div>
               </div>
             </div>
@@ -5584,25 +5587,27 @@
           <div
             class="grid grid-cols-12 gap-2 flex-1 min-h-0 overflow-hidden px-6 pb-6"
           >
+            <div class="col-span-12">
+              <div class="card-panel p-2.5 shrink-0">
+                <h2
+                  class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1"
+                >
+                  Tổng quan hệ thống
+                </h2>
+                <!-- Bỏ flex-row, overflow-x-auto ở đây để JS tự dựng layout 6 cột full width -->
+                <div id="system-overview-container" class="w-full"></div>
+              </div>
+            </div>
+
             <div class="col-span-3 h-full flex flex-col min-h-0">
-              <div class="card-panel p-2.5 h-full flex flex-col min-h-0">
-                <div class="flex justify-between items-center mb-2 shrink-0">
+              <div class="card-panel h-full flex flex-col gap-2 min-h-0 p-2">
+                <div class="flex justify-between gap-2 items-center shrink-0">
                   <h2
                     class="text-cyan-400 font-bold uppercase text-[11px] tracking-wider"
                   >
                     Giám sát trạng thái CSDL
                   </h2>
-                  <div class="flex items-center gap-1.5">
-                    <div class="relative">
-                      <i
-                        class="fa-solid fa-magnifying-glass absolute left-2 top-2 text-slate-500 text-[12px]"
-                      ></i>
-                      <input
-                        type="text"
-                        placeholder="Tìm kiếm..."
-                        class="border border-slate-700/80 rounded !pl-6 pr-1.5 py-0.5 text-[9px] text-black w-28 focus:outline-none focus:border-cyan-500"
-                      />
-                    </div>
+                  <div class="flex items-center">
                     <div
                       class="flex border border-slate-700/80 rounded overflow-hidden"
                     >
@@ -5617,7 +5622,16 @@
                     </div>
                   </div>
                 </div>
-
+                <div class="relative min-w-[200px]">
+                  <i
+                    class="fa-solid fa-magnifying-glass absolute left-2 top-2 text-slate-500 text-[12px]"
+                  ></i>
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm..."
+                    class="w-full border border-slate-700/80 rounded !pl-6 pr-1.5 py-0.5 text-[9px] text-black w-28 focus:outline-none focus:border-cyan-500"
+                  />
+                </div>
                 <!-- Container Render Các Bảng Trạng Thái (Tự co giãn ẩn cuộn xấu) -->
                 <div
                   id="db-status-container"
@@ -5628,18 +5642,27 @@
 
             <div class="col-span-9 h-full flex flex-col gap-2 min-h-0">
               <!-- ROW 1: Card Tổng quan hệ thống (Thiết kế lại Grid Ngang cực gọn) -->
-              <div class="card-panel p-2.5 shrink-0">
-                <h2
-                  class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-2"
-                >
-                  Tổng quan hệ thống
-                </h2>
-                <!-- Bỏ flex-row, overflow-x-auto ở đây để JS tự dựng layout 6 cột full width -->
-                <div id="system-overview-container" class="w-full"></div>
-              </div>
 
               <!-- ROW 2: Card Chỉ số chi tiết + Card Số lượng bản ghi (Phân chia 1/2 chiều cao dư) -->
               <div class="grid grid-cols-12 gap-2 flex-1 min-h-0">
+                <!-- Số lượng bản ghi đồng bộ (Col 5-12) -->
+                <div
+                  class="col-span-8 card-panel p-2 flex flex-col h-full min-h-0"
+                >
+                  <h2
+                    class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
+                  >
+                    Số lượng bản ghi đồng bộ
+                    <span
+                      class="text-[8px] text-slate-500 font-normal lowercase"
+                      >(Đơn vị: bản ghi)</span
+                    >
+                  </h2>
+                  <div class="flex-1 w-full min-h-0">
+                    <canvas id="recordsLineChart"></canvas>
+                  </div>
+                </div>
+
                 <!-- Card Chỉ số chi tiết (Col 1-4) -->
                 <div
                   class="col-span-4 card-panel p-2 flex flex-col justify-between h-full min-h-0"
@@ -5685,31 +5708,13 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Số lượng bản ghi đồng bộ (Col 5-12) -->
-                <div
-                  class="col-span-8 card-panel p-2 flex flex-col h-full min-h-0"
-                >
-                  <h2
-                    class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
-                  >
-                    Số lượng bản ghi đồng bộ
-                    <span
-                      class="text-[8px] text-slate-500 font-normal lowercase"
-                      >(Đơn vị: bản ghi)</span
-                    >
-                  </h2>
-                  <div class="flex-1 w-full min-h-0">
-                    <canvas id="recordsLineChart"></canvas>
-                  </div>
-                </div>
               </div>
 
               <!-- ROW 3: Báo cáo đồng bộ phút + Trạng thái Queue (Phân chia 1/2 chiều cao dư) -->
               <div class="grid grid-cols-12 gap-2 flex-1 min-h-0">
                 <!-- Báo cáo đồng bộ theo phút (Col 1-7) -->
                 <div
-                  class="col-span-7 card-panel p-2 flex flex-col h-full min-h-0"
+                  class="col-span-6 card-panel p-2 flex flex-col h-full min-h-0"
                 >
                   <h2
                     class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
@@ -5725,18 +5730,33 @@
                   </div>
                 </div>
 
-                <!-- Trạng thái Queue (Col 8-12) -->
+                <!-- Trạng thái Queue (Col 8-12) 1233-->
                 <div
-                  class="col-span-5 card-panel p-2 flex flex-col h-full min-h-0"
+                  class="col-span-6 card-panel p-2 flex flex-col h-full min-h-0"
                 >
-                  <h2
-                    class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
-                  >
-                    Trạng thái hàng đợi xử lý
-                  </h2>
+                  <div class="flex justify-between items-center mb-1 shrink-0">
+                    <h2
+                      class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider"
+                    >
+                      Luồng nhật ký realtime
+                    </h2>
+                    <div class="flex gap-1">
+                      <button
+                        class="bg-blue-600 hover:bg-blue-500 text-white text-[9px] px-1.5 py-0.5 rounded flex items-center gap-1"
+                      >
+                        <i class="fa-solid fa-play text-[7px]"></i> Tiếp tục
+                      </button>
+                      <button
+                        class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[9px] px-1.5 py-0.5 rounded flex items-center gap-1 border border-slate-700"
+                      >
+                        <i class="fa-solid fa-pause text-[7px]"></i> Tạm dừng
+                      </button>
+                    </div>
+                  </div>
+
                   <div
-                    id="queue-container"
-                    class="space-y-1.5 text-[9px] flex-1 overflow-y-auto"
+                    id="realtime-logs-container"
+                    class="overflow-x-auto flex-1 min-h-0"
                   ></div>
                 </div>
               </div>
@@ -5769,31 +5789,16 @@
                 </div>
 
                 <div
-                  class="col-span-8 card-panel p-2 flex flex-col h-full min-h-0"
+                  class="col-span-5 card-panel p-2 flex flex-col h-full min-h-0"
                 >
-                  <div class="flex justify-between items-center mb-1 shrink-0">
-                    <h2
-                      class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider"
-                    >
-                      Luồng nhật ký realtime
-                    </h2>
-                    <div class="flex gap-1">
-                      <button
-                        class="bg-blue-600 hover:bg-blue-500 text-white text-[9px] px-1.5 py-0.5 rounded flex items-center gap-1"
-                      >
-                        <i class="fa-solid fa-play text-[7px]"></i> Tiếp tục
-                      </button>
-                      <button
-                        class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-[9px] px-1.5 py-0.5 rounded flex items-center gap-1 border border-slate-700"
-                      >
-                        <i class="fa-solid fa-pause text-[7px]"></i> Tạm dừng
-                      </button>
-                    </div>
-                  </div>
-
+                  <h2
+                    class="text-cyan-400 font-bold uppercase text-[10px] tracking-wider mb-1 shrink-0"
+                  >
+                    Trạng thái hàng đợi xử lý
+                  </h2>
                   <div
-                    id="realtime-logs-container"
-                    class="overflow-x-auto flex-1 min-h-0"
+                    id="queue-container"
+                    class="space-y-1.5 text-[9px] flex-1 overflow-y-auto"
                   ></div>
                 </div>
               </div>
@@ -11699,14 +11704,16 @@
         let da = 0,
           dang = 0,
           chua = 0,
+          khong = 0,
           canxaymoi = 0;
         list.forEach(({ m }) => {
           if (m.buildStatus === "Đã xây dựng") da++;
           else if (m.buildStatus === "Đang xây dựng") dang++;
           else if (needsNewBuild(m)) canxaymoi++;
+          else if (m.buildStatus === "Không xây dựng") khong = 0;
           else chua++;
         });
-        return { da, dang, chua, canxaymoi, total: list.length };
+        return { da, dang, khong, chua, canxaymoi, total: list.length };
       }
       function dashDqOf(m) {
         // Dữ liệu đảm bảo "đúng, đủ, sạch, sống" — ưu tiên dùng dữ liệu thật đã nhập (chỉ tiêu 45-48), nếu chưa có thì dùng số minh họa
@@ -11776,7 +11783,16 @@
           document.getElementById("dashCompare").value === "year"
             ? "kỳ gốc"
             : "kỳ liền trước";
-        return `<span class="${v >= 0 ? "up" : "dn"}">${v >= 0 ? "▲" : "▼"} ${Math.abs(v).toFixed(1)}%</span> so với ${compareLabel}`;
+
+        return `
+    <div class="flex flex-col leading-tight">
+      <span class="${v >= 0 ? "up text-emerald-500" : "dn text-rose-500"} font-bold text-[9px]">
+        ${v >= 0 ? "▲" : "▼"} ${Math.abs(v).toFixed(1)}%
+      </span>
+      <span class="text-xs text-slate-400 whitespace-nowrap">
+        so với ${compareLabel}
+      </span>
+    </div>`;
       }
       function renderDashKpis(list) {
         const bc = dashBuildCounts(list);
@@ -11804,9 +11820,9 @@
           },
           {
             label: "CSDL Quốc Gia",
-            val: bc.da,
-            key: "da",
-            status: "Đã xây dựng",
+            val: bc.khong,
+            key: "daxd",
+            status: "Không xây dựng",
             cls: "kpi-good",
             icon: "🗄",
             bg: "var(--good-bg)",
@@ -11857,7 +11873,7 @@
               const isNegative = pctValue < 0 || c.status.includes("chua_xay");
 
               return `
-      <div class="kpi kpi-status ${c.cls || ""} ${isActive ? "kpi-active" : ""} group w-full py-1.5 px-2.5 border ${isActive ? "border-emerald-500" : "border-slate-100"} rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer" 
+      <div class="kpi kpi-status ${c.cls || ""} ${isActive ? "kpi-active" : ""} group w-full py-2 px-3 ${isActive ? "border border-emerald-500" : ""} rounded-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 grid grid-cols-[auto_1fr] gap-2 items-center cursor-pointer" 
            onclick="openDashDetail('${c.status}')">
         
         <div class="kic w-8 h-8 rounded-md flex items-center justify-center text-xs shrink-0 transition-all duration-300 group-hover:scale-105" style="background:${c.bg}; color:${c.fg}">
@@ -11866,7 +11882,9 @@
         
         <div class="kbody min-w-0 flex flex-col justify-center">
           <div class="klabel text-[9px] text-slate-400 font-bold uppercase truncate leading-tight">${c.label}</div>
-          <div class="flex items-center gap-1 mt-0.5">
+          
+          <!-- Chuyển items-center sang items-start/baseline để phù hợp khi delta có 2 dòng -->
+          <div class="flex items-baseline gap-1.5 mt-0.5">
             <div class="kval text-base font-black text-slate-900 leading-none" style="color:${c.fg}">${c.val}</div>
             <div class="kdelta flex items-center scale-90 origin-left">
               ${
@@ -11884,7 +11902,7 @@
             })
             .join("") +
           `
-  <div class="hidden kpi kpi-sync kpi-info kpi-nostat group w-full py-1.5 px-2.5 bg-gradient-to-br from-slate-950 to-slate-850 border border-slate-900 rounded-lg hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-800/50 transition-all duration-300 grid grid-rows-[auto_auto] gap-1 text-white cursor-pointer">
+  <div class="hidden kpi kpi-sync kpi-info kpi-nostat group w-full py-2 px-3 bg-gradient-to-br from-slate-950 to-slate-850 border border-slate-900 rounded-lg hover:-translate-y-0.5 hover:shadow-md hover:shadow-slate-800/50 transition-all duration-300 grid grid-rows-[auto_auto] gap-1 text-white cursor-pointer">
     <div class="klabel flex items-center justify-between gap-3 w-full">
       <span class="text-[9px] font-bold text-slate-300 uppercase tracking-wider truncate leading-tight">BẢN GHI ĐỒNG BỘ</span>
       <span class="syncper inline-flex p-0.5 rounded text-[8px] shrink-0 scale-90 origin-right" id="syncPeriod">
@@ -14564,8 +14582,9 @@
             <div class="text-[10px] text-slate-400 font-medium">bản ghi/ngày</div>
             <div class="text-[10px] text-emerald-500 font-bold mt-2 flex items-center gap-1">
               <i class="fa-solid fa-arrow-trend-up"></i>
-              <span>12.4% <span class="text-slate-500 font-normal">so với kỳ trước</span></span>
+              <span>12.4% </span>
             </div>
+            <span class="text-slate-500 font-normal">so với kỳ trước</span>
           </div>
           <div class="flex-1 h-full min-h-[110px] relative">
             <canvas id="miniAreaChart"></canvas>
@@ -15539,37 +15558,30 @@
               color: "text-emerald-600",
             },
             {
-              stt: 1,
+              stt: 2,
               agency: "Bộ Công an",
               csdl: "CSDL Định danh",
               status: "Đang kết nối",
               color: "text-emerald-600",
             },
             {
-              stt: 1,
+              stt: 3,
               agency: "Bộ Công an",
               csdl: "CSDL Căn cước",
               status: "Đang kết nối",
               color: "text-emerald-600",
             },
             {
-              stt: 2,
+              stt: 4,
               agency: "Bộ Tài chính",
               csdl: "CSDL Thuế",
               status: "Đang kết nối",
               color: "text-emerald-600",
             },
             {
-              stt: 2,
+              stt: 5,
               agency: "Bộ Tài chính",
               csdl: "CSDL Hải quan",
-              status: "Đang kết nối",
-              color: "text-emerald-600",
-            },
-            {
-              stt: 2,
-              agency: "Bộ Tài chính",
-              csdl: "CSDL Kho bạc",
               status: "Đang kết nối",
               color: "text-emerald-600",
             },
@@ -16186,11 +16198,11 @@
         <div class="flex flex-col justify-center overflow-hidden">
           <div class="text-[9px] ${item.colorClass} font-bold uppercase tracking-wider truncate mb-0.5">
             ${item.title}
+            
           </div>
-          <div class="text-base font-extrabold ${item.valueColor} leading-tight flex items-center gap-1">
-            ${item.value} ${dotHtml}
+          <div class="flex flex-row gap-2 text-base font-extrabold ${item.valueColor} leading-tight flex items-center gap-1">
+            ${item.value} ${dotHtml} <span class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">${subText}</span>
           </div>
-          <div class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">${subText}</div>
         </div>
         <div class="${item.colorClass} text-base opacity-80 shrink-0 ml-1">
           <i class="fa-solid ${item.icon}"></i>
@@ -16209,8 +16221,8 @@
         </div>
         <div class="text-base font-extrabold text-emerald-400 leading-tight">
           ${overviewData.metrics.syncSpeed}
+          <span class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">bản ghi/giây</span>
         </div>
-        <div class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">bản ghi/giây</div>
       </div>
       <div class="text-emerald-400 text-base opacity-80 shrink-0 ml-1">
         <i class="fa-solid fa-gauge-high"></i>
@@ -16225,8 +16237,8 @@
         </div>
         <div class="text-base font-extrabold text-amber-400 leading-tight">
           ${overviewData.metrics.avgLatency}
+          <span class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">giây</span>
         </div>
-        <div class="text-[8px] text-slate-400 mt-0.5 font-medium truncate">giây</div>
       </div>
       <div class="text-amber-400 text-base opacity-80 shrink-0 ml-1">
         <i class="fa-regular fa-clock"></i>
